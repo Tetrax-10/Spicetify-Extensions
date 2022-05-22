@@ -5,15 +5,9 @@ let Source = {
         href: "/genre/0JQ5DAqbMKFE33XAyDiPIr",
         backgroundColor: "rgb(240, 55, 165)",
     },
-    Chart2: {
-        name: "Telugu",
-        image: "https://t.scdn.co/images/96b5132876eb4e818723555ce365cd87.jpeg",
-        href: "/genre/0JQ5DAqbMKFIdOwkMWR5at",
-        backgroundColor: "rgb(71, 125, 149)",
-    },
 };
 // let className = "x-categoryCard-CategoryCard";
-let className = "Em2LrSSfvrgXQoajs6cm";
+let className = "Em2LrSSfvrgXQoajs6cm"; // web class name
 let refferenceNode = document.querySelector(`.${className}`);
 let createNode;
 
