@@ -2,6 +2,40 @@
 
 This Extension adds other countries exclusive Charts to your Spotify App's Browse Page
 
+## Add Custom Chart
+Open Spotify Web and navigate to this [page](https://open.spotify.com/search)
+
+click inspect element on the chart you want, copy the name, image, href, backgroundColor.
+
+paste them on ChartDataBase in [AddCharts.js](https://github.com/Tetrax-10/Spicetify-Extensions/blob/master/Add-Charts/AddCharts.js)
+
+### This to :
+
+```html
+<a draggable="false" class="Em2LrSSfvrgXQoajs6cm" href="/genre/0JQ5DAqbMKFE33XAyDiPIr" style="background-color: rgb(240, 55, 165)"
+            ><div>
+                <img aria-hidden="false" draggable="false" loading="lazy" src="https://t.scdn.co/images/2117dadfdd254825b3fbc52e3652ed56.jpeg" alt="" class="mMx2LUixlnN_Fu45JpFB tV9cjMpTPaykKsn2OVsw" />
+                <h3 class="i2yp6pOoZpYZLd5QWguN">Tamil</h3>
+            </div>
+        </a>
+```
+
+### This :
+```javascript
+let ChartDataBase = {
+    Chart1: {
+        name: "Tamil",
+        image: "https://t.scdn.co/images/2117dadfdd254825b3fbc52e3652ed56.jpeg",
+        href: "/genre/0JQ5DAqbMKFE33XAyDiPIr",
+        backgroundColor: "rgb(240, 55, 165)",
+    },
+};
+```
+
+If you want an other country's chart use a VPN and connect to that country. Change country in Spotify Settings from [here](https://www.spotify.com/us/account/profile/)
+
+now you can see that chart in you browse page and you can follow the above steps
+
 ### Note :
 
 Currently this extension only shows the default playlists of a chart not the regional based once.
