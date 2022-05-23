@@ -16,7 +16,7 @@ let ChartDataBase = {
         href: "/genre/0JQ5DAqbMKFIdOwkMWR5at",
         backgroundColor: "rgb(71, 125, 149)",
     },
-    Chart4: {
+    Chart3: {
         name: "Arab",
         image: "https://t.scdn.co/images/0c70e480b55c41858ebcc47061ebcb45.jpeg",
         href: "/genre/0JQ5DAqbMKFQ1UFISXj59F",
