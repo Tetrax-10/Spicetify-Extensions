@@ -75,7 +75,6 @@ function init() {
         for (let key in ChartDataBase) {
             let newChart = createChart();
             newChart.className = className + " " + "AddCharts";
-            newChart.href = "#";
             newChart.style["background-color"] = ChartDataBase[`${key}`]["backgroundColor"];
             newChart.setAttribute("onclick", `chartPageOpener('${ChartDataBase[`${key}`]["href"]}'); return false;`);
             newChart.children[0].children[0].src = ChartDataBase[`${key}`]["image"];
