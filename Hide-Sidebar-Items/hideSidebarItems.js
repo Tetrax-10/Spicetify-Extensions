@@ -2,7 +2,7 @@
 
 // NAME: Hide Sidebar Items
 // AUTHOR: Tetrax-10
-// DESCRIPTION: Hide sidebar items like liked songs, create playlist
+// DESCRIPTION: Hide sidebar items like liked songs, create playlist, your podcast.
 
 /// <reference path="../globals.d.ts" />
 
