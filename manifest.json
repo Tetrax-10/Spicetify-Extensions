@@ -1,0 +1,9 @@
+[
+    {
+        "name": "Hide Sidebar Items",
+        "description": "This Extension Hides Sidebar Items like liked songs, create playlist, your podcast",
+        "preview": "Hide-Sidebar-Items/screenshot.png",
+        "main": "Hide-Sidebar-Items/hideSidebarItems.js",
+        "readme": "Hide-Sidebar-Items/README.md"
+    }
+]
