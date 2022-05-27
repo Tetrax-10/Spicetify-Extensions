@@ -12,6 +12,8 @@ This Extension Hides Sidebar Items
 
 ## Get it on [Spicetify Marketplace](https://github.com/spicetify/spicetify-marketplace) or [Manually](https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Hide-Sidebar-Items)
 
+Search `Hide Sidebar Items` and Click Install Buttton.
+
 <br />
 
 🌟 Like it? Gimme Some Love ! 💕
