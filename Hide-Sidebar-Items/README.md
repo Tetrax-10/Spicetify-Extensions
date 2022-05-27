@@ -2,7 +2,7 @@
 
 This Extension Hides Sidebar Items
 
-Sidebar Config wont hide liked songs, create playlist, your podcast from Spotify veriosn `1.1.84`, So this extension is used to hide them.
+Sidebar Config wont hide `liked songs`, `create playlist`, `your podcast` from Spotify veriosn `1.1.84`, So this extension is used to hide them.
 
 ![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Hide-Sidebar-Items/screenshot.png)
 
