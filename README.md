@@ -1,3 +1,3 @@
 # Spicetify-Extensions
 
-Some use full extension developed by a music lover
+Some use full Extension developed by a Music Lover
