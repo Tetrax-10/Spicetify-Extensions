@@ -14,16 +14,16 @@ let SETTINGS_Hide_Sidebar_Items = {
     Hide_Your_Episodes_Feature: true,
 };
 
-(async function extension() {
+(async function hideSidebarItems() {
     const { Platform } = Spicetify;
     if (!Platform) {
-        setTimeout(extension, 300);
+        setTimeout(hideSidebarItems, 300);
         return;
     }
     init();
 })();
 
-function init() {
+function initHideSidebarItems() {
     likedSongkey = "hideLikedSongs";
     createPlaylistkey = "hideCreatePlaylist";
     yourPodcastKey = "hideYourPodcast";
