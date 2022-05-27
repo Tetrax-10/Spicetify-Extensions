@@ -8,7 +8,7 @@
 
 // Just change the value to false to disable that feature
 // I use hide podcast extension so i disable Hide_Your_Episodes_Feature
-let SETTINGS = {
+let SETTINGS_Hide_Sidebar_Items = {
     Hide_Liked_Songs_Feature: true,
     Hide_Create_Playlist_Feature: true,
     Hide_Your_Episodes_Feature: true,
@@ -100,7 +100,7 @@ function init() {
         let isCreatePlaylisHide = getLocalStorageDataFromKey(createPlaylistkey) === "true";
         let isYourPodcastHide = getLocalStorageDataFromKey(createPlaylistkey) === "true";
 
-        if (SETTINGS.Hide_Liked_Songs_Feature) {
+        if (SETTINGS_Hide_Sidebar_Items.Hide_Liked_Songs_Feature) {
             condition(isLikedSongsHide, likedSongs);
 
             new Spicetify.Menu.Item("Hide Liked Songs", isLikedSongsHide, (self) => {
@@ -111,7 +111,7 @@ function init() {
             }).register();
         }
 
-        if (SETTINGS.Hide_Create_Playlist_Feature) {
+        if (SETTINGS_Hide_Sidebar_Items.Hide_Create_Playlist_Feature) {
             condition(isCreatePlaylisHide, createPlaylist);
 
             new Spicetify.Menu.Item("Hide Create Playlist", isCreatePlaylisHide, (self) => {
@@ -122,7 +122,7 @@ function init() {
             }).register();
         }
 
-        if (SETTINGS.Hide_Your_Episodes_Feature) {
+        if (SETTINGS_Hide_Sidebar_Items.Hide_Your_Episodes_Feature) {
             condition(isYourPodcastHide, yourPodcast);
 
             new Spicetify.Menu.Item("Hide Your Podacast", isYourPodcastHide, (self) => {
