@@ -1,10 +1,10 @@
-# Hide-Sidebar-Items
+# Seek-Song
 
-This Extension Hides Sidebar Items
+This Extension Seeks Song when you press `1 to 9` for `10 % to 90 %` of the video.
 
-Sidebar Config won't hide `liked songs`, `create playlist`, `your podcast` from Spotify version `1.1.84`, So this extension is used to hide them.
+`left arrow` and `right arrow` Seeks backward/forward for `10` seconds.
 
-![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Hide-Sidebar-Items/screenshot.png)
+https://user-images.githubusercontent.com/75513645/170735691-5ad6a61a-5cdd-4a7c-bc92-9461bc0fc7f9.mp4
 
 <br />
 <br />
@@ -15,13 +15,13 @@ Step 1 : Follow [Spicetify Marketplace](https://github.com/spicetify/spicetify-m
 
 Step 2 : Open Spotify App -> Marketplace -> Extensions
 
-Step 3 : Search `Hide Sidebar Items` Click Install Buttton. Done!
+Step 3 : Search `Seek Song` Click Install Buttton. Done!
 
 <br />
 <br />
 
 ## Install Manually
-Copy `hideSidebarItems.js` into your [Spicetify](https://github.com/spicetify/spicetify-cli) extensions directory:
+Copy `seekSong.js` into your [Spicetify](https://github.com/spicetify/spicetify-cli) extensions directory:
 | **Platform** | **Path**                                                                            |
 |------------|-----------------------------------------------------------------------------------|
 | **Linux**      | `~/.config/spicetify/Extensions` or `$XDG_CONFIG_HOME/.config/spicetify/Extensions/` |
@@ -30,33 +30,25 @@ Copy `hideSidebarItems.js` into your [Spicetify](https://github.com/spicetify/sp
 
 After putting the extension file into the correct folder, run the following command to install the extension:
 ```
-spicetify config extensions hideSidebarItems.js
+spicetify config extensions seekSong.js
 spicetify apply
 ```
 
 <br />
 <br />
 
-## To disable a feature (everything enabled by default)
+## To alter seek seconds
 
-Open [hideSidebarItems.js](https://github.com/Tetrax-10/Spicetify-Extensions/blob/master/Hide-Sidebar-Items/hideSidebarItems.js) in line number 11 just change the value to false to disable that feature
+Open [seekSong.js](https://github.com/Tetrax-10/Spicetify-Extensions/blob/master/Seek-Song/seekSong.js) in line number 9 just change the value (in seconds).
 
 
 ```javascript
-let SETTINGS = {
-    Hide_Liked_Songs_Feature: true,
-    Hide_Create_Playlist_Feature: true,
-    Hide_Your_Episodes_Feature: false,
-};
+let skipBackwardValue = 10;
+let skipForwardValue = 10;
 ```
-I disable `Hide_Your_Episodes_Feature` for me as I use [hidePodcasts.js](https://github.com/theRealPadster/spicetify-hide-podcasts/blob/main/hidePodcasts.js) Extension
 
 <br />
 <br />
-
-## Credits
-
-[CharlieS1103](https://github.com/CharlieS1103) - [readme.md](https://github.com/CharlieS1103/spicetify-extensions/blob/main/adblock/README.md)
 
 ## Support
 🌟 Like it? Gimme Some Love ! 💕
