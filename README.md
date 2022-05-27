@@ -16,6 +16,22 @@ Search `Hide Sidebar Items` and Click Install Buttton.
 
 <br />
 
+# 2.Seek-Song
+
+This Extension Seeks Song when you press `1 to 9` for `10 % to 90 %` of the video.
+
+`left arrow` and `right arrow` Seeks backward/forward for `10` seconds.
+
+<br />
+
+https://user-images.githubusercontent.com/75513645/170735691-5ad6a61a-5cdd-4a7c-bc92-9461bc0fc7f9.mp4
+
+## Get it on [Spicetify Marketplace](https://github.com/spicetify/spicetify-marketplace) or [Manually](https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Seek-Song)
+
+Search `Seek Song` and Click Install Buttton.
+
+<br />
+
 🌟 Like it? Gimme Some Love ! 💕
 
 [![Github Stars badge](https://img.shields.io/github/stars/Tetrax-10/Spicetify-Extensions?logo=github&style=social)](https://github.com/Tetrax-10/Spicetify-Extensions)
