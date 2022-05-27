@@ -4,6 +4,8 @@ This Extension Seeks Song when you press `1 to 9` for `10 % to 90 %` of the vide
 
 `left arrow` and `right arrow` Seeks backward/forward for `10` seconds.
 
+<br />
+
 https://user-images.githubusercontent.com/75513645/170735691-5ad6a61a-5cdd-4a7c-bc92-9461bc0fc7f9.mp4
 
 <br />
