@@ -5,5 +5,12 @@
         "preview": "Hide-Sidebar-Items/screenshot.png",
         "main": "Hide-Sidebar-Items/hideSidebarItems.js",
         "readme": "Hide-Sidebar-Items/README.md"
+    },
+    {
+        "name": "Seek Song",
+        "description": "This Extension Seeks Song when you press 1 to 9 for 10 % to 90 % of the video and left arrow and right arrow Seeks backward/forward for 10 seconds",
+        "preview": "Seek-Song/screenshot.png",
+        "main": "Seek-Song/seekSong.js",
+        "readme": "Seek-Song/README.md"
     }
 ]
