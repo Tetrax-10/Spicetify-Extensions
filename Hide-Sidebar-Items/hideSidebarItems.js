@@ -20,7 +20,7 @@ let SETTINGS_Hide_Sidebar_Items = {
         setTimeout(hideSidebarItems, 300);
         return;
     }
-    init();
+    initHideSidebarItems();
 })();
 
 function initHideSidebarItems() {
