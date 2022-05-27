@@ -2,7 +2,6 @@
 // AUTHOR: Tetrax-10
 // DESCRIPTION: Adds Other Countries exclusice Charts to your Spotify Browse Page
 
-
 let ChartDataBase = {
     Chart1: {
         name: "Tamil",
