@@ -32,6 +32,22 @@ Search `Seek Song` and Click Install Buttton.
 
 <br />
 
+# 3.CSS-Injector
+
+This Extension Injects your custom CSS, snippets.
+
+This is in early stage in upcomming updates you can enable or disable a particular CSS block and also insert CSS from inside Spotify App
+
+<br />
+
+![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/CSS-Injector/screenshot.png)
+
+## Get it on [Spicetify Marketplace](https://github.com/spicetify/spicetify-marketplace) or [Manually](https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/CSS-Injector)
+
+Search `CSS Injector` and Click Install Buttton.
+
+<br />
+
 🌟 Like it? Gimme Some Love ! 💕
 
 [![Github Stars badge](https://img.shields.io/github/stars/Tetrax-10/Spicetify-Extensions?logo=github&style=social)](https://github.com/Tetrax-10/Spicetify-Extensions)
