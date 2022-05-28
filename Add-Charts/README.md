@@ -1,4 +1,4 @@
-# Add-Charts
+# Add-Charts [deprecated]
 
 This Extension adds other countries exclusive Charts to your Spotify App's Browse Page
 
