@@ -12,5 +12,12 @@
         "preview": "Seek-Song/screenshot.png",
         "main": "Seek-Song/seekSong.js",
         "readme": "Seek-Song/README.md"
+    },
+    {
+        "name": "CSS Injector",
+        "description": "This Extension Injects your custom CSS, snippets.",
+        "preview": "CSS-Injector/screenshot.png",
+        "main": "CSS-Injector/CSSInjector.js",
+        "readme": "CSS-Injector/README.md"
     }
 ]
