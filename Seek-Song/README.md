@@ -9,7 +9,6 @@ This Extension Seeks Song when you press `1 to 9` for `10 % to 90 %` of the song
 https://user-images.githubusercontent.com/75513645/170735691-5ad6a61a-5cdd-4a7c-bc92-9461bc0fc7f9.mp4
 
 <br />
-<br />
 
 ## Get it on Spicetify Marketplace
 
@@ -19,7 +18,6 @@ Step 2 : Open Spotify App -> Marketplace -> Extensions
 
 Step 3 : Search `Seek Song` Click Install Buttton. Done!
 
-<br />
 <br />
 
 ## Install Manually
@@ -37,7 +35,6 @@ spicetify apply
 ```
 
 <br />
-<br />
 
 ## To alter seek seconds
 
@@ -49,7 +46,6 @@ let skipBackwardValue = 10;
 let skipForwardValue = 10;
 ```
 
-<br />
 <br />
 
 ## Support
