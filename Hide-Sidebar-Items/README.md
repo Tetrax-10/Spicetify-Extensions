@@ -4,9 +4,10 @@ This Extension Hides Sidebar Items
 
 Sidebar Config won't hide `liked songs`, `create playlist`, `your podcast` from Spotify version `1.1.84`, So this extension is used to hide them.
 
+<br />
+
 ![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Hide-Sidebar-Items/screenshot.png)
 
-<br />
 <br />
 
 ## Get it on Spicetify Marketplace
@@ -17,7 +18,6 @@ Step 2 : Open Spotify App -> Marketplace -> Extensions
 
 Step 3 : Search `Hide Sidebar Items` Click Install Buttton. Done!
 
-<br />
 <br />
 
 ## Install Manually
@@ -35,7 +35,6 @@ spicetify apply
 ```
 
 <br />
-<br />
 
 ## To disable a feature (everything enabled by default)
 
@@ -51,7 +50,6 @@ let SETTINGS = {
 ```
 I disable `Hide_Your_Episodes_Feature` for me as I use [hidePodcasts.js](https://github.com/theRealPadster/spicetify-hide-podcasts/blob/main/hidePodcasts.js) Extension
 
-<br />
 <br />
 
 ## Credits
