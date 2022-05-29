@@ -4,7 +4,7 @@ A better Nord Theme with no Ads
 
 <br />
 
-![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Seek-Song/screenshot.gif)
+![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Nord-Spotify/screenshot.png)
 
 <br />
 
