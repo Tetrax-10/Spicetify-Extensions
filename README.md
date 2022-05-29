@@ -24,7 +24,7 @@ This Extension Seeks Song when you press `1 to 9` for `10 % to 90 %` of the vide
 
 <br />
 
-https://user-images.githubusercontent.com/75513645/170735691-5ad6a61a-5cdd-4a7c-bc92-9461bc0fc7f9.mp4
+![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Seek-Song/screenshot.gif)
 
 ## Get it on [Spicetify Marketplace](https://github.com/spicetify/spicetify-marketplace) or [Manually](https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Seek-Song)
 
@@ -41,6 +41,10 @@ This is in early stage in upcomming updates you can enable or disable a particul
 <br />
 
 ![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/CSS-Injector/screenshot.png)
+
+## After Injection
+
+![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/CSS-Injector/after%20injection.png)
 
 ## Get it on [Spicetify Marketplace](https://github.com/spicetify/spicetify-marketplace) or [Manually](https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/CSS-Injector)
 
