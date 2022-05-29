@@ -46,18 +46,15 @@ spicetify apply
 
 <br />
 
-## To Inject a CSS
+# Tutorial
+
+## To Inject a CSS [Don't paste this, its just for example]
 
 Open [CSSInjector.js](https://github.com/Tetrax-10/Spicetify-Extensions/blob/master/CSS-Injector/CSSInjector.js) in line number 10 just paste your CSS inside the variable
 
 
 ```javascript
 let cssInjectorStyle = `
-
-/* hides playlist scrollbar */
-.os-scrollbar:nth-child(6) .os-scrollbar-handle {
-    visibility: hidden;
-}
 
 /* Insert Your custom CSS */
 
@@ -66,12 +63,13 @@ let cssInjectorStyle = `
 
 <br />
 
-## My Custom CSS
-I use [SpotifyNoPremium](https://github.com/Daksh777/SpotifyNoPremium) theme, it get updated frequently with help of a `bat` / `sh` file.
+## My Custom CSS [Don't paste this, its just for example]
+
+I use [SpotifyNoPremium](https://github.com/Daksh777/SpotifyNoPremium) theme, it gets updated frequently with help of a `bat` / `sh` file.
 
 So if I put my CSS inside that theme's `user.css` after updating it wipes my custom CSS. So I use this extension to inject my theme.
 
-If you like my theme paste this CSS inside [CSSInjector.js](https://github.com/Tetrax-10/Spicetify-Extensions/blob/master/CSS-Injector/CSSInjector.js). This CSS will be updated frequently to provide you a better theme.
+### If you like my theme Its Available in [Spicetify Marketplace](https://github.com/spicetify/spicetify-marketplace) or here
 
 ```css
 /* hides playlist scrollbar */
