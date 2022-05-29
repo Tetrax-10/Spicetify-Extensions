@@ -1,8 +1,6 @@
-# Seek-Song
+# Nord-Spotify
 
-This Extension Seeks Song when you press `1 to 9` for `10 % to 90 %` of the song like YouTube.
-
-`left arrow` and `right arrow` Seeks backward/forward for `10` seconds.
+A better Nord Theme with no Ads
 
 <br />
 
@@ -14,36 +12,24 @@ This Extension Seeks Song when you press `1 to 9` for `10 % to 90 %` of the song
 
 Step 1 : Follow [Spicetify Marketplace](https://github.com/spicetify/spicetify-marketplace) readme and install it.
 
-Step 2 : Open Spotify App -> Marketplace -> Extensions
+Step 2 : Open Spotify App -> Marketplace -> Themes
 
-Step 3 : Search `Seek Song` Click Install Buttton. Done!
+Step 3 : Search `Nord Spotify` Click Install Buttton. Done!
 
 <br />
 
 ## Install Manually
-Copy `seekSong.js` into your [Spicetify](https://github.com/spicetify/spicetify-cli) extensions directory:
+Copy `Nord-Spotify` folder into your [Spicetify](https://github.com/spicetify/spicetify-cli) themes directory:
 | **Platform** | **Path**                                                                            |
 |------------|-----------------------------------------------------------------------------------|
-| **Linux**      | `~/.config/spicetify/Extensions` or `$XDG_CONFIG_HOME/.config/spicetify/Extensions/` |
-| **MacOS**      | `~/spicetify_data/Extensions` or `$SPICETIFY_CONFIG/Extensions`                      |
-| **Windows**    | `%userprofile%\.spicetify\Extensions\`                                              |
+| **Linux**      | `~/.config/spicetify/Themes` or `$XDG_CONFIG_HOME/.config/spicetify/Themes/` |
+| **MacOS**      | `~/spicetify_data/Themes` or `$SPICETIFY_CONFIG/Themes`                      |
+| **Windows**    | `%userprofile%\.spicetify\Themes\`                                              |
 
-After putting the extension file into the correct folder, run the following command to install the extension:
+After putting the `Nord-Spotify` folder into the themes folder, run the following command to install the theme:
 ```
-spicetify config extensions seekSong.js
+spicetify config current_theme Nord-Spotify color_scheme base
 spicetify apply
-```
-
-<br />
-
-## To alter seek seconds
-
-Open [seekSong.js](https://github.com/Tetrax-10/Spicetify-Extensions/blob/master/Seek-Song/seekSong.js) in line number 9 just change the value (in seconds).
-
-
-```javascript
-let skipBackwardValue = 10;
-let skipForwardValue = 10;
 ```
 
 <br />
