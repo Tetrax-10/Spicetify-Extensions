@@ -19,13 +19,5 @@
         "preview": "CSS-Injector/screenshot.png",
         "main": "CSS-Injector/CSSInjector.js",
         "readme": "CSS-Injector/README.md"
-    },
-    {
-        "name": "Nord Spotify",
-        "description": "A better Nord Theme with no Ads",
-        "preview": "Nord-Spotify/screenshot.png",
-        "usercss": "Nord-Spotify/user.css",
-        "schemes": "Nord-Spotify/color.ini",
-        "readme": "Nord-Spotify/README.md"
     }
 ]
