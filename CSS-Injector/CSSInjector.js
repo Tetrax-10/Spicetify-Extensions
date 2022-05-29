@@ -9,11 +9,6 @@
 // you can get CSS snippets from https://github.com/spicetify/spicetify-marketplace/blob/main/snippets.json
 let cssInjectorStyle = `
 
-/* hides playlist scrollbar */
-.os-scrollbar:nth-child(6) .os-scrollbar-handle {
-    visibility: hidden;
-}
-
 /* Insert Your custom CSS */
 
 `;
