@@ -34,6 +34,12 @@ spicetify apply
 
 <br />
 
+## Credits
+
+[Sleek](https://github.com/spicetify/spicetify-themes/tree/master/Sleek) theme by [harbassan](https://github.com/harbassan)
+
+[SpotifyNoPremium](https://github.com/Daksh777/SpotifyNoPremium) theme by [Daksh777](https://github.com/Daksh777)
+
 ## Support
 🌟 Like it? Gimme Some Love ! 💕
 
