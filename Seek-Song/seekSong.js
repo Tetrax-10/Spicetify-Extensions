@@ -31,6 +31,18 @@ function initSeekSong() {
         Spicetify.Mousetrap.bind(key, functionToExecute);
     }
 
+    function openSearchPage() {
+        const searchInput = document.querySelector(".main-topBar-container input");
+        if (searchInput) {
+            searchInput.focus();
+        } else {
+            const sidebarItem = document.querySelector(`.main-navBar-navBar a[href="/search"]`);
+            if (sidebarItem) {
+                sidebarItem.click();
+            }
+        }
+    }
+
     function main() {
         window.addEventListener(
             "keydown",
@@ -83,6 +95,9 @@ function initSeekSong() {
         });
         eventTriggerWithKey("down", () => {
             Spicetify.Player.decreaseVolume();
+        });
+        eventTriggerWithKey("/", () => {
+            openSearchPage();
         });
     }
     main();
