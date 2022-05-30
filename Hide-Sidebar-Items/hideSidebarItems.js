@@ -90,8 +90,6 @@ function initHideSidebarItems() {
     }
 
     function main() {
-        injectCSS();
-
         let likedSongs = 'a[href="/collection/tracks"]';
         let createPlaylist = ".IPVjkkhh06nan7aZK7Bx";
         let yourPodcast = 'a[href="/collection/episodes"]';
@@ -99,6 +97,23 @@ function initHideSidebarItems() {
         let isLikedSongsHide = getLocalStorageDataFromKey(likedSongkey) === "true";
         let isCreatePlaylisHide = getLocalStorageDataFromKey(createPlaylistkey) === "true";
         let isYourPodcastHide = getLocalStorageDataFromKey(createPlaylistkey) === "true";
+
+        if (!document.querySelector(`${likedSongs}`)) {
+            SETTINGS_Hide_Sidebar_Items.Hide_Liked_Songs_Feature = false;
+            console.log("can't find liked songs");
+        }
+
+        if (!document.querySelector(`${createPlaylist}`)) {
+            SETTINGS_Hide_Sidebar_Items.Hide_Create_Playlist_Feature = false;
+            console.log("can't find create playlist");
+        }
+
+        if (!document.querySelector(`${yourPodcast}`)) {
+            SETTINGS_Hide_Sidebar_Items.Hide_Your_Episodes_Feature = false;
+            console.log("can't find your episodes");
+        }
+
+        injectCSS();
 
         if (SETTINGS_Hide_Sidebar_Items.Hide_Liked_Songs_Feature) {
             condition(isLikedSongsHide, likedSongs);
