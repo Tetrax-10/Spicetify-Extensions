@@ -47,7 +47,7 @@ function initSeekSong() {
         window.addEventListener(
             "keydown",
             function (e) {
-                if (["ArrowUp", "ArrowDown"].indexOf(e.code) > -1) {
+                if (["ArrowUp", "ArrowDown", "."].indexOf(e.code) > -1) {
                     e.preventDefault();
                 }
             },
