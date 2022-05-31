@@ -2,7 +2,9 @@
 
 This Extension Seeks Song when you press `1 to 9` for `10 % to 90 %` of the song like YouTube.
 
-`left arrow` and `right arrow` Seeks backward/forward for `10` seconds.
+`left arrow` and `right arrow` Seeks backward/forward for `10` seconds like YouTube.
+
+`up arrow` and `down arrow` for increase/decrease volume like YouTube.
 
 <br />
 
