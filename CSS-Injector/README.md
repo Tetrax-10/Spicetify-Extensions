@@ -16,7 +16,7 @@ This is in early stage in upcomming updates you can enable or disable a particul
 
 ## After Injection
 
-![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/CSS-Injector/after%20injection.png)
+![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Themes/master/screenshot.png)
 
 <br />
 
