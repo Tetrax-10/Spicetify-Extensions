@@ -69,7 +69,7 @@ I use [SpotifyNoPremium](https://github.com/Daksh777/SpotifyNoPremium) theme, it
 
 So if I put my CSS inside that theme's `user.css` after updating it wipes my custom CSS. So I use this extension to inject my theme.
 
-### If you like my theme Its Available in [Spicetify Marketplace](https://github.com/spicetify/spicetify-marketplace) or here
+### If you like my theme Its Available [here](https://github.com/Tetrax-10/Spicetify-Themes)
 
 ```css
 /* hides playlist scrollbar */
