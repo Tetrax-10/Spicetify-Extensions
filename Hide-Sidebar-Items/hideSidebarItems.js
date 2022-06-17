@@ -16,7 +16,7 @@ let SETTINGS_Hide_Sidebar_Items = {
 
 (async function hideSidebarItems() {
     const { Platform } = Spicetify;
-    if (!Platform) {
+    if (!(Platform && Spicetify.LocalStorage)) {
         setTimeout(hideSidebarItems, 300);
         return;
     }
@@ -98,6 +98,12 @@ function initHideSidebarItems() {
         let isCreatePlaylisHide = getLocalStorageDataFromKey(createPlaylistkey) === "true";
         let isYourPodcastHide = getLocalStorageDataFromKey(createPlaylistkey) === "true";
 
+        let hide_Liked_Songs;
+        let hide_Create_Playlist;
+        let hide_Your_Podacast;
+
+        let menuArray = [];
+
         if (!document.querySelector(`${likedSongs}`)) {
             SETTINGS_Hide_Sidebar_Items.Hide_Liked_Songs_Feature = false;
             console.log("can't find liked songs");
@@ -118,35 +124,43 @@ function initHideSidebarItems() {
         if (SETTINGS_Hide_Sidebar_Items.Hide_Liked_Songs_Feature) {
             condition(isLikedSongsHide, likedSongs);
 
-            new Spicetify.Menu.Item("Hide Liked Songs", isLikedSongsHide, (self) => {
+            hide_Liked_Songs = new Spicetify.Menu.Item("Hide Liked Songs", isLikedSongsHide, (self) => {
                 isLikedSongsHide = !isLikedSongsHide;
                 Spicetify.LocalStorage.set(likedSongkey, isLikedSongsHide ? true : false);
                 self.setState(isLikedSongsHide);
                 condition(isLikedSongsHide, likedSongs);
-            }).register();
+            });
+
+            menuArray.push(hide_Liked_Songs);
         }
 
         if (SETTINGS_Hide_Sidebar_Items.Hide_Create_Playlist_Feature) {
             condition(isCreatePlaylisHide, createPlaylist);
 
-            new Spicetify.Menu.Item("Hide Create Playlist", isCreatePlaylisHide, (self) => {
+            hide_Create_Playlist = new Spicetify.Menu.Item("Hide Create Playlist", isCreatePlaylisHide, (self) => {
                 isCreatePlaylisHide = !isCreatePlaylisHide;
                 Spicetify.LocalStorage.set(createPlaylistkey, isCreatePlaylisHide ? true : false);
                 self.setState(isCreatePlaylisHide);
                 condition(isCreatePlaylisHide, createPlaylist);
-            }).register();
+            });
+
+            menuArray.push(hide_Create_Playlist);
         }
 
         if (SETTINGS_Hide_Sidebar_Items.Hide_Your_Episodes_Feature) {
             condition(isYourPodcastHide, yourPodcast);
 
-            new Spicetify.Menu.Item("Hide Your Podacast", isYourPodcastHide, (self) => {
+            hide_Your_Podacast = new Spicetify.Menu.Item("Hide Your Podacast", isYourPodcastHide, (self) => {
                 isYourPodcastHide = !isYourPodcastHide;
                 Spicetify.LocalStorage.set(yourPodcastKey, isYourPodcastHide ? true : false);
                 self.setState(isYourPodcastHide);
                 condition(isYourPodcastHide, yourPodcast);
-            }).register();
+            });
+
+            menuArray.push(hide_Your_Podacast);
         }
+
+        new Spicetify.Menu.SubMenu("Hide Sidebar Items", menuArray).register();
     }
 
     if (isLocalStorageInitialized()) {
