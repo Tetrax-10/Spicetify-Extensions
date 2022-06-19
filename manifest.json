@@ -20,4 +20,11 @@
         "main": "CSS-Injector/CSSInjector.js",
         "readme": "CSS-Injector/README.md"
     }
+    {
+        "name": "Skip or Play Liked Songs",
+        "description": "This Extension Skips or Plays Liked Songs only",
+        "preview": "Skip-or-Play-Liked-Songs/screenshot.png",
+        "main": "Skip-or-Play-Liked-Songs/skipOrPlayLikedSongs.js",
+        "readme": "Skip-or-Play-Liked-Songs/README.md"
+    }
 ]
