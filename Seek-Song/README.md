@@ -8,6 +8,8 @@ This Extension Seeks Song when you press `1 to 9` for `10 % to 90 %` of the song
 
 <br />
 
+# Demo
+
 ![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Seek-Song/screenshot.gif)
 
 <br />
