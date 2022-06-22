@@ -16,18 +16,18 @@
 })();
 
 function initSkipOrPlayLikedSongs() {
-    let SkipLikedSongsKey = "SkipLikedSongs";
+    let skipLikedSongsKey = "SkipLikedSongs";
 
     function isLocalStorageInitialized() {
-        if (getLocalStorageDataFromKey(SkipLikedSongsKey) == null) {
+        if (getLocalStorageDataFromKey(skipLikedSongsKey) == null) {
             return false;
         }
         return true;
     }
 
-    function InitializeLocalStorage() {
-        if (getLocalStorageDataFromKey(SkipLikedSongsKey) == null) {
-            setLocalStorageDataWithKey(SkipLikedSongsKey, false);
+    function initializeLocalStorage() {
+        if (getLocalStorageDataFromKey(skipLikedSongsKey) == null) {
+            setLocalStorageDataWithKey(skipLikedSongsKey, false);
         }
     }
 
@@ -76,43 +76,41 @@ function initSkipOrPlayLikedSongs() {
             },
         };
 
-        function likedSongsMode(name) {
-            if (name == "play") {
+        function likedSongsMode(mode) {
+            if (mode == "play") {
                 Spicetify.Player.removeEventListener("songchange", skip.callAddEventListener);
                 Spicetify.Player.removeEventListener("songchange", play.callAddEventListener);
                 Spicetify.Player.addEventListener("songchange", play.callAddEventListener);
             }
 
-            if (name == "skip") {
+            if (mode == "skip") {
                 Spicetify.Player.removeEventListener("songchange", skip.callAddEventListener);
                 Spicetify.Player.removeEventListener("songchange", play.callAddEventListener);
                 Spicetify.Player.addEventListener("songchange", skip.callAddEventListener);
             }
 
-            if (name == "disable") {
+            if (mode == "disable") {
                 Spicetify.Player.removeEventListener("songchange", skip.callAddEventListener);
                 Spicetify.Player.removeEventListener("songchange", play.callAddEventListener);
             }
         }
 
-        let isPlayLikedSongs = getLocalStorageDataFromKey(SkipLikedSongsKey) === "false";
-        let isSkipLikedSongs = getLocalStorageDataFromKey(SkipLikedSongsKey) === "true";
-        let isDisable = getLocalStorageDataFromKey(SkipLikedSongsKey) === "disable";
+        let isPlayLikedSongs = getLocalStorageDataFromKey(skipLikedSongsKey) === "false";
+        let isSkipLikedSongs = getLocalStorageDataFromKey(skipLikedSongsKey) === "true";
+        let isDisable = getLocalStorageDataFromKey(skipLikedSongsKey) === "disable";
 
-        if (getLocalStorageDataFromKey(SkipLikedSongsKey) == "true") {
-            likedSongsMode("skip");
-        }
-
-        if (getLocalStorageDataFromKey(SkipLikedSongsKey) == "false") {
+        if (getLocalStorageDataFromKey(skipLikedSongsKey) == "false") {
             likedSongsMode("play");
         }
-
-        if (getLocalStorageDataFromKey(SkipLikedSongsKey) == "disable") {
+        if (getLocalStorageDataFromKey(skipLikedSongsKey) == "true") {
+            likedSongsMode("skip");
+        }
+        if (getLocalStorageDataFromKey(skipLikedSongsKey) == "disable") {
             likedSongsMode("disable");
         }
 
         let play_Liked_Songs = new Spicetify.Menu.Item("Play Liked Only", isPlayLikedSongs, () => {
-            setLocalStorageDataWithKey(SkipLikedSongsKey, false);
+            setLocalStorageDataWithKey(skipLikedSongsKey, false);
             play_Liked_Songs.setState(true);
             skip_Liked_Songs.setState(false);
             disable.setState(false);
@@ -120,7 +118,7 @@ function initSkipOrPlayLikedSongs() {
         });
 
         let skip_Liked_Songs = new Spicetify.Menu.Item("Skip Liked", isSkipLikedSongs, () => {
-            setLocalStorageDataWithKey(SkipLikedSongsKey, true);
+            setLocalStorageDataWithKey(skipLikedSongsKey, true);
             play_Liked_Songs.setState(false);
             skip_Liked_Songs.setState(true);
             disable.setState(false);
@@ -128,7 +126,7 @@ function initSkipOrPlayLikedSongs() {
         });
 
         let disable = new Spicetify.Menu.Item("Disable", isDisable, () => {
-            setLocalStorageDataWithKey(SkipLikedSongsKey, "disable");
+            setLocalStorageDataWithKey(skipLikedSongsKey, "disable");
             skip_Liked_Songs.setState(false);
             play_Liked_Songs.setState(false);
             disable.setState(true);
@@ -141,7 +139,7 @@ function initSkipOrPlayLikedSongs() {
     if (isLocalStorageInitialized()) {
         main();
     } else {
-        InitializeLocalStorage();
+        initializeLocalStorage();
         main();
     }
 }
