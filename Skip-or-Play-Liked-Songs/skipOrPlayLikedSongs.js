@@ -39,12 +39,22 @@ function initSkipOrPlayLikedSongs() {
         Spicetify.LocalStorage.set(key, value);
     }
 
+    function sleep(delay) {
+        let start = new Date().getTime();
+        while (new Date().getTime() < start + delay);
+    }
+
     function main() {
+        let Count = 0;
+
         let play = {
             removeEventListeners() {
                 Spicetify.Player.removeEventListener("onprogress", play.removeEventListeners);
                 if (!Spicetify.Player.getHeart()) {
                     Spicetify.Player.next();
+                    Count++;
+                } else {
+                    Count = 0;
                 }
                 return;
             },
@@ -54,6 +64,10 @@ function initSkipOrPlayLikedSongs() {
             },
 
             callAddEventListener() {
+                if (Count == 50) {
+                    sleep(3000);
+                    Count = 0;
+                }
                 setTimeout(play.addEventListeners, 500);
             },
         };
@@ -63,6 +77,9 @@ function initSkipOrPlayLikedSongs() {
                 Spicetify.Player.removeEventListener("onprogress", skip.removeEventListeners);
                 if (Spicetify.Player.getHeart()) {
                     Spicetify.Player.next();
+                    Count++;
+                } else {
+                    Count = 0;
                 }
                 return;
             },
@@ -72,6 +89,10 @@ function initSkipOrPlayLikedSongs() {
             },
 
             callAddEventListener() {
+                if (Count == 50) {
+                    sleep(3000);
+                    Count = 0;
+                }
                 setTimeout(skip.addEventListeners, 500);
             },
         };
@@ -92,6 +113,7 @@ function initSkipOrPlayLikedSongs() {
             if (mode == "disable") {
                 Spicetify.Player.removeEventListener("songchange", skip.callAddEventListener);
                 Spicetify.Player.removeEventListener("songchange", play.callAddEventListener);
+                Count = 0;
             }
         }
 
