@@ -7,8 +7,7 @@
 /// <reference path="../globals.d.ts" />
 
 (async function skipOrPlayLikedSongs() {
-    const { Platform } = Spicetify;
-    if (!(Platform && Spicetify.LocalStorage)) {
+    if (!(Spicetify.Platform && Spicetify.LocalStorage && Spicetify.Player.data)) {
         setTimeout(skipOrPlayLikedSongs, 300);
         return;
     }
@@ -45,75 +44,84 @@ function initSkipOrPlayLikedSongs() {
     }
 
     function main() {
-        let Count = 0;
+        let count = 0;
+        function isLiked() {
+            if (Spicetify.Player.data.track.metadata["collection.in_collection"] == "true") {
+                return true;
+            } else {
+                return false;
+            }
+        }
 
-        let play = {
-            removeEventListeners() {
-                Spicetify.Player.removeEventListener("onprogress", play.removeEventListeners);
-                if (!Spicetify.Player.getHeart()) {
+        function playLikedOnly() {
+            if (count <= 49) {
+                if (!isLiked()) {
                     Spicetify.Player.next();
-                    Count++;
                 } else {
-                    Count = 0;
+                    count = 0;
                 }
-                return;
-            },
+            }
+            if (count == 50) {
+                Spicetify.showNotification("Skiped 50 Songs, So 1 min Cooldown to avoid Crash");
+                setTimeout(() => {
+                    count = 0;
+                    Spicetify.showNotification("You can Start Skiping Songs Now");
+                }, 60000);
+            }
+            if (count == 79) {
+                Spicetify.showNotification("Stop skipping Songs for that 1 min To Avoid Crash");
+            }
+            if (count == 85) {
+                Spicetify.showNotification("Just wait for that 1m, you will get a Message after that 1 min");
+            }
+            if (count == 95) {
+                Spicetify.showNotification("5 More Skips to Crash!");
+            }
+            count++;
+        }
 
-            addEventListeners() {
-                Spicetify.Player.addEventListener("onprogress", play.removeEventListeners);
-            },
-
-            callAddEventListener() {
-                if (Count == 50) {
-                    sleep(3000);
-                    Count = 0;
-                }
-                setTimeout(play.addEventListeners, 500);
-            },
-        };
-
-        let skip = {
-            removeEventListeners() {
-                Spicetify.Player.removeEventListener("onprogress", skip.removeEventListeners);
-                if (Spicetify.Player.getHeart()) {
+        function skipLiked() {
+            if (count <= 49) {
+                if (isLiked()) {
                     Spicetify.Player.next();
-                    Count++;
                 } else {
-                    Count = 0;
+                    count = 0;
                 }
-                return;
-            },
-
-            addEventListeners() {
-                Spicetify.Player.addEventListener("onprogress", skip.removeEventListeners);
-            },
-
-            callAddEventListener() {
-                if (Count == 50) {
-                    sleep(3000);
-                    Count = 0;
-                }
-                setTimeout(skip.addEventListeners, 500);
-            },
-        };
+            }
+            if (count == 50) {
+                Spicetify.showNotification("Skiped 50 Songs, So 1 min Cooldown to avoid Crash");
+                setTimeout(() => {
+                    count = 0;
+                    Spicetify.showNotification("You can Start Skiping Songs Now");
+                }, 60000);
+            }
+            if (count == 79) {
+                Spicetify.showNotification("Stop skipping Songs for that 1 min To Avoid Crash");
+            }
+            if (count == 85) {
+                Spicetify.showNotification("Just wait for that 1m, you will get a Message after that 1 min");
+            }
+            if (count == 95) {
+                Spicetify.showNotification("5 More Skips to Crash!");
+            }
+            count++;
+        }
 
         function likedSongsMode(mode) {
             if (mode == "play") {
-                Spicetify.Player.removeEventListener("songchange", skip.callAddEventListener);
-                Spicetify.Player.removeEventListener("songchange", play.callAddEventListener);
-                Spicetify.Player.addEventListener("songchange", play.callAddEventListener);
+                playLikedOnly();
+                likedSongsMode("disable");
+                Spicetify.Player.addEventListener("songchange", playLikedOnly);
             }
 
             if (mode == "skip") {
-                Spicetify.Player.removeEventListener("songchange", skip.callAddEventListener);
-                Spicetify.Player.removeEventListener("songchange", play.callAddEventListener);
-                Spicetify.Player.addEventListener("songchange", skip.callAddEventListener);
+                likedSongsMode("disable");
+                Spicetify.Player.addEventListener("songchange", skipLiked);
             }
 
             if (mode == "disable") {
-                Spicetify.Player.removeEventListener("songchange", skip.callAddEventListener);
-                Spicetify.Player.removeEventListener("songchange", play.callAddEventListener);
-                Count = 0;
+                Spicetify.Player.removeEventListener("songchange", skipLiked);
+                Spicetify.Player.removeEventListener("songchange", playLikedOnly);
             }
         }
 
@@ -122,10 +130,12 @@ function initSkipOrPlayLikedSongs() {
         let isDisable = getLocalStorageDataFromKey(skipLikedSongsKey) === "disable";
 
         if (getLocalStorageDataFromKey(skipLikedSongsKey) == "false") {
-            likedSongsMode("play");
+            likedSongsMode("disable");
+            Spicetify.Player.addEventListener("songchange", playLikedOnly);
         }
         if (getLocalStorageDataFromKey(skipLikedSongsKey) == "true") {
-            likedSongsMode("skip");
+            likedSongsMode("disable");
+            Spicetify.Player.addEventListener("songchange", skipLiked);
         }
         if (getLocalStorageDataFromKey(skipLikedSongsKey) == "disable") {
             likedSongsMode("disable");
@@ -136,7 +146,8 @@ function initSkipOrPlayLikedSongs() {
             play_Liked_Songs.setState(true);
             skip_Liked_Songs.setState(false);
             disable.setState(false);
-            likedSongsMode("play");
+            likedSongsMode("disable");
+            Spicetify.Player.addEventListener("songchange", playLikedOnly);
         });
 
         let skip_Liked_Songs = new Spicetify.Menu.Item("Skip Liked", isSkipLikedSongs, () => {
@@ -144,7 +155,8 @@ function initSkipOrPlayLikedSongs() {
             play_Liked_Songs.setState(false);
             skip_Liked_Songs.setState(true);
             disable.setState(false);
-            likedSongsMode("skip");
+            likedSongsMode("disable");
+            Spicetify.Player.addEventListener("songchange", skipLiked);
         });
 
         let disable = new Spicetify.Menu.Item("Disable", isDisable, () => {
