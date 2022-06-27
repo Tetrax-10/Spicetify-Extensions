@@ -59,9 +59,6 @@ This is in early stage in upcomming updates you can enable or disable a particul
 
 ![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/CSS-Injector/screenshot.png)
 
-## After Injection
-
-![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Themes/master/screenshot.png)
 
 ## Get it on [Spicetify Marketplace](https://github.com/spicetify/spicetify-marketplace) or [Manually](https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/CSS-Injector)
 
