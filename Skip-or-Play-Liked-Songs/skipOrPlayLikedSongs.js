@@ -5,10 +5,11 @@
 // DESCRIPTION: Skip or Play liked songs only
 
 /// <reference path="../globals.d.ts" />
-
+let skipOrPlayLikedSongsCount = 0;
 (async function skipOrPlayLikedSongs() {
-    if (!(Spicetify.Platform && Spicetify.LocalStorage && Spicetify.Player.data)) {
+    if (!(Spicetify.Platform && Spicetify.LocalStorage && Spicetify.Player.data) && skipOrPlayLikedSongsCount < 200) {
         setTimeout(skipOrPlayLikedSongs, 300);
+        skipOrPlayLikedSongsCount++;
         return;
     }
     initSkipOrPlayLikedSongs();
