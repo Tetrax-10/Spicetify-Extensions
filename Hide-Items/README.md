@@ -1,8 +1,6 @@
-# Hide-Sidebar-Items
+# Hide-Items
 
-This Extension Hides Sidebar Items
-
-Sidebar Config won't hide `liked songs`, `create playlist`, `your podcast` from Spotify version `1.1.84`, So this extension is used to hide them.
+This Extension Hides Some Useless Items you can hide or unhide it any time.
 
 <br />
 
@@ -16,12 +14,12 @@ Step 1 : Follow [Spicetify Marketplace](https://github.com/spicetify/spicetify-m
 
 Step 2 : Open Spotify App -> Marketplace -> Extensions
 
-Step 3 : Search `Hide Sidebar Items` Click Install Buttton. Done!
+Step 3 : Search `Hide Items` Click Install Buttton. Done!
 
 <br />
 
 ## Install Manually
-Copy `hideSidebarItems.js` into your [Spicetify](https://github.com/spicetify/spicetify-cli) extensions directory:
+Copy `hideItems.js` into your [Spicetify](https://github.com/spicetify/spicetify-cli) extensions directory:
 | **Platform** | **Path**                                                                            |
 |------------|-----------------------------------------------------------------------------------|
 | **Linux**      | `~/.config/spicetify/Extensions` or `$XDG_CONFIG_HOME/.config/spicetify/Extensions/` |
@@ -30,7 +28,7 @@ Copy `hideSidebarItems.js` into your [Spicetify](https://github.com/spicetify/sp
 
 After putting the extension file into the correct folder, run the following command to install the extension:
 ```
-spicetify config extensions hideSidebarItems.js
+spicetify config extensions hideItems.js
 spicetify apply
 ```
 
@@ -38,7 +36,7 @@ spicetify apply
 
 ## To disable a feature (everything enabled by default)
 
-Open [hideSidebarItems.js](https://github.com/Tetrax-10/Spicetify-Extensions/blob/master/Hide-Sidebar-Items/hideSidebarItems.js) in line number 11 just change the value to false to disable that feature
+Open [hideItems.js](https://github.com/Tetrax-10/Spicetify-Extensions/blob/master/Hide-Items/hideItems.js) in line number 11 just change the value to false to disable that feature
 
 
 ```javascript
@@ -51,10 +49,6 @@ let SETTINGS = {
 I disable `Hide_Your_Episodes_Feature` for me as I use [hidePodcasts.js](https://github.com/theRealPadster/spicetify-hide-podcasts/blob/main/hidePodcasts.js) Extension
 
 <br />
-
-## Credits
-
-[CharlieS1103](https://github.com/CharlieS1103) - [readme.md](https://github.com/CharlieS1103/spicetify-extensions/blob/main/adblock/README.md)
 
 ## Support
 🌟 Like it? Gimme Some Love ! 💕
