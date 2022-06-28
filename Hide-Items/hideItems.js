@@ -46,7 +46,7 @@ function initHideItems() {
     let Hide_Homepage_Charts;
 
     let itemsKeyArray = [likedSongskey, createPlaylistkey, yourPodcastKey, homePageChartsKey];
-    let itemsSelectorArray = [likedSongs, createPlaylist, yourPodcast, homePageCharts];
+    // let itemsSelectorArray = [likedSongs, createPlaylist, yourPodcast, homePageCharts];
     let menuArray = [];
 
     function isLocalStorageInitialized() {
