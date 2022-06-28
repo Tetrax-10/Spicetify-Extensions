@@ -34,11 +34,6 @@ function initHideItems() {
     let createPlaylist = ".main-createPlaylistButton-button";
     let yourPodcast = 'a[href="/collection/episodes"]';
     let homePageCharts = '.main-shelf-shelf[aria-label="Charts"]';
-    // Made For Raven Silky
-    // Hindi Party
-    // Your top mixes
-    // Uniquely yours
-    // The Neha Kakkar Collection
 
     let isLikedSongsHide = getLocalStorageDataFromKey(likedSongskey) === "true";
     let isCreatePlaylisHide = getLocalStorageDataFromKey(createPlaylistkey) === "true";
