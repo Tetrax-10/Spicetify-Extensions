@@ -8,7 +8,7 @@ Some Use Full Extension Developed by a Music Lover.
 
 This Extension Hides Sidebar Items
 
-![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Hide-Sidebar-Items/screenshot.png)
+![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Hide-Items/screenshot.png)
 
 ## Get it on [Spicetify Marketplace](https://github.com/spicetify/spicetify-marketplace) or [Manually](https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Hide-Sidebar-Items)
 
