@@ -1,10 +1,10 @@
 [
     {
-        "name": "Hide Sidebar Items",
-        "description": "This Extension Hides Sidebar Items like liked songs, create playlist, your podcast",
-        "preview": "Hide-Sidebar-Items/screenshot.png",
-        "main": "Hide-Sidebar-Items/hideSidebarItems.js",
-        "readme": "Hide-Sidebar-Items/README.md"
+        "name": "Hide Items",
+        "description": "This Extension Hides Unnecessary Recommendation in Home Page",
+        "preview": "Hide-Items/screenshot.png",
+        "main": "Hide-Items/hideSidebarItems.js",
+        "readme": "Hide-Items/README.md"
     },
     {
         "name": "Seek Song",
