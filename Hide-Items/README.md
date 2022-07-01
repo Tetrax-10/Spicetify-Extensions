@@ -4,7 +4,7 @@ This Extension Hides Some Useless Items you can hide or unhide it any time.
 
 <br />
 
-![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Hide-Sidebar-Items/screenshot.png)
+![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Hide-Items/screenshot.png)
 
 <br />
 
