@@ -1,6 +1,6 @@
 # Hide-Items
 
-This Extension Hides Some Useless Items you can hide or unhide it any time.
+This Extension Hides Unnecessary Recommendation in Home Page and Sidebar Items. You can toggle it any time
 
 <br />
 
