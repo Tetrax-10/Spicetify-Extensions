@@ -84,6 +84,12 @@ function initSeekSong() {
         eventTriggerWithKey("9", () => {
             setProgressPercent(90);
         });
+        eventTriggerWithKey(",", () => {
+            Spicetify.Player.skipBack(1000);
+        });
+        eventTriggerWithKey(".", () => {
+            Spicetify.Player.skipForward(1000);
+        });
         eventTriggerWithKey("left", () => {
             Spicetify.Player.skipBack(skipBackwardValue * 1000);
         });
@@ -95,9 +101,6 @@ function initSeekSong() {
         });
         eventTriggerWithKey("down", () => {
             Spicetify.Player.decreaseVolume();
-        });
-        eventTriggerWithKey("/", () => {
-            openSearchPage();
         });
     }
     main();
