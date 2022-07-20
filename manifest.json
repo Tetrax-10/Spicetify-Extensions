@@ -1,10 +1,10 @@
 [
     {
-        "name": "Hide Items",
-        "description": "This Extension Hides Unnecessary Recommendation in Home Page",
-        "preview": "Hide-Items/screenshot.png",
-        "main": "Hide-Items/hideSidebarItems.js",
-        "readme": "Hide-Items/README.md"
+        "name": "Skip or Play Liked Songs",
+        "description": "This Extension Skips or Plays Liked Songs only",
+        "preview": "Skip-or-Play-Liked-Songs/screenshot.png",
+        "main": "Skip-or-Play-Liked-Songs/skipOrPlayLikedSongs.js",
+        "readme": "Skip-or-Play-Liked-Songs/README.md"
     },
     {
         "name": "Seek Song",
@@ -19,12 +19,5 @@
         "preview": "CSS-Injector/screenshot.png",
         "main": "CSS-Injector/CSSInjector.js",
         "readme": "CSS-Injector/README.md"
-    },
-    {
-        "name": "Skip or Play Liked Songs",
-        "description": "This Extension Skips or Plays Liked Songs only",
-        "preview": "Skip-or-Play-Liked-Songs/screenshot.png",
-        "main": "Skip-or-Play-Liked-Songs/skipOrPlayLikedSongs.js",
-        "readme": "Skip-or-Play-Liked-Songs/README.md"
     }
 ]
