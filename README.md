@@ -4,15 +4,19 @@ Some Use Full Extension Developed by a Music Lover.
 
 <br />
 
-# 1.Hide-Items
+# 1.Skip-or-Play-Liked-Songs
 
-This Extension Hides Unnecessary Recommendation in Home Page
+This Extension Skips or Plays Liked Songs only
 
-![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Hide-Items/screenshot.png)
+Very Useful if you are Discovering new Songs or want to play your Fav Songs in a PlayList or Album.
 
-## Get it on [Spicetify Marketplace](https://github.com/spicetify/spicetify-marketplace) or [Manually](https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Hide-Items)
+<br />
 
-Search `Hide Items` and Click Install Buttton.
+![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Skip-or-Play-Liked-Songs/screenshot.png)
+
+## Get it on [Spicetify Marketplace](https://github.com/spicetify/spicetify-marketplace) or [Manually](https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Skip-or-Play-Liked-Songs)
+
+Search `Skip or Play Liked Songs` and Click Install Buttton.
 
 <br />
 
@@ -29,40 +33,6 @@ This Extension Seeks Song when you press `1 to 9` for `10 % to 90 %` of the vide
 ## Get it on [Spicetify Marketplace](https://github.com/spicetify/spicetify-marketplace) or [Manually](https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Seek-Song)
 
 Search `Seek Song` and Click Install Buttton.
-
-<br />
-
-
-# 3.Skip-or-Play-Liked-Songs
-
-This Extension Skips or Plays Liked Songs only
-
-Very Useful if you are Discovering new Songs or want to play your Fav Songs in a PlayList or Album.
-
-<br />
-
-![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Skip-or-Play-Liked-Songs/screenshot.png)
-
-## Get it on [Spicetify Marketplace](https://github.com/spicetify/spicetify-marketplace) or [Manually](https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Skip-or-Play-Liked-Songs)
-
-Search `Skip or Play Liked Songs` and Click Install Buttton.
-
-<br />
-
-# 4.CSS-Injector
-
-This Extension Injects your custom CSS, snippets.
-
-This is in early stage in upcomming updates you can enable or disable a particular CSS block and also insert CSS from inside Spotify App
-
-<br />
-
-![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/CSS-Injector/screenshot.png)
-
-
-## Get it on [Spicetify Marketplace](https://github.com/spicetify/spicetify-marketplace) or [Manually](https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/CSS-Injector)
-
-Search `CSS Injector` and Click Install Buttton.
 
 <br />
 
