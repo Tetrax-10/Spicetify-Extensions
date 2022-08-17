@@ -4,7 +4,7 @@ Sorts Songs by Play Count, Global Scrobbles, Personal Scrobbles ( Source : Last.
 
 <br />
 
-![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Skip-or-Play-Liked-Songs/screenshot.png)
+![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Sort-by-Play-count/screenshot.png)
 
 <br />
 
