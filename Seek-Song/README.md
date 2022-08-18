@@ -32,7 +32,7 @@ Copy `seekSong.js` into your [Spicetify](https://github.com/spicetify/spicetify-
 |------------|-----------------------------------------------------------------------------------|
 | **Linux**      | `~/.config/spicetify/Extensions` or `$XDG_CONFIG_HOME/.config/spicetify/Extensions/` |
 | **MacOS**      | `~/spicetify_data/Extensions` or `$SPICETIFY_CONFIG/Extensions`                      |
-| **Windows**    | `%userprofile%\.spicetify\Extensions\`                                              |
+| **Windows**    | `%appdata%\spicetify\Extensions`                                              |
 
 After putting the extension file into the correct folder, run the following command to install the extension:
 ```
