@@ -1,4 +1,4 @@
-# Sort By Play Count
+# Sort By Play Count (Dev release) Not recommended for daily usage
 
 Sorts Songs by Play Count, Global Scrobbles, Personal Scrobbles ( Source : Last.FM, Youtube )
 
@@ -14,21 +14,21 @@ Step 1 : Follow [Spicetify Marketplace](https://github.com/spicetify/spicetify-m
 
 Step 2 : Open Spotify App -> Marketplace -> Extensions
 
-Step 3 : Search `Skip or Play Liked Songs` Click Install Buttton. Done!
+Step 3 : Search `Sort By Play Count` Click Install Buttton. Done!
 
 <br />
 
 ## Install Manually
-Copy `skipOrPlayLikedSongs.js` into your [Spicetify](https://github.com/spicetify/spicetify-cli) extensions directory:
+Copy `sortByPlayCount.js` into your [Spicetify](https://github.com/spicetify/spicetify-cli) extensions directory:
 | **Platform** | **Path**                                                                            |
 |------------|-----------------------------------------------------------------------------------|
 | **Linux**      | `~/.config/spicetify/Extensions` or `$XDG_CONFIG_HOME/.config/spicetify/Extensions/` |
 | **MacOS**      | `~/spicetify_data/Extensions` or `$SPICETIFY_CONFIG/Extensions`                      |
-| **Windows**    | `%userprofile%\.spicetify\Extensions\`                                              |
+| **Windows**    | `%appdata%\spicetify\Extensions`                                              |
 
 After putting the extension file into the correct folder, run the following command to install the extension:
 ```
-spicetify config extensions skipOrPlayLikedSongs.js
+spicetify config extensions sortByPlayCount.js
 spicetify apply
 ```
 
