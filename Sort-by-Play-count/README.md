@@ -1,6 +1,6 @@
-# Sort By Play Count (Dev release) Not recommended for daily usage
+# Sort By Play Count (Beta)
 
-Sorts Songs by Play Count, Global Scrobbles, Personal Scrobbles ( Source : Last.FM, Youtube )
+Sorts Songs by Play Count, Global Scrobbles, Personal Scrobbles Using Last.FM
 
 <br />
 
