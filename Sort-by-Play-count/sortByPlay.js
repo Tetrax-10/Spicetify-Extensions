@@ -2,15 +2,10 @@
 
 // NAME: Sort By Play Count
 // AUTHOR: Tetrax-10
-// DESCRIPTION: Sorts Songs by Play Count, Global Scrobbles, Personal Scrobbles ( Source : Last.FM, Youtube )
-// KNOWLEDGE: shuffle+
-// Version: dev
+// DESCRIPTION: Sorts Songs by Play Count, Global Scrobbles, Personal Scrobbles Using Last.FM
+// Version: beta
 
 /// <reference path="../globals.d.ts" />
-
-// preferred Playlist to test beta version : https://open.spotify.com/playlist/7pJIqg6EpSdTKrVEqwN8Df (Vikram Songs)
-// Some Playlist will return "cannot read properties of undefined (reading 'listeners')", this error will be fixed in final release
-// Something wrong in playList function Line no :
 
 let sortByPlayCount = 0;
 (async function sortByPlay() {
@@ -24,69 +19,202 @@ let sortByPlayCount = 0;
 
 async function initSortByPlay() {
     let { Type } = Spicetify.URI;
-    let LFMApiKey = "83fb76a887a860800fd8719bd7412ada";
-    let lastFmUsername = "Raghavan_Rave";
+    let LFMApiKey = "44654ea047786d90338c17331a5f5d95";
+    let lastFmUsername = "Register Last.FM Username";
+    let unsupportedChar = /[#&+%\\]/g;
+    let songCount = 0;
 
-    new Spicetify.ContextMenu.Item(
-        "Sort by Play Count",
-        async (uri) => {
-            fetchAndPlay(uri[0]);
-            Spicetify.showNotification("Sorting...");
-        },
-        (uri) => {
-            let uriObj = Spicetify.URI.fromString(uri[0]);
-            switch (uriObj.type) {
-                case Type.PLAYLIST:
-                case Type.PLAYLIST_V2:
-                    return true;
-            }
+    async function getLocalStorageDataFromKey(key) {
+        return Spicetify.LocalStorage.get(key);
+    }
+
+    async function setLocalStorageDataWithKey(key, value) {
+        Spicetify.LocalStorage.set(key, value);
+    }
+
+    if ((await getLocalStorageDataFromKey("sortByPlayCountLastFmUserName")) !== null) {
+        lastFmUsername = await getLocalStorageDataFromKey("sortByPlayCountLastFmUserName");
+    }
+
+    async function validateLocalStorage() {
+        if (!(await getLocalStorageDataFromKey(`sortByPlayCountLastFmUserName`))) {
+            alert("Add Your Last.FM UserName to Use Personal Scrobbles\nUser (on top right) > Sort By Play Count > Register Username");
             return false;
+        }
+        return true;
+    }
+
+    function setLastFmUsername() {
+        function triggerModal() {
+            Spicetify.PopupModal.display({
+                title: "Connect Last.FM",
+                content: addLoginContainer,
+            });
+        }
+
+        if (addLoginContainer) {
+            triggerModal();
+            return;
+        }
+
+        addLoginContainer = document.createElement("div");
+        let loginContainer = document.createElement("div");
+        loginContainer.setAttribute("id", "login-global-div");
+        loginContainer.setAttribute("style", "padding-bottom: 10%");
+        let loginText = document.createElement("div");
+        loginText.innerText = `Enter your Last.FM Username`;
+        let nameInput = document.createElement("input");
+        nameInput.style.cssText = "display:flex;flex-direction: column;padding:15px; border-radius:15px; border:0; box-shadow:4px 4px 10px rgba(0,0,0,0.06);";
+        nameInput.placeholder = lastFmUsername;
+        nameInput.required = true;
+        loginContainer.appendChild(nameInput);
+        let submitBtn = document.createElement("button");
+        submitBtn.innerText = "Save";
+        submitBtn.setAttribute(
+            "style",
+            'background-color: var(--spice-button);border-radius: 8px;border-style: none;box-sizing: border-box;color: #FFFFFF;cursor: pointer;display: inline-block;font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;font-size: 14px;font-weight: 500;height: 40px;line-height: 20px;list-style: none;margin: 0;outline: none;padding: 10px 16px;position: relative;text-align: center;text-decoration: none;transition: color 100ms;vertical-align: baseline;user-select: none;-webkit-user-select: none;touch-action: manipulation;}.button-1:hover,.button-1:focus {background-color: #1DB954;'
+        );
+
+        submitBtn.addEventListener(
+            "click",
+            async function (event) {
+                event.preventDefault();
+                let name = nameInput.value.replace(/\n/g, "");
+
+                if (name === "" || !name) {
+                    alert("The UserName can't be blank");
+                    return;
+                }
+
+                await setLocalStorageDataWithKey("sortByPlayCountLastFmUserName", name);
+
+                Spicetify.PopupModal.hide();
+
+                alert("Relaunch Spotify to Take Effect");
+            },
+            false
+        );
+
+        loginText.style.cssText = "padding-bottom: 10%;";
+        loginContainer.appendChild(loginText);
+
+        addLoginContainer.append(loginText, loginContainer, submitBtn);
+
+        triggerModal();
+    }
+
+    let registerUsernameMenuItem = new Spicetify.Menu.Item(lastFmUsername, false, async () => {
+        setLastFmUsername();
+    });
+
+    new Spicetify.Menu.SubMenu("Sort By Play Count", [registerUsernameMenuItem]).register();
+
+    function shouldAdd(uri) {
+        let uriObj = Spicetify.URI.fromString(uri[0]);
+        switch (uriObj.type) {
+            case Type.PLAYLIST:
+            case Type.PLAYLIST_V2:
+                return true;
+        }
+        return false;
+    }
+
+    let playCountItem = new Spicetify.ContextMenu.Item(
+        "Play Count",
+        async (uri) => {
+            Spicetify.showNotification("Sorting...");
+            await fetchAndPlay(uri[0], "playCount");
         },
+        shouldAdd,
         "subtitles"
-    ).register();
+    );
+
+    let scrobblesItem = new Spicetify.ContextMenu.Item(
+        "Scrobbles",
+        async (uri) => {
+            Spicetify.showNotification("Sorting...");
+            await fetchAndPlay(uri[0], "scrobbles");
+        },
+        shouldAdd,
+        "heart"
+    );
+
+    let personalScrobblesItem = new Spicetify.ContextMenu.Item(
+        "Personal Scrobbles",
+        async (uri) => {
+            if (!(await validateLocalStorage())) {
+                return;
+            }
+            Spicetify.showNotification("Sorting...");
+            await fetchAndPlay(uri[0], "personalScrobbles");
+        },
+        shouldAdd,
+        "artist"
+    );
+
+    new Spicetify.ContextMenu.SubMenu("Sort by", [playCountItem, scrobblesItem, personalScrobblesItem], shouldAdd, false).register();
 
     async function fetchTrackInfoFromLastFM(artist, songName, lastFmUsername) {
         let url = `https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=${LFMApiKey}&artist=${artist}&track=${songName}&format=json&username=${lastFmUsername}`;
         let initialRequest = await fetch(url);
         let response = await initialRequest.json();
+
         return response;
     }
 
     async function fetchTrackPlayCountInfo(songId) {
-        const spotifyTrackInfoObject = await Spicetify.CosmosAsync.get("https://api.spotify.com/v1/tracks/" + songId);
+        // https://api.spotify.com/v1/tracks/ - has Quota limit, needed internal api to get artist and song names
+        let spotifyTrackInfoObject = await Spicetify.CosmosAsync.get("https://api.spotify.com/v1/tracks/" + songId);
+
+        if (unsupportedChar.test(spotifyTrackInfoObject.name) || unsupportedChar.test(spotifyTrackInfoObject.artists[0].name)) {
+            return { playCount: "-1", scrobbles: "-1", personalScrobbles: "-1", link: `spotify:track:${songId}`, name: spotifyTrackInfoObject.name };
+        }
+
         let trackInfo = await fetchTrackInfoFromLastFM(spotifyTrackInfoObject.artists[0].name, spotifyTrackInfoObject.name, lastFmUsername);
-        return { playCount: trackInfo.track.listeners, scrobbles: trackInfo.track.playcount, PersonalScrobbles: trackInfo.track.userplaycount, link: `spotify:track:${songId}` };
+
+        if (trackInfo.message == "Track not found") {
+            return { playCount: "-1", scrobbles: "-1", personalScrobbles: "-1", link: `spotify:track:${songId}`, name: spotifyTrackInfoObject.name };
+        } else {
+            return { playCount: trackInfo.track.listeners, scrobbles: trackInfo.track.playcount, personalScrobbles: trackInfo.track.userplaycount, link: `spotify:track:${songId}`, name: spotifyTrackInfoObject.name };
+        }
     }
+
     async function fetchPlaylist(uri) {
-        const res = await Spicetify.CosmosAsync.get(`sp://core-playlist/v1/playlist/${uri}/rows`, {
+        let res = await Spicetify.CosmosAsync.get(`sp://core-playlist/v1/playlist/${uri}/rows`, {
             policy: { link: true, playable: true },
         });
 
+        songCount = 0;
+
         let unsortedArray = res.rows
-            .filter((track) => track.playable)
+            .filter((track, index) => {
+                return track.playable && track.link.includes("spotify:track:") && index < 101;
+            })
             .map(async (songInfo) => {
+                songCount++;
                 return await fetchTrackPlayCountInfo(songInfo.link.split(":")[2]);
             });
 
         return Promise.all(unsortedArray);
     }
 
-    async function sortByPlay(unsortedArray) {
-        return await unsortedArray.sort((item1, item2) => item2.playCount - item1.playCount);
+    async function sortByPlay(unsortedArray, mode) {
+        return await unsortedArray.sort((item1, item2) => item2[mode] - item1[mode]);
     }
 
     async function playList(unsortedArray, context) {
+        // needed a better queue implementation
         let list = await unsortedArray.map((item) => item.link);
 
-        const count = list.length;
+        let count = list.length;
         if (count === 0) {
             throw "There is no available track to play";
         }
         list.push("spotify:delimiter");
 
-        Spicetify.Platform.PlayerAPI.clearQueue();
+        await Spicetify.Platform.PlayerAPI.clearQueue();
 
-        const isQueue = !context;
+        let isQueue = !context;
 
         await Spicetify.CosmosAsync.put("sp://player/v2/main/queue", {
             queue_revision: Spicetify.Queue?.queueRevision,
@@ -108,16 +236,19 @@ async function initSortByPlay() {
                 },
             });
         }
-
-        Spicetify.showNotification("Playlist Sorted");
+        if (songCount == 100) {
+            Spicetify.showNotification("Big Playlist - Only 100 Songs Sorted"); // Due to https://api.spotify.com/v1/tracks/uri Quota limit
+        } else {
+            Spicetify.showNotification("Playlist Sorted");
+        }
         Spicetify.Player.next();
     }
 
-    async function fetchAndPlay(uri) {
+    async function fetchAndPlay(uri, mode) {
         try {
             let list = await fetchPlaylist(uri);
-            playList(await sortByPlay(list), uri);
-            console.log(list);
+            playList(await sortByPlay(list, mode), uri);
+            // console.log(list);  // enable this to log sorted array
         } catch (error) {
             Spicetify.showNotification(`${error}`);
         }
