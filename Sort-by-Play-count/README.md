@@ -8,6 +8,18 @@ Sorts Songs by Play Count, Global Scrobbles, Personal Scrobbles Using Last.FM
 
 <br />
 
+## Need to Connect Spotify and Last.FM for Personal Scrobbles to Work
+
+Step 1 : Make a [Last.FM Account](https://www.last.fm/join)
+
+Step 2 : Connect [Spotify Scrobbling](https://www.last.fm/settings/applications)
+
+Step 3 : Paste your `UserName` in Spotify by going to User (on top right) -> Sort By Play Count -> Register Username
+
+![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Sort-by-Play-count/screenshot2.png)
+
+<br />
+
 ## Get it on Spicetify Marketplace
 
 Step 1 : Follow [Spicetify Marketplace](https://github.com/spicetify/spicetify-marketplace) readme and install it.
