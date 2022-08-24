@@ -1,4 +1,4 @@
-# Sort By Play Count (Beta)
+# Sort By Play Count
 
 Sorts Songs by Play Count, Global Scrobbles, Personal Scrobbles Using Last.FM
 
