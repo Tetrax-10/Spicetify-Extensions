@@ -4,7 +4,22 @@ Some Use Full Extension Developed by a Music Lover.
 
 <br />
 
-# 1.Skip-or-Play-Liked-Songs
+# 1.Sort By Play Count
+
+Sorts Songs by Play Count, Global Scrobbles, Personal Scrobbles Using Last.FM
+
+<br />
+
+![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Sort-by-Play-count/screenshot.png)
+
+## Get it on [Spicetify Marketplace](https://github.com/spicetify/spicetify-marketplace) or [Manually](https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Sort-by-Play-count)
+
+Search `Sort By Play Count` and Click Install Buttton.
+
+<br />
+
+
+# 2.Skip or Play Liked Songs
 
 This Extension Skips or Plays Liked Songs only
 
@@ -20,7 +35,7 @@ Search `Skip or Play Liked Songs` and Click Install Buttton.
 
 <br />
 
-# 2.Seek-Song
+# 3.Seek Song
 
 This Extension Seeks Song when you press `1 to 9` for `10 % to 90 %` of the song like YouTube.
 
