@@ -1,4 +1,4 @@
-# Skip-or-Play-Liked-Songs
+# Skip or Play Liked Songs
 
 This Extension Skips or Plays Liked Songs only
 
