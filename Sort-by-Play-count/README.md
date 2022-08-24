@@ -30,7 +30,7 @@ Step 3 : Search `Sort By Play Count` Click Install Buttton. Done!
 
 <br />
 
-## Install Manually
+## Install Manually (Recommended)
 Copy `sortByPlayCount.js` into your [Spicetify](https://github.com/spicetify/spicetify-cli) extensions directory:
 | **Platform** | **Path**                                                                            |
 |------------|-----------------------------------------------------------------------------------|
@@ -48,6 +48,8 @@ spicetify apply
 
 # Credits
 [@LucasBares](https://github.com/LucasBares) for Last.FM Register PopupModal
+
+<br />
 
 ## Support
 🌟 Like it? Gimme Some Love ! 💕
