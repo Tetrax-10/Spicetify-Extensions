@@ -22,6 +22,7 @@ async function initSortByPlay() {
     let LFMApiKey = "44654ea047786d90338c17331a5f5d95";
     let lastFmUsername = "Register Last.FM Username";
     let unsupportedChar = /[#&+%\\]/g;
+    let addLoginContainer;
 
     async function getLocalStorageDataFromKey(key) {
         return Spicetify.LocalStorage.get(key);
