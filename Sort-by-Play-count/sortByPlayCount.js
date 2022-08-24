@@ -223,10 +223,10 @@ async function initSortByPlay() {
         try {
             let list = await fetchPlaylistTracks(uri);
             playList(await sortByPlay(list, mode), uri);
-            // console.log(list); // enable this to log sorted array
+            console.log(list);
         } catch (error) {
             Spicetify.showNotification(`${error}`);
-            // console.log(error);
+            console.log(error);
         }
     }
 }
