@@ -3,7 +3,7 @@
 // NAME: Sort By Play Count
 // AUTHOR: Tetrax-10
 // DESCRIPTION: Sorts Songs by Play Count, Global Scrobbles, Personal Scrobbles Using Last.FM
-// Version: beta
+// Version: 1.0
 
 /// <reference path="../globals.d.ts" />
 
@@ -22,7 +22,6 @@ async function initSortByPlay() {
     let LFMApiKey = "44654ea047786d90338c17331a5f5d95";
     let lastFmUsername = "Register Last.FM Username";
     let unsupportedChar = /[#&+%\\]/g;
-    let songCount = 0;
 
     async function getLocalStorageDataFromKey(key) {
         return Spicetify.LocalStorage.get(key);
@@ -103,7 +102,7 @@ async function initSortByPlay() {
         triggerModal();
     }
 
-    let registerUsernameMenuItem = new Spicetify.Menu.Item(lastFmUsername, false, async () => {
+    let registerUsernameMenuItem = new Spicetify.Menu.Item(lastFmUsername, false, () => {
         setLastFmUsername();
     });
 
@@ -162,37 +161,17 @@ async function initSortByPlay() {
         return response;
     }
 
-    async function fetchTrackPlayCountInfo(songId) {
-        // https://api.spotify.com/v1/tracks/ - has Quota limit, needed internal api to get artist and song names
-        let spotifyTrackInfoObject = await Spicetify.CosmosAsync.get("https://api.spotify.com/v1/tracks/" + songId);
+    async function fetchPlaylistTracks(uri) {
+        let res = await Spicetify.Platform.PlaylistAPI.getContents(uri);
 
-        if (unsupportedChar.test(spotifyTrackInfoObject.name) || unsupportedChar.test(spotifyTrackInfoObject.artists[0].name)) {
-            return { playCount: "-1", scrobbles: "-1", personalScrobbles: "-1", link: `spotify:track:${songId}`, name: spotifyTrackInfoObject.name };
-        }
-
-        let trackInfo = await fetchTrackInfoFromLastFM(spotifyTrackInfoObject.artists[0].name, spotifyTrackInfoObject.name, lastFmUsername);
-
-        if (trackInfo.message == "Track not found") {
-            return { playCount: "-1", scrobbles: "-1", personalScrobbles: "-1", link: `spotify:track:${songId}`, name: spotifyTrackInfoObject.name };
-        } else {
-            return { playCount: trackInfo.track.listeners, scrobbles: trackInfo.track.playcount, personalScrobbles: trackInfo.track.userplaycount, link: `spotify:track:${songId}`, name: spotifyTrackInfoObject.name };
-        }
-    }
-
-    async function fetchPlaylist(uri) {
-        let res = await Spicetify.CosmosAsync.get(`sp://core-playlist/v1/playlist/${uri}/rows`, {
-            policy: { link: true, playable: true },
-        });
-
-        songCount = 0;
-
-        let unsortedArray = res.rows
-            .filter((track, index) => {
-                return track.playable && track.link.includes("spotify:track:") && index < 101;
-            })
-            .map(async (songInfo) => {
-                songCount++;
-                return await fetchTrackPlayCountInfo(songInfo.link.split(":")[2]);
+        let unsortedArray = res.items
+            .filter((song) => song.type == "track" && song.isPlayable && !song.isLocal && !unsupportedChar.test(song.name) && !unsupportedChar.test(song.artists[0].name))
+            .map(async (song) => {
+                let trackInfo = await fetchTrackInfoFromLastFM(song.artists[0].name, song.name, lastFmUsername);
+                if (trackInfo.message == "Track not found") {
+                    return { playCount: "-1", scrobbles: "-1", personalScrobbles: "-1" };
+                }
+                return { playCount: trackInfo.track.listeners, scrobbles: trackInfo.track.playcount, personalScrobbles: trackInfo.track.userplaycount, link: song.uri };
             });
 
         return Promise.all(unsortedArray);
@@ -202,9 +181,9 @@ async function initSortByPlay() {
         return await unsortedArray.sort((item1, item2) => item2[mode] - item1[mode]);
     }
 
-    async function playList(unsortedArray, context) {
+    async function playList(sortedArray, context) {
         // needed a better queue implementation
-        let list = await unsortedArray.map((item) => item.link);
+        let list = await sortedArray.map((item) => item.link);
 
         let count = list.length;
         if (count === 0) {
@@ -236,21 +215,18 @@ async function initSortByPlay() {
                 },
             });
         }
-        if (songCount == 100) {
-            Spicetify.showNotification("Big Playlist - Only 100 Songs Sorted"); // Due to https://api.spotify.com/v1/tracks/uri Quota limit
-        } else {
-            Spicetify.showNotification("Playlist Sorted");
-        }
+        Spicetify.showNotification("Playlist Sorted");
         Spicetify.Player.next();
     }
 
     async function fetchAndPlay(uri, mode) {
         try {
-            let list = await fetchPlaylist(uri);
+            let list = await fetchPlaylistTracks(uri);
             playList(await sortByPlay(list, mode), uri);
-            // console.log(list);  // enable this to log sorted array
+            // console.log(list); // enable this to log sorted array
         } catch (error) {
             Spicetify.showNotification(`${error}`);
+            // console.log(error);
         }
     }
 }
