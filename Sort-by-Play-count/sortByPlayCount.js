@@ -215,7 +215,7 @@ async function initSortByPlay() {
                 },
             });
         }
-        Spicetify.showNotification("Playlist Sorted");
+        Spicetify.showNotification(`Sorted ${count} Songs`);
         Spicetify.Player.next();
     }
 
