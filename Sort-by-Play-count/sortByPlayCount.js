@@ -166,7 +166,12 @@ async function initSortByPlay() {
         let res = await Spicetify.Platform.PlaylistAPI.getContents(uri);
 
         let unsortedArray = res.items
-            .filter((song) => song.type == "track" && song.isPlayable && !song.isLocal && !unsupportedChar.test(song.name) && !unsupportedChar.test(song.artists[0].name))
+            .filter((song) => {
+                if (!(song.type == "track" && song.isPlayable && !song.isLocal && !unsupportedChar.test(song.name) && !unsupportedChar.test(song.artists[0].name))) {
+                    return { playCount: "-1", scrobbles: "-1", personalScrobbles: "-1", link: song.uri, name: song.name, artist: song.artists[0].name };
+                }
+                return true;
+            })
             .map(async (song) => {
                 let trackInfo = await fetchTrackInfoFromLastFM(song.artists[0].name, song.name, lastFmUsername);
                 if (trackInfo.message == "Track not found") {
