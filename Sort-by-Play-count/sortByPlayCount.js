@@ -170,9 +170,9 @@ async function initSortByPlay() {
             .map(async (song) => {
                 let trackInfo = await fetchTrackInfoFromLastFM(song.artists[0].name, song.name, lastFmUsername);
                 if (trackInfo.message == "Track not found") {
-                    return { playCount: "-1", scrobbles: "-1", personalScrobbles: "-1", link: song.uri, name: song.name };
+                    return { playCount: "-1", scrobbles: "-1", personalScrobbles: "-1", link: song.uri, name: song.name, artist: song.artists[0].name };
                 }
-                return { playCount: trackInfo.track.listeners, scrobbles: trackInfo.track.playcount, personalScrobbles: trackInfo.track.userplaycount, link: song.uri, name: song.name };
+                return { playCount: trackInfo.track.listeners, scrobbles: trackInfo.track.playcount, personalScrobbles: trackInfo.track.userplaycount, link: song.uri, name: song.name, artist: song.artists[0].name };
             });
 
         return Promise.all(unsortedArray);
