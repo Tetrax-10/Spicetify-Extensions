@@ -27,6 +27,13 @@ function initSkipOrPlayLikedSongs() {
 
     function initializeLocalStorage() {
         if (getLocalStorageDataFromKey(skipLikedSongsKey) == null) {
+            Spicetify.showNotification("Only Liked Songs will be Played as default");
+            setTimeout(() => {
+                Spicetify.showNotification("You can Change it in Context Ment Located on Top under User Profile");
+                setTimeout(() => {
+                    Spicetify.showNotification("You can Change it in Context Ment Located on Top under User Profile");
+                }, 3000);
+            }, 5000);
             setLocalStorageDataWithKey(skipLikedSongsKey, false);
         }
     }
