@@ -1,6 +1,14 @@
 # Sort By Play Count
 
-Sorts Songs by Play Count, Global Scrobbles, Personal Scrobbles Using Last.FM
+Sorts Songs by :
+
+* Play Count - No of people listened to that song
+
+* Scrobbles - How many times every single listener has listened to that song
+
+* Personal Scrobbles - How many times you have listened to that song
+
+Using Last.FM
 
 <br />
 
