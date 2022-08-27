@@ -14,6 +14,8 @@ Using Last.FM
 
 ![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Sort-by-Play-count/screenshot.png)
 
+![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Sort-by-Play-count/screenshot3.png)
+
 <br />
 
 ## Need to Connect Spotify and Last.FM for Personal Scrobbles to Work
