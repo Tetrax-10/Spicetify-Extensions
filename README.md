@@ -2,23 +2,17 @@
 
 Some Use Full Extension Developed by a Music Lover.
 
-<br />
-
 # 1.Sort By Play Count
 
-Sorts Songs by :
+Sort Playlists, All songs of a Artist, Albums by :
 
-* Play Count (Spotify) - Spotify's Play Count
+* Play Count using Spotify and Last.FM
 
-* Popularity (Spotify) - Spotify's Popularity Level
+* Scrobbles - How many times every single listener has listened to that song
 
-* Play Count - No of people listened to that song (Last.FM)
+* Personal Scrobbles - How many times you have listened to that song
 
-* Scrobbles - How many times every single listener has listened to that song (Last.FM)
-
-* Personal Scrobbles - How many times you have listened to that song (Last.FM)
-
-Using Last.FM
+Sorted Songs just get Added to Queue, you can even create a playlist by `Ctrl+A` and drag and drop songs to the playlist from Queue
 
 <br />
 
