@@ -1,24 +1,24 @@
 # Sort By Play Count
 
-Sorts Songs by :
+Sort Playlists, All songs of a Artist, Albums by :
 
-* Play Count - No of people listened to that song
+* Play Count using Spotify and Last.FM
 
 * Scrobbles - How many times every single listener has listened to that song
 
 * Personal Scrobbles - How many times you have listened to that song
 
-Using Last.FM
+Sorted Songs just get Added to Queue, you can even create a playlist by `Ctrl+A` and drag and drop songs to the playlist from Queue
 
 <br />
 
 ![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Sort-by-Play-count/screenshot.png)
 
-![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Sort-by-Play-count/screenshot3.png)
+![Artist Demo](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Sort-by-Play-count/artist.gif)
 
 <br />
 
-## Need to Connect Spotify and Last.FM for Personal Scrobbles to Work
+## Need to Connect Spotify and Last.FM for Personal Scrobbles to Work (Optional Step)
 
 Step 1 : Make a [Last.FM Account](https://www.last.fm/join)
 
@@ -58,8 +58,6 @@ spicetify apply
 
 # Credits
 [@LucasBares](https://github.com/LucasBares) for Last.FM Register PopupModal
-
-<br />
 
 ## Support
 🌟 Like it? Gimme Some Love ! 💕
