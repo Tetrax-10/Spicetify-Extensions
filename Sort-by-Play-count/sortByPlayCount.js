@@ -274,7 +274,8 @@ async function initSortByPlay() {
                 }
             }
         }
-        if (artistSingles.total_count == 0) {
+
+        if (artistSingles.total_count != 0) {
             for (let albums of artistSingles.releases) {
                 let albumRes = await Spicetify.CosmosAsync.get(`wg://album/v1/album-app/album/${albums.uri}/desktop`);
                 for (let tracks of albumRes.discs) {
@@ -327,7 +328,7 @@ async function initSortByPlay() {
         return Promise.all(unsortedArray);
     }
 
-    async function fetchPlaylistTracksLastfm(uri) {
+    async function fetchPlaylistTracksLastfm(uri, mode) {
         let res = await Spicetify.Platform.PlaylistAPI.getContents(`spotify:playlist:${uri}`);
 
         let unsortedArray = await res.items
@@ -335,14 +336,24 @@ async function initSortByPlay() {
             .map(async (track) => {
                 let trackInfo = await fetchTrackInfoFromLastFM(track.artists[0].name, track.name, lastFmUsername);
 
-                if (trackInfo) {
+                if (mode == "playCount") {
+                    mode = "playcount";
+                }
+                if (mode == "scrobbles") {
+                    mode = "listeners";
+                }
+                if (mode == "personalScrobbles") {
+                    mode = "userplaycount";
+                }
+
+                if (trackInfo.track[mode]) {
                     try {
                         if (trackInfo.message == "Track not found") {
                             return { playCount: "-1", scrobbles: "-1", personalScrobbles: "-1", link: track.uri, name: track.name, artist: track.artists[0].name };
                         }
                     } catch (error) {}
 
-                    return { playCount: trackInfo.track.listeners, scrobbles: trackInfo.track.playcount, personalScrobbles: trackInfo.track.userplaycount, link: track.uri, name: track.name, artist: track.artists[0].name };
+                    return { playCount: trackInfo.track.listeners ? trackInfo.track.listeners : -1, scrobbles: trackInfo.track.playcount ? trackInfo.track.playcount : -1, personalScrobbles: trackInfo.track.userplaycount ? trackInfo.track.userplaycount : -1, link: track.uri, name: track.name, artist: track.artists[0].name };
                 }
             });
 
@@ -354,7 +365,7 @@ async function initSortByPlay() {
         return Promise.all(unsortedArray);
     }
 
-    async function fetchAlbumTracksLastfm(uri) {
+    async function fetchAlbumTracksLastfm(uri, mode) {
         let res = await Spicetify.CosmosAsync.get(`wg://album/v1/album-app/album/${uri}/desktop`);
         let availables;
         for (let disc of res.discs) {
@@ -366,14 +377,24 @@ async function initSortByPlay() {
             .map(async (track) => {
                 let trackInfo = await fetchTrackInfoFromLastFM(track.artists[0].name, track.name, lastFmUsername);
 
-                if (trackInfo) {
+                if (mode == "playCount") {
+                    mode = "playcount";
+                }
+                if (mode == "scrobbles") {
+                    mode = "listeners";
+                }
+                if (mode == "personalScrobbles") {
+                    mode = "userplaycount";
+                }
+
+                if (trackInfo.track[mode]) {
                     try {
                         if (trackInfo.message == "Track not found") {
                             return { playCount: "-1", scrobbles: "-1", personalScrobbles: "-1", link: track.uri, name: track.name, artist: track.artists[0].name };
                         }
                     } catch (error) {}
 
-                    return { playCount: trackInfo.track.listeners, scrobbles: trackInfo.track.playcount, personalScrobbles: trackInfo.track.userplaycount, link: track.uri, name: track.name, artist: track.artists[0].name };
+                    return { playCount: trackInfo.track.listeners ? trackInfo.track.listeners : -1, scrobbles: trackInfo.track.playcount ? trackInfo.track.playcount : -1, personalScrobbles: trackInfo.track.userplaycount ? trackInfo.track.userplaycount : -1, link: track.uri, name: track.name, artist: track.artists[0].name };
                 }
             });
 
@@ -442,19 +463,19 @@ async function initSortByPlay() {
                 case Type.PLAYLIST_V2 + "spotify":
                     list = await fetchPlaylistTracksSpotify(uri, mode);
                     break;
-                case Type.ALBUM + "spotify":
-                    list = await fetchAlbumTracksSpotify(uri, mode);
-                    break;
                 case Type.ARTIST + "spotify":
                     Spicetify.showNotification("Sorting Artist may Consume more Time ...");
                     list = await fetchArtistTracksSpotify(uri, mode);
                     break;
+                case Type.ALBUM + "spotify":
+                    list = await fetchAlbumTracksSpotify(uri, mode);
+                    break;
                 case Type.PLAYLIST + "lastfm":
                 case Type.PLAYLIST_V2 + "lastfm":
-                    list = await fetchPlaylistTracksLastfm(uri);
+                    list = await fetchPlaylistTracksLastfm(uri, mode);
                     break;
                 case Type.ALBUM + "lastfm":
-                    list = await fetchAlbumTracksLastfm(uri);
+                    list = await fetchAlbumTracksLastfm(uri, mode);
                     break;
             }
 
