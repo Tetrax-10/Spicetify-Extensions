@@ -234,6 +234,7 @@ async function initSortByPlay() {
                     }
                 }
             }
+
             for (let track of allTracks) {
                 if (playlistTrack.uri == track.uri && track[mode]) {
                     filteredTrack.push({ playCount: track.playcount, popularity: track.popularity, link: track.uri, name: track.name, artist: track.artists[0].name });
@@ -263,12 +264,16 @@ async function initSortByPlay() {
 
         if (artistAlbums.total_count != 0) {
             for (let albums of artistAlbums.releases) {
-                if (albums.discs) {
-                    for (let disc of albums.discs) {
-                        for (let track of disc.tracks) {
-                            if (track.playable && track[mode]) {
-                                allArtistAlbumsTracks.push({ playCount: track.playcount, popularity: track.popularity, duration: track.duration, link: track.uri, name: track.name, artist: track.artists[0].name });
-                            }
+                let albumsRes;
+                if (!albums.discs) {
+                    albumsRes = await Spicetify.CosmosAsync.get(`wg://album/v1/album-app/album/${albums.uri}/desktop`);
+                } else {
+                    albumsRes = albums;
+                }
+                for (let tracks of albumsRes.discs) {
+                    for (let track of tracks.tracks) {
+                        if (track.playable && track[mode]) {
+                            allArtistAlbumsTracks.push({ playCount: track.playcount, popularity: track.popularity, duration: track.duration, link: track.uri, name: track.name, artist: track.artists[0].name });
                         }
                     }
                 }
@@ -277,8 +282,13 @@ async function initSortByPlay() {
 
         if (artistSingles.total_count != 0) {
             for (let albums of artistSingles.releases) {
-                let albumRes = await Spicetify.CosmosAsync.get(`wg://album/v1/album-app/album/${albums.uri}/desktop`);
-                for (let tracks of albumRes.discs) {
+                let albumsRes;
+                if (!albums.discs) {
+                    albumsRes = await Spicetify.CosmosAsync.get(`wg://album/v1/album-app/album/${albums.uri}/desktop`);
+                } else {
+                    albumsRes = albums;
+                }
+                for (let tracks of albumsRes.discs) {
                     for (let track of tracks.tracks) {
                         if (track.playable && track[mode]) {
                             allArtistSinglesTracks.push({ playCount: track.playcount, popularity: track.popularity, duration: track.duration, link: track.uri, name: track.name, artist: track.artists[0].name });
@@ -413,7 +423,6 @@ async function initSortByPlay() {
 
     async function Queue(sortedArray, context) {
         // needed a better queue implementation
-        console.log(sortedArray);
         let list = await sortedArray.map((item) => {
             try {
                 return item.link;
@@ -464,7 +473,7 @@ async function initSortByPlay() {
                     list = await fetchPlaylistTracksSpotify(uri, mode);
                     break;
                 case Type.ARTIST + "spotify":
-                    Spicetify.showNotification("Sorting Artist may Consume more Time ...");
+                    Spicetify.showNotification("Sorting Artist may Consume some Time ...");
                     list = await fetchArtistTracksSpotify(uri, mode);
                     break;
                 case Type.ALBUM + "spotify":
