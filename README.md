@@ -8,11 +8,15 @@ Some Use Full Extension Developed by a Music Lover.
 
 Sorts Songs by :
 
-* Play Count - No of people listened to that song
+* Play Count (Spotify) - Spotify's Play Count
 
-* Scrobbles - How many times every single listener has listened to that song
+* Popularity (Spotify) - Spotify's Popularity Level
 
-* Personal Scrobbles - How many times you have listened to that song
+* Play Count - No of people listened to that song (Last.FM)
+
+* Scrobbles - How many times every single listener has listened to that song (Last.FM)
+
+* Personal Scrobbles - How many times you have listened to that song (Last.FM)
 
 Using Last.FM
 
