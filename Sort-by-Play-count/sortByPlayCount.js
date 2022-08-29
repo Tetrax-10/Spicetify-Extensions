@@ -138,7 +138,7 @@ async function initSortByPlay() {
             let uriInfo = rawUri[0].split(":");
             let type = uriInfo[1];
             let uri = uriInfo[2];
-            Spicetify.showNotification("Sorting ...");
+            Spicetify.showNotification("Sorting Please Wait...");
             await fetchAndPlay(type, uri, "playCount", "spotify");
         },
         shouldAddSpotifySort,
@@ -151,7 +151,7 @@ async function initSortByPlay() {
             let uriInfo = rawUri[0].split(":");
             let type = uriInfo[1];
             let uri = uriInfo[2];
-            Spicetify.showNotification("Sorting ...");
+            Spicetify.showNotification("Sorting Please Wait...");
             await fetchAndPlay(type, uri, "popularity", "spotify");
         },
         shouldAddSpotifySort,
@@ -164,7 +164,7 @@ async function initSortByPlay() {
             let uriInfo = rawUri[0].split(":");
             let type = uriInfo[1];
             let uri = uriInfo[2];
-            Spicetify.showNotification("Sorting ...");
+            Spicetify.showNotification("Sorting Please Wait...");
             await fetchAndPlay(type, uri, "playCount", "lastfm");
         },
         shouldAddLastFmSort,
@@ -177,7 +177,7 @@ async function initSortByPlay() {
             let uriInfo = rawUri[0].split(":");
             let type = uriInfo[1];
             let uri = uriInfo[2];
-            Spicetify.showNotification("Sorting ...");
+            Spicetify.showNotification("Sorting Please Wait...");
             await fetchAndPlay(type, uri, "scrobbles", "lastfm");
         },
         shouldAddLastFmSort,
@@ -194,7 +194,7 @@ async function initSortByPlay() {
             let uriInfo = rawUri[0].split(":");
             let type = uriInfo[1];
             let uri = uriInfo[2];
-            Spicetify.showNotification("Sorting ...");
+            Spicetify.showNotification("Sorting Please Wait...");
             await fetchAndPlay(type, uri, "personalScrobbles", "lastfm");
         },
         shouldAddLastFmSort,
@@ -451,7 +451,7 @@ async function initSortByPlay() {
                     list = await fetchPlaylistTracksSpotify(uri, mode);
                     break;
                 case Type.ARTIST + "spotify":
-                    Spicetify.showNotification("Sorting Artist may Consume some Time ...");
+                    Spicetify.showNotification("Sorting Artist may Consume some Time Please Wait...");
                     list = await fetchArtistTracksSpotify(uri, mode);
                     break;
                 case Type.ALBUM + "spotify":
