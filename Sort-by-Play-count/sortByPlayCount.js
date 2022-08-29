@@ -521,8 +521,6 @@ async function initSortByPlay() {
                     break;
             }
 
-            await sortByPlay(list, mode);
-
             await Queue(await sortByPlay(list, mode), `spotify:${type}:${uri}`, type);
         } catch (error) {
             Spicetify.showNotification(`${error}`);
