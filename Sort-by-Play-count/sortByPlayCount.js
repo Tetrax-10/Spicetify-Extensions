@@ -241,6 +241,9 @@ async function initSortByPlay() {
         return filteredTrack;
     }
 
+    let albumsCount = 0;
+    let singlesCount = 0;
+
     async function fetchArtistTracksSpotify(uri, mode) {
         let artistRes = await Spicetify.CosmosAsync.get(`wg://artist/v1/${uri}/desktop?format=json`);
         let artistAlbums = artistRes.releases.albums;
@@ -249,11 +252,14 @@ async function initSortByPlay() {
         let allArtistAlbumsTracks = [];
         let allArtistSinglesTracks = [];
 
+        let allAlbumsCount = artistAlbums.total_count;
+        let allSinglesCount = artistSingles.total_count;
+
         if (mode == "playCount") {
             mode = "playcount";
         }
 
-        if (artistAlbums.total_count != 0) {
+        if (allAlbumsCount != 0) {
             for (let albums of artistAlbums.releases) {
                 let albumsRes;
                 if (!albums.discs) {
@@ -261,6 +267,8 @@ async function initSortByPlay() {
                 } else {
                     albumsRes = albums;
                 }
+                albumsCount++;
+                Spicetify.showNotification(`${albumsCount} / ${allAlbumsCount} Albums`);
                 for (let tracks of albumsRes.discs) {
                     for (let track of tracks.tracks) {
                         if (track.playable && track[mode]) {
@@ -271,7 +279,7 @@ async function initSortByPlay() {
             }
         }
 
-        if (artistSingles.total_count != 0) {
+        if (allSinglesCount != 0) {
             for (let albums of artistSingles.releases) {
                 let albumsRes;
                 if (!albums.discs) {
@@ -279,6 +287,8 @@ async function initSortByPlay() {
                 } else {
                     albumsRes = albums;
                 }
+                singlesCount++;
+                Spicetify.showNotification(`${singlesCount} / ${allSinglesCount} Singles`);
                 for (let tracks of albumsRes.discs) {
                     for (let track of tracks.tracks) {
                         if (track.playable && track[mode]) {
@@ -398,7 +408,7 @@ async function initSortByPlay() {
         return sortedArray;
     }
 
-    async function Queue(sortedArray, context) {
+    async function Queue(sortedArray, context, type) {
         // needed a better queue implementation
         // console.log(sortedArray); // Prints Final Array you gonna Heaar
         let list = await sortedArray.map((item) => {
@@ -437,8 +447,22 @@ async function initSortByPlay() {
                 },
             });
         }
+
         Spicetify.Player.next();
-        Spicetify.showNotification(`Sorted ${count} Songs`);
+
+        switch (type) {
+            case "playlist":
+                Spicetify.showNotification(`Sorted ${count} Songs`);
+                break;
+            case "artist":
+                Spicetify.showNotification(`Sorted ${albumsCount} Albums, ${singlesCount} Singles, Totally ${count} Songs`);
+                break;
+            case "album":
+                Spicetify.showNotification(`Sorted ${count} Songs`);
+                break;
+        }
+        albumsCount = 0;
+        singlesCount = 0;
     }
 
     async function fetchAndPlay(type, uri, mode, platform) {
@@ -468,7 +492,7 @@ async function initSortByPlay() {
 
             await sortByPlay(list, mode);
 
-            await Queue(await sortByPlay(list, mode), `spotify:${type}:${uri}`);
+            await Queue(await sortByPlay(list, mode), `spotify:${type}:${uri}`, type);
         } catch (error) {
             Spicetify.showNotification(`${error}`);
             console.log(error);
