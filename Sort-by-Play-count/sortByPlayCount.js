@@ -38,7 +38,7 @@ async function initSortByPlay() {
 
     async function validateLocalStorage() {
         if (!(await getLocalStorageDataFromKey(`sortByPlayCountLastFmUserName`))) {
-            alert("Add Your Last.FM UserName to Use Personal Scrobbles\nUser (on top right) > Sort By Play Count > Register Username");
+            alert("Add Your Last.FM Username to use Personal Scrobbles\nUser (on top right) > Sort By Play Count > Register Username");
             return false;
         }
         return true;
@@ -69,7 +69,7 @@ async function initSortByPlay() {
         nameInput.required = true;
         loginContainer.appendChild(nameInput);
         let submitBtn = document.createElement("button");
-        submitBtn.innerText = "Save";
+        submitBtn.innerText = "Save and Restart";
         submitBtn.setAttribute(
             "style",
             'background-color: var(--spice-button);border-radius: 8px;border-style: none;box-sizing: border-box;color: #FFFFFF;cursor: pointer;display: inline-block;font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;font-size: 14px;font-weight: 500;height: 40px;line-height: 20px;list-style: none;margin: 0;outline: none;padding: 10px 16px;position: relative;text-align: center;text-decoration: none;transition: color 100ms;vertical-align: baseline;user-select: none;-webkit-user-select: none;touch-action: manipulation;}.button-1:hover,.button-1:focus {background-color: #1DB954;'
@@ -90,7 +90,7 @@ async function initSortByPlay() {
 
                 Spicetify.PopupModal.hide();
 
-                alert("Relaunch Spotify to Take Effect");
+                Spicetify.CosmosAsync.post(`sp://desktop/v1/restart`);
             },
             false
         );
