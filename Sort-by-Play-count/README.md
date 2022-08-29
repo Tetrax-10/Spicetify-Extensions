@@ -2,11 +2,13 @@
 
 Sort Playlists, All songs of a Artist, Albums by :
 
-* Play Count using Spotify and Last.FM
+* Play Count (Spotify's Playcount)
 
-* Scrobbles - How many times every single listener has listened to that song
+* Popularity (Spotify's Popularity) (Trending)
 
-* Personal Scrobbles - How many times you have listened to that song
+* Scrobbles - How many times every single listener has listened to that song (Last.FM)
+
+* Personal Scrobbles - How many times you have listened to that song (Last.FM with Login)
 
 Sorted Songs just get Added to Queue, you can even create a playlist by `Ctrl+A` and drag and drop songs to the playlist from Queue
 
