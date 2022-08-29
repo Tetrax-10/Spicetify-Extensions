@@ -390,7 +390,6 @@ async function initSortByPlay() {
             Spicetify.showNotification(`${mode} data not available ! try other options`);
             return [];
         }
-        console.log(unsortedArray);
         return Promise.all(unsortedArray);
     }
 
