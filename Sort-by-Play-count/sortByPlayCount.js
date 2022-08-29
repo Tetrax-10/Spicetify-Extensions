@@ -138,7 +138,6 @@ async function initSortByPlay() {
             let uriInfo = rawUri[0].split(":");
             let type = uriInfo[1];
             let uri = uriInfo[2];
-            Spicetify.showNotification("Sorting Please Wait...");
             await fetchAndPlay(type, uri, "playCount", "spotify");
         },
         shouldAddSpotifySort,
@@ -151,7 +150,6 @@ async function initSortByPlay() {
             let uriInfo = rawUri[0].split(":");
             let type = uriInfo[1];
             let uri = uriInfo[2];
-            Spicetify.showNotification("Sorting Please Wait...");
             await fetchAndPlay(type, uri, "popularity", "spotify");
         },
         shouldAddSpotifySort,
@@ -164,7 +162,6 @@ async function initSortByPlay() {
             let uriInfo = rawUri[0].split(":");
             let type = uriInfo[1];
             let uri = uriInfo[2];
-            Spicetify.showNotification("Sorting Please Wait...");
             await fetchAndPlay(type, uri, "playCount", "lastfm");
         },
         shouldAddLastFmSort,
@@ -177,7 +174,6 @@ async function initSortByPlay() {
             let uriInfo = rawUri[0].split(":");
             let type = uriInfo[1];
             let uri = uriInfo[2];
-            Spicetify.showNotification("Sorting Please Wait...");
             await fetchAndPlay(type, uri, "scrobbles", "lastfm");
         },
         shouldAddLastFmSort,
@@ -194,7 +190,6 @@ async function initSortByPlay() {
             let uriInfo = rawUri[0].split(":");
             let type = uriInfo[1];
             let uri = uriInfo[2];
-            Spicetify.showNotification("Sorting Please Wait...");
             await fetchAndPlay(type, uri, "personalScrobbles", "lastfm");
         },
         shouldAddLastFmSort,
@@ -211,11 +206,22 @@ async function initSortByPlay() {
         let allTracks = [];
         let filteredTrack = [];
 
+        let totalTrackCount = playlistRes.items.length ? playlistRes.items.length : 0;
+
+        if (totalTrackCount == 0) {
+            Spicetify.showNotification(`${mode} data not available! Try other options`);
+            return [];
+        }
+
+        let currentTrack = 0;
+
         if (mode == "playCount") {
             mode = "playcount";
         }
 
         for (let playlistTrack of playlistRes.items) {
+            currentTrack++;
+            Spicetify.showNotification(`${currentTrack} / ${totalTrackCount} Songs`);
             if (playlistTrack.type == "track" && playlistTrack.isPlayable && !playlistTrack.isLocal && !trackHistory.includes(playlistTrack.album.uri)) {
                 let albumRes = await Spicetify.CosmosAsync.get(`wg://album/v1/album-app/album/${playlistTrack.album.uri.split(":")[2]}/desktop`);
                 for (let tracks of albumRes.discs) {
@@ -234,7 +240,7 @@ async function initSortByPlay() {
         }
 
         if (filteredTrack.length == 0) {
-            Spicetify.showNotification(`${mode} data not available ! try other options`);
+            Spicetify.showNotification(`${mode} data not available! Try other options`);
             return [];
         }
 
@@ -309,7 +315,7 @@ async function initSortByPlay() {
         allArtistTracks = allArtistTracks.filter((track_, index, array) => array.findIndex((track) => (track.playCount == track_.playCount && track.duration == track_.duration) || track.name == track_.name) == index);
 
         if (allArtistTracks.length == 0) {
-            Spicetify.showNotification(`${mode} data not available ! try other options`);
+            Spicetify.showNotification(`${mode} data not available! Try other options`);
             return [];
         }
 
@@ -334,7 +340,7 @@ async function initSortByPlay() {
             });
 
         if (unsortedArray.length == 0) {
-            Spicetify.showNotification(`${mode} data not available ! try other options`);
+            Spicetify.showNotification(`${mode} data not available! Try other options`);
         }
 
         return Promise.all(unsortedArray);
@@ -363,24 +369,43 @@ async function initSortByPlay() {
             mode = "userplaycount";
         }
 
-        if (trackInfo.track[mode]) {
-            try {
-                if (trackInfo.message == "Track not found") {
-                    return { playCount: "-1", scrobbles: "-1", personalScrobbles: "-1", link: track.uri, name: track.name, artist: track.artists[0].name };
-                }
-            } catch (error) {}
+        if (trackInfo.track) {
+            if (trackInfo.track[mode]) {
+                try {
+                    if (trackInfo.message == "Track not found") {
+                        return { playCount: "-1", scrobbles: "-1", personalScrobbles: "-1", link: track.uri, name: track.name, artist: track.artists[0].name };
+                    }
+                } catch (error) {}
 
-            return { playCount: trackInfo.track.listeners ? trackInfo.track.listeners : -1, scrobbles: trackInfo.track.playcount ? trackInfo.track.playcount : -1, personalScrobbles: trackInfo.track.userplaycount ? trackInfo.track.userplaycount : -1, link: track.uri, name: track.name, artist: track.artists[0].name };
+                return { playCount: trackInfo.track.listeners ? trackInfo.track.listeners : -1, scrobbles: trackInfo.track.playcount ? trackInfo.track.playcount : -1, personalScrobbles: trackInfo.track.userplaycount ? trackInfo.track.userplaycount : -1, link: track.uri, name: track.name, artist: track.artists[0].name };
+            }
         }
     }
 
     async function fetchPlaylistTracksLastfm(uri, mode) {
         let res = await Spicetify.Platform.PlaylistAPI.getContents(`spotify:playlist:${uri}`);
 
-        let unsortedArray = await res.items.filter((track) => track.type == "track" && track.isPlayable && !track.isLocal && !unsupportedChar.test(track.name) && !unsupportedChar.test(track.artists[0].name)).map(async (track) => await createDataFromATrack(track, mode));
+        let totalTrackCount = res.items.length ? res.items.length : 0;
+
+        if (totalTrackCount == 0) {
+            if (mode == "personalScrobbles") {
+                mode = "Personal Scrobbles";
+            }
+            Spicetify.showNotification(`${mode} data not available! Try other options`);
+            return [];
+        }
+
+        let unsortedArray = await res.items
+            .filter((track) => track.type == "track" && track.isPlayable && !track.isLocal && !unsupportedChar.test(track.name) && !unsupportedChar.test(track.artists[0].name))
+            .map(async (track) => {
+                return await createDataFromATrack(track, mode);
+            });
 
         if (unsortedArray.length == 0) {
-            Spicetify.showNotification(`${mode} data not available ! try other options`);
+            if (mode == "personalScrobbles") {
+                mode = "Personal Scrobbles";
+            }
+            Spicetify.showNotification(`${mode} data not available! Try other options`);
             return [];
         }
 
@@ -397,9 +422,13 @@ async function initSortByPlay() {
         let unsortedArray = availables.filter((track) => track.playable && !unsupportedChar.test(track.name) && !unsupportedChar.test(track.artists[0].name)).map(async (track) => await createDataFromATrack(track, mode));
 
         if (unsortedArray.length == 0) {
-            Spicetify.showNotification(`${mode} data not available ! try other options`);
+            if (mode == "personalScrobbles") {
+                mode = "Personal Scrobbles";
+            }
+            Spicetify.showNotification(`${mode} data not available! Try other options`);
             return [];
         }
+
         return Promise.all(unsortedArray);
     }
 
@@ -421,11 +450,14 @@ async function initSortByPlay() {
         if (count === 0) {
             return;
         }
+
         list.push("spotify:delimiter");
 
         await Spicetify.Platform.PlayerAPI.clearQueue();
 
         let isQueue = !context;
+
+        Spicetify.showNotification("Adding to Queue Please Wait...");
 
         await Spicetify.CosmosAsync.put("sp://player/v2/main/queue", {
             queue_revision: Spicetify.Queue?.queueRevision,
@@ -475,7 +507,6 @@ async function initSortByPlay() {
                     list = await fetchPlaylistTracksSpotify(uri, mode);
                     break;
                 case Type.ARTIST + "spotify":
-                    Spicetify.showNotification("Sorting Artist may Consume some Time Please Wait...");
                     list = await fetchArtistTracksSpotify(uri, mode);
                     break;
                 case Type.ALBUM + "spotify":
