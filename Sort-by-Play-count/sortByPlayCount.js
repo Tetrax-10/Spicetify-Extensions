@@ -133,7 +133,7 @@ async function initSortByPlay() {
     }
 
     let playCountItemSpotify = new Spicetify.ContextMenu.Item(
-        "Play Count - Spotify",
+        "Play Count",
         async (rawUri) => {
             let uriInfo = rawUri[0].split(":");
             let type = uriInfo[1];
@@ -146,7 +146,7 @@ async function initSortByPlay() {
     );
 
     let popularityItemSpotify = new Spicetify.ContextMenu.Item(
-        "Popularity - Spotify",
+        "Popularity",
         async (rawUri) => {
             let uriInfo = rawUri[0].split(":");
             let type = uriInfo[1];
@@ -158,7 +158,7 @@ async function initSortByPlay() {
         "heart"
     );
 
-    let playCountItem = new Spicetify.ContextMenu.Item(
+    let playCountItemLastFM = new Spicetify.ContextMenu.Item(
         "Play Count - Last.FM",
         async (rawUri) => {
             let uriInfo = rawUri[0].split(":");
@@ -171,8 +171,8 @@ async function initSortByPlay() {
         "subtitles"
     );
 
-    let scrobblesItem = new Spicetify.ContextMenu.Item(
-        "Scrobbles - Last.FM",
+    let scrobblesItemLastFM = new Spicetify.ContextMenu.Item(
+        "Scrobbles",
         async (rawUri) => {
             let uriInfo = rawUri[0].split(":");
             let type = uriInfo[1];
@@ -184,8 +184,8 @@ async function initSortByPlay() {
         "volume"
     );
 
-    let personalScrobblesItem = new Spicetify.ContextMenu.Item(
-        "Personal Scrobbles",
+    let personalScrobblesItemLastFM = new Spicetify.ContextMenu.Item(
+        "My Scrobbles",
         async (rawUri) => {
             if (!(await validateLocalStorage())) {
                 return;
@@ -201,17 +201,8 @@ async function initSortByPlay() {
         "artist"
     );
 
-    new Spicetify.ContextMenu.SubMenu("Sort by", [playCountItemSpotify, popularityItemSpotify, playCountItem, scrobblesItem, personalScrobblesItem], shouldAddSpotifySort, false).register();
-
-    async function fetchTrackInfoFromLastFM(artist, trackName, lastFmUsername) {
-        let url = `https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=${LFMApiKey}&artist=${artist}&track=${trackName}&format=json&username=${lastFmUsername}`;
-
-        try {
-            let initialRequest = await fetch(url);
-            let response = await initialRequest.json();
-            return response;
-        } catch (error) {}
-    }
+    let ContextMenuItems = [playCountItemSpotify, popularityItemSpotify, scrobblesItemLastFM, personalScrobblesItemLastFM]; // Add playCountItemLastFM variable to this Array to get Last.Fm Play Count
+    new Spicetify.ContextMenu.SubMenu("Sort by", ContextMenuItems, shouldAddSpotifySort, false).register();
 
     async function fetchPlaylistTracksSpotify(uri, mode) {
         let playlistRes = await Spicetify.Platform.PlaylistAPI.getContents(`spotify:playlist:${uri}`);
@@ -301,8 +292,9 @@ async function initSortByPlay() {
         // sort the Songs by popularity so the original song will be on top of the array when compared to its duplicate songs
         let allArtistTracks = await sortByPlay(allArtistAlbumsTracks.concat(allArtistSinglesTracks), "popularity");
 
-        // duplicate songs will have same popularity and duration.
-        // So this fill remove all songs that have same popularity and duration except the first occurrence.
+        // Duplicate songs will have same playcount and duration buy different popularity.
+        // Song with higher popularity will be listed on top while searching a song in spotify while duplicate once (low popularity) will be below.
+        // So this fill remove all songs that have same playcount and duration except the first occurrence.
         // as we have sorted songs by popularity the original will be on top
         allArtistTracks = allArtistTracks.filter((track_, index, array) => array.findIndex((track) => (track.playCount == track_.playCount && track.duration == track_.duration) || track.name == track_.name) == index);
 
@@ -338,34 +330,44 @@ async function initSortByPlay() {
         return Promise.all(unsortedArray);
     }
 
+    async function fetchTrackInfoFromLastFM(artist, trackName, lastFmUsername) {
+        let url = `https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=${LFMApiKey}&artist=${artist}&track=${trackName}&format=json&username=${lastFmUsername}`;
+
+        try {
+            let initialRequest = await fetch(url);
+            let response = await initialRequest.json();
+            return response;
+        } catch (error) {}
+    }
+
+    async function createDataFromATrack(track, mode) {
+        let trackInfo = await fetchTrackInfoFromLastFM(track.artists[0].name, track.name, lastFmUsername);
+
+        if (mode == "playCount") {
+            mode = "playcount";
+        }
+        if (mode == "scrobbles") {
+            mode = "listeners";
+        }
+        if (mode == "personalScrobbles") {
+            mode = "userplaycount";
+        }
+
+        if (trackInfo.track[mode]) {
+            try {
+                if (trackInfo.message == "Track not found") {
+                    return { playCount: "-1", scrobbles: "-1", personalScrobbles: "-1", link: track.uri, name: track.name, artist: track.artists[0].name };
+                }
+            } catch (error) {}
+
+            return { playCount: trackInfo.track.listeners ? trackInfo.track.listeners : -1, scrobbles: trackInfo.track.playcount ? trackInfo.track.playcount : -1, personalScrobbles: trackInfo.track.userplaycount ? trackInfo.track.userplaycount : -1, link: track.uri, name: track.name, artist: track.artists[0].name };
+        }
+    }
+
     async function fetchPlaylistTracksLastfm(uri, mode) {
         let res = await Spicetify.Platform.PlaylistAPI.getContents(`spotify:playlist:${uri}`);
 
-        let unsortedArray = await res.items
-            .filter((track) => track.type == "track" && track.isPlayable && !track.isLocal && !unsupportedChar.test(track.name) && !unsupportedChar.test(track.artists[0].name))
-            .map(async (track) => {
-                let trackInfo = await fetchTrackInfoFromLastFM(track.artists[0].name, track.name, lastFmUsername);
-
-                if (mode == "playCount") {
-                    mode = "playcount";
-                }
-                if (mode == "scrobbles") {
-                    mode = "listeners";
-                }
-                if (mode == "personalScrobbles") {
-                    mode = "userplaycount";
-                }
-
-                if (trackInfo.track[mode]) {
-                    try {
-                        if (trackInfo.message == "Track not found") {
-                            return { playCount: "-1", scrobbles: "-1", personalScrobbles: "-1", link: track.uri, name: track.name, artist: track.artists[0].name };
-                        }
-                    } catch (error) {}
-
-                    return { playCount: trackInfo.track.listeners ? trackInfo.track.listeners : -1, scrobbles: trackInfo.track.playcount ? trackInfo.track.playcount : -1, personalScrobbles: trackInfo.track.userplaycount ? trackInfo.track.userplaycount : -1, link: track.uri, name: track.name, artist: track.artists[0].name };
-                }
-            });
+        let unsortedArray = await res.items.filter((track) => track.type == "track" && track.isPlayable && !track.isLocal && !unsupportedChar.test(track.name) && !unsupportedChar.test(track.artists[0].name)).map(async (track) => await createDataFromATrack(track, mode));
 
         if (unsortedArray.length == 0) {
             Spicetify.showNotification(`${mode} data not available ! try other options`);
@@ -382,37 +384,13 @@ async function initSortByPlay() {
             availables = disc.tracks.filter((track) => track.playable);
         }
 
-        let unsortedArray = availables
-            .filter((track) => track.playable && !unsupportedChar.test(track.name) && !unsupportedChar.test(track.artists[0].name))
-            .map(async (track) => {
-                let trackInfo = await fetchTrackInfoFromLastFM(track.artists[0].name, track.name, lastFmUsername);
-
-                if (mode == "playCount") {
-                    mode = "playcount";
-                }
-                if (mode == "scrobbles") {
-                    mode = "listeners";
-                }
-                if (mode == "personalScrobbles") {
-                    mode = "userplaycount";
-                }
-
-                if (trackInfo.track[mode]) {
-                    try {
-                        if (trackInfo.message == "Track not found") {
-                            return { playCount: "-1", scrobbles: "-1", personalScrobbles: "-1", link: track.uri, name: track.name, artist: track.artists[0].name };
-                        }
-                    } catch (error) {}
-
-                    return { playCount: trackInfo.track.listeners ? trackInfo.track.listeners : -1, scrobbles: trackInfo.track.playcount ? trackInfo.track.playcount : -1, personalScrobbles: trackInfo.track.userplaycount ? trackInfo.track.userplaycount : -1, link: track.uri, name: track.name, artist: track.artists[0].name };
-                }
-            });
+        let unsortedArray = availables.filter((track) => track.playable && !unsupportedChar.test(track.name) && !unsupportedChar.test(track.artists[0].name)).map(async (track) => await createDataFromATrack(track, mode));
 
         if (unsortedArray.length == 0) {
             Spicetify.showNotification(`${mode} data not available ! try other options`);
             return [];
         }
-
+        console.log(unsortedArray);
         return Promise.all(unsortedArray);
     }
 
@@ -423,6 +401,7 @@ async function initSortByPlay() {
 
     async function Queue(sortedArray, context) {
         // needed a better queue implementation
+        // console.log(sortedArray); // Prints Final Array you gonna Heaar
         let list = await sortedArray.map((item) => {
             try {
                 return item.link;
