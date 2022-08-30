@@ -2,7 +2,7 @@
 
 // NAME: Sort By Play Count
 // AUTHOR: Tetrax-10
-// DESCRIPTION: Sorts Songs by Play Count, Global Scrobbles, Personal Scrobbles Using Spotify and Last.FM
+// DESCRIPTION: Sorts Songs by Play Count, Popularity, Global Scrobbles, Personal Scrobbles Using Spotify and Last.FM
 // Version: 2.0
 
 /// <reference path="../globals.d.ts" />
@@ -38,7 +38,7 @@ async function initSortByPlay() {
 
     async function validateLocalStorage() {
         if (!(await getLocalStorageDataFromKey(`sortByPlayCountLastFmUserName`))) {
-            alert("Add Your Last.FM Username to use Personal Scrobbles\nUser (on top right) > Sort By Play Count > Register Username");
+            alert("Add Your Last.FM Username to use My Scrobbles\nUser (on top right) > Sort By Play Count > Register Username");
             return false;
         }
         return true;
@@ -157,7 +157,7 @@ async function initSortByPlay() {
     );
 
     let playCountItemLastFM = new Spicetify.ContextMenu.Item(
-        "Play Count - Last.FM",
+        "Last.FM Play Count",
         async (rawUri) => {
             let uriInfo = rawUri[0].split(":");
             let type = uriInfo[1];
@@ -369,14 +369,11 @@ async function initSortByPlay() {
             mode = "userplaycount";
         }
 
+        if (trackInfo.message == "Track not found") {
+            return null;
+        }
         if (trackInfo.track) {
             if (trackInfo.track[mode]) {
-                try {
-                    if (trackInfo.message == "Track not found") {
-                        return { playCount: "-1", scrobbles: "-1", personalScrobbles: "-1", link: track.uri, name: track.name, artist: track.artists[0].name };
-                    }
-                } catch (error) {}
-
                 return { playCount: trackInfo.track.listeners ? trackInfo.track.listeners : -1, scrobbles: trackInfo.track.playcount ? trackInfo.track.playcount : -1, personalScrobbles: trackInfo.track.userplaycount ? trackInfo.track.userplaycount : -1, link: track.uri, name: track.name, artist: track.artists[0].name };
             }
         }
@@ -389,7 +386,7 @@ async function initSortByPlay() {
 
         if (totalTrackCount == 0) {
             if (mode == "personalScrobbles") {
-                mode = "Personal Scrobbles";
+                mode = "My Scrobbles";
             }
             Spicetify.showNotification(`${mode} data not available! Try other options`);
             return [];
@@ -401,9 +398,9 @@ async function initSortByPlay() {
                 return await createDataFromATrack(track, mode);
             });
 
-        if (unsortedArray.length == 0) {
+        if ((await unsortedArray.length) == 0 || (await unsortedArray[0]) == null) {
             if (mode == "personalScrobbles") {
-                mode = "Personal Scrobbles";
+                mode = "My Scrobbles";
             }
             Spicetify.showNotification(`${mode} data not available! Try other options`);
             return [];
@@ -419,11 +416,11 @@ async function initSortByPlay() {
             availables = disc.tracks.filter((track) => track.playable);
         }
 
-        let unsortedArray = availables.filter((track) => track.playable && !unsupportedChar.test(track.name) && !unsupportedChar.test(track.artists[0].name)).map(async (track) => await createDataFromATrack(track, mode));
+        let unsortedArray = await availables.filter((track) => track.playable && !unsupportedChar.test(track.name) && !unsupportedChar.test(track.artists[0].name)).map(async (track) => await createDataFromATrack(track, mode));
 
-        if (unsortedArray.length == 0) {
+        if ((await unsortedArray.length) == 0 || (await unsortedArray[0]) == null) {
             if (mode == "personalScrobbles") {
-                mode = "Personal Scrobbles";
+                mode = "My Scrobbles";
             }
             Spicetify.showNotification(`${mode} data not available! Try other options`);
             return [];
