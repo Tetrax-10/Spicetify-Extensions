@@ -457,8 +457,6 @@ async function initSortByPlay() {
 
         let isQueue = !context;
 
-        Spicetify.showNotification("Adding to Queue Please Wait...");
-
         await Spicetify.CosmosAsync.put("sp://player/v2/main/queue", {
             queue_revision: Spicetify.Queue?.queueRevision,
             next_tracks: list.map((uri) => ({
