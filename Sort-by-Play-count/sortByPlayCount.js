@@ -3,7 +3,7 @@
 // NAME: Sort By Play Count
 // AUTHOR: Tetrax-10
 // DESCRIPTION: Sorts Songs by Play Count, Popularity, Global Scrobbles, Personal Scrobbles Using Spotify and Last.FM
-// Version: 2.0
+// Version: 2.1
 
 /// <reference path="../globals.d.ts" />
 
