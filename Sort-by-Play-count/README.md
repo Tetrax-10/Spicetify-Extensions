@@ -31,7 +31,7 @@ Step 2 : Connect [Spotify Scrobbling](https://www.last.fm/settings/applications)
 
 Step 3 : Paste your `UserName` in Spotify by going to User (on top right) -> Sort By Play Count -> Register Username
 
-![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Sort-by-Play-count/screenshot2.png)
+![lastfm Demo](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Sort-by-Play-count/lastfm.gif)
 
 <br />
 
