@@ -10,6 +10,8 @@ Sort Playlists, All songs of a Artist, Albums by :
 
 * Personal Scrobbles - How many times you have listened to that song (Last.FM with Login)
 
+* Play Count (lastFM's Playcount)
+
 Sorted Songs just get Added to Queue, you can even create a playlist by `Ctrl+A` and drag and drop songs to the playlist from Queue
 
 <br />
