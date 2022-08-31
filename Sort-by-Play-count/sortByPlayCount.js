@@ -668,15 +668,19 @@ async function initSortByPlay() {
         if (mode == "personalScrobbles") {
             mode = "userplaycount";
         }
-
-        if (trackInfo.message) {
-            return null;
-        }
-        if (trackInfo.track) {
-            if (trackInfo.track[mode]) {
-                return { playCount: trackInfo.track.listeners ? trackInfo.track.listeners : -1, scrobbles: trackInfo.track.playcount ? trackInfo.track.playcount : -1, personalScrobbles: trackInfo.track.userplaycount ? trackInfo.track.userplaycount : -1, link: track.uri, name: track.name, artist: track.artists[0].name };
+        try {
+            if (await trackInfo.message) {
+                return null;
             }
-        }
+        } catch (error) {}
+
+        try {
+            if (await trackInfo.track) {
+                if (trackInfo.track[mode]) {
+                    return { playCount: trackInfo.track.listeners ? trackInfo.track.listeners : -1, scrobbles: trackInfo.track.playcount ? trackInfo.track.playcount : -1, personalScrobbles: trackInfo.track.userplaycount ? trackInfo.track.userplaycount : -1, link: track.uri, name: track.name, artist: track.artists[0].name };
+                }
+            }
+        } catch (error) {}
         return null;
     }
 
