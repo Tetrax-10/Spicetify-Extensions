@@ -550,11 +550,14 @@ async function initSortByPlay() {
         for (let albums of res) {
             let albumsRes;
 
-            if (!albums.discs) {
-                albumsRes = await Spicetify.CosmosAsync.get(`wg://album/v1/album-app/album/${albums.uri}/desktop`);
-            } else {
-                albumsRes = albums;
-            }
+            try {
+                if (!albums.discs) {
+                    albumsRes = await Spicetify.CosmosAsync.get(`wg://album/v1/album-app/album/${albums.uri}/desktop`);
+                } else {
+                    albumsRes = albums;
+                }
+            } catch (error) {}
+
             artistFetchType[type]++;
             Spicetify.showNotification(`${artistFetchType[type]} / ${allCount} ${type}s`);
             for (let tracks of albumsRes.discs) {
