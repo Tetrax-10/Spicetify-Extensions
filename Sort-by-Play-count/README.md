@@ -1,6 +1,11 @@
 # Sort By Play Count
 
+<br />
+
+
 Sort Playlists, All songs of a Artist, Albums by :
+
+![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Sort-by-Play-count/screenshot.png)
 
 * Play Count (Spotify's Playcount)
 
@@ -11,12 +16,6 @@ Sort Playlists, All songs of a Artist, Albums by :
 * Personal Scrobbles - How many times you have listened to that song (Last.FM with Login)
 
 * Play Count (lastFM's Playcount)
-
-Sorted Songs just get Added to Queue, you can even create a playlist by `Ctrl+A` and drag and drop songs to the playlist from Queue
-
-<br />
-
-![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Sort-by-Play-count/screenshot.png)
 
 ![Artist Demo](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Sort-by-Play-count/artist.gif)
 
