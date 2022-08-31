@@ -22,7 +22,9 @@ async function initSortByPlay() {
     let LFMApiKey = "44654ea047786d90338c17331a5f5d95";
     let lastFmUsername = "Register Last.FM Username";
     let unsupportedChar = /[#&+%\\]/g;
-    let addLoginContainer;
+
+    const { React } = Spicetify;
+    const { useState } = React;
 
     async function getLocalStorageDataFromKey(key) {
         return Spicetify.LocalStorage.get(key);
@@ -32,32 +34,39 @@ async function initSortByPlay() {
         Spicetify.LocalStorage.set(key, value);
     }
 
-    if ((await getLocalStorageDataFromKey("sortByPlayCountLastFmUserName")) !== null) {
-        lastFmUsername = await getLocalStorageDataFromKey("sortByPlayCountLastFmUserName");
-    }
-
     async function validateLocalStorage() {
-        if (!(await getLocalStorageDataFromKey(`sortByPlayCountLastFmUserName`))) {
-            alert("Add Your Last.FM Username to use My Scrobbles\nUser (on top right) > Sort By Play Count > Register Username");
+        if (!CONFIG.lastFmUserName) {
+            setLastFmUsername();
             return false;
         }
         return true;
     }
 
+    async function getConfig() {
+        try {
+            const parsed = JSON.parse(await getLocalStorageDataFromKey("sortByPlayCount:settings"));
+            if (parsed && typeof parsed === "object") {
+                return parsed;
+            }
+            throw "";
+        } catch {
+            await setLocalStorageDataWithKey("sortByPlayCount:settings", `{"removeDuplicate":true,"artistMode":"both","artistNameMust":false,"lastfmPlayCount":false,"myScrobbles":true}`);
+            return { removeDuplicate: true, artistMode: "both", artistNameMust: false, lastfmPlayCount: false, myScrobbles: true };
+        }
+    }
+
+    const CONFIG = await getConfig();
+
+    if (CONFIG.lastFmUserName) {
+        lastFmUsername = CONFIG.lastFmUserName;
+    }
+
+    async function saveConfig() {
+        await setLocalStorageDataWithKey("sortByPlayCount:settings", JSON.stringify(CONFIG));
+    }
+
     function setLastFmUsername() {
-        function triggerModal() {
-            Spicetify.PopupModal.display({
-                title: "Connect Last.FM",
-                content: addLoginContainer,
-            });
-        }
-
-        if (addLoginContainer) {
-            triggerModal();
-            return;
-        }
-
-        addLoginContainer = document.createElement("div");
+        let addLoginContainer = document.createElement("div");
         let loginContainer = document.createElement("div");
         loginContainer.setAttribute("id", "login-global-div");
         loginContainer.setAttribute("style", "padding-bottom: 10%");
@@ -70,10 +79,7 @@ async function initSortByPlay() {
         loginContainer.appendChild(nameInput);
         let submitBtn = document.createElement("button");
         submitBtn.innerText = "Save and Restart";
-        submitBtn.setAttribute(
-            "style",
-            'background-color: var(--spice-button);border-radius: 8px;border-style: none;box-sizing: border-box;color: #FFFFFF;cursor: pointer;display: inline-block;font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;font-size: 14px;font-weight: 500;height: 40px;line-height: 20px;list-style: none;margin: 0;outline: none;padding: 10px 16px;position: relative;text-align: center;text-decoration: none;transition: color 100ms;vertical-align: baseline;user-select: none;-webkit-user-select: none;touch-action: manipulation;}.button-1:hover,.button-1:focus {background-color: #1DB954;'
-        );
+        submitBtn.setAttribute("style", "background-color: var(--spice-button);border-radius: 8px;border-style: none;box-sizing: border-box;color: var(--spice-text);cursor: pointer;display: inline-block;font-size: 14px;font-weight: 500;height: 40px;line-height: 20px;list-style: none;margin: 10px;outline: none;padding: 5px 10px;position: relative;text-align: center;text-decoration: none;vertical-align: baseline;touch-action: manipulation;");
 
         submitBtn.addEventListener(
             "click",
@@ -86,11 +92,9 @@ async function initSortByPlay() {
                     return;
                 }
 
-                await setLocalStorageDataWithKey("sortByPlayCountLastFmUserName", name);
-
-                Spicetify.PopupModal.hide();
-
-                Spicetify.CosmosAsync.post(`sp://desktop/v1/restart`);
+                CONFIG.lastFmUserName = name;
+                await saveConfig();
+                setTimeout(Spicetify.CosmosAsync.post(`sp://desktop/v1/restart`), 100);
             },
             false
         );
@@ -100,14 +104,297 @@ async function initSortByPlay() {
 
         addLoginContainer.append(loginText, loginContainer, submitBtn);
 
-        triggerModal();
+        Spicetify.PopupModal.display({
+            title: "Connect Last.FM",
+            content: addLoginContainer,
+        });
     }
 
-    let registerUsernameMenuItem = new Spicetify.Menu.Item(lastFmUsername, false, () => {
-        setLastFmUsername();
-    });
+    function settingsPage() {
+        const style = React.createElement(
+            "style",
+            null,
+            `.popup-row::after {
+                    content: "";
+                    display: table;
+                    clear: both;
+                }
+                .popup-row .col {
+                    display: flex;
+                    padding: 10px 0;
+                    align-items: center;
+                }
+                .popup-row .col.description {
+                    float: left;
+                    padding-right: 15px;
+                }
+                .popup-row .col.action {
+                    float: right;
+                    text-align: right;
+                }
+                .popup-row .div-title {
+                    color: var(--spice-text);
+                }                
+                .popup-row .divider {
+                    height: 2px;
+                    border-width: 0;
+                    background-color: var(--spice-button-disabled);
+                }
+                .popup-row .space {
+                    margin-bottom: 20px;
+                    visibility: hidden;
+                }
+                button.checkbox {
+                    align-items: center;
+                    border: 0px;
+                    border-radius: 50%;
+                    background-color: rgba(var(--spice-rgb-shadow), 0.7);
+                    color: var(--spice-text);
+                    cursor: pointer;
+                    display: flex;
+                    margin-inline-start: 12px;
+                    padding: 8px;
+                }
+                button.checkbox.disabled {
+                    color: rgba(var(--spice-rgb-text), 0.3);
+                }
+                select {
+                    color: var(--spice-text);
+                    background: rgba(var(--spice-rgb-shadow), 0.7);
+                    border: 0;
+                    height: 32px;
+                }
+                ::-webkit-scrollbar {
+                    width: 8px;
+                }
+                .login-button {
+                    background-color: var(--spice-button);
+                    border-radius: 8px;
+                    border-style: none;
+                    box-sizing: border-box;
+                    color: var(--spice-text);
+                    cursor: pointer;
+                    display: inline-block;
+                    font-size: 14px;
+                    font-weight: 500;
+                    height: 40px;
+                    line-height: 20px;
+                    list-style: none;
+                    margin: 10px;
+                    outline: none;
+                    padding: 5px 10px;
+                    position: relative;
+                    text-align: center;
+                    text-decoration: none;
+                    vertical-align: baseline;
+                    touch-action: manipulation;
+                }`
+        );
 
-    new Spicetify.Menu.SubMenu("Sort By Play Count", [registerUsernameMenuItem]).register();
+        const buttonStyle = React.createElement(
+            "style",
+            { className: "popup-container" },
+            `
+            .login-button {
+                background-color: var(--spice-button);
+                border-radius: 8px;
+                border-style: none;
+                color: var(--spice-text);
+                cursor: pointer;
+                font-size: 14px;
+                height: 40px;
+                margin: 10px;
+                padding: 5px 10px;
+                text-align: center;
+            }`
+        );
+
+        function DisplayIcon({ icon, size }) {
+            return React.createElement("svg", {
+                width: size,
+                height: size,
+                viewBox: "0 0 16 16",
+                fill: "currentColor",
+                dangerouslySetInnerHTML: {
+                    __html: icon,
+                },
+            });
+        }
+
+        function checkBoxItem({ name, field, onclickFun }) {
+            let [value, setValue] = useState(CONFIG[field]);
+            return React.createElement(
+                "div",
+                { className: "popup-row" },
+                React.createElement("label", { className: "col description" }, name),
+                React.createElement(
+                    "div",
+                    { className: "col action" },
+                    React.createElement(
+                        "button",
+                        {
+                            className: "checkbox" + (value ? "" : " disabled"),
+                            onClick: async () => {
+                                let state = !value;
+                                CONFIG[field] = state;
+                                setValue(state);
+                                await saveConfig();
+                                onclickFun();
+                            },
+                        },
+                        React.createElement(DisplayIcon, { icon: Spicetify.SVGIcons.check, size: 16 })
+                    )
+                )
+            );
+        }
+
+        function dropDownItem({ name, field, options, onclickFun }) {
+            const [value, setValue] = useState(CONFIG[field]);
+            return React.createElement(
+                "div",
+                { className: "popup-row" },
+                React.createElement("label", { className: "col description" }, name),
+                React.createElement(
+                    "div",
+                    { className: "col action" },
+                    React.createElement(
+                        "select",
+                        {
+                            value,
+                            onChange: async (e) => {
+                                setValue(e.target.value);
+                                CONFIG[field] = e.target.value;
+                                await saveConfig();
+                                onclickFun();
+                            },
+                        },
+                        Object.keys(options).map((item) =>
+                            React.createElement(
+                                "option",
+                                {
+                                    value: item,
+                                },
+                                options[item]
+                            )
+                        )
+                    )
+                )
+            );
+        }
+
+        function ButtonItem({ name, onclickFun }) {
+            return React.createElement(
+                "button",
+                {
+                    className: "login-button",
+                    onClick: async () => {
+                        onclickFun();
+                    },
+                },
+                name
+            );
+        }
+
+        function restartPopup() {
+            let DOMcontent = React.createElement(
+                "div",
+                null,
+                buttonStyle,
+                React.createElement(ButtonItem, {
+                    name: "Restart Now",
+                    onclickFun: async () => {
+                        await Spicetify.CosmosAsync.post("sp://desktop/v1/restart");
+                    },
+                }),
+                React.createElement(ButtonItem, {
+                    name: "Restart Later",
+                    onclickFun: async () => {
+                        Spicetify.PopupModal.hide();
+                        setTimeout(settingsPage, 300);
+                    },
+                })
+            );
+
+            Spicetify.PopupModal.display({
+                title: "Restart Spotify",
+                content: DOMcontent,
+            });
+        }
+
+        let settingsDOMContent = React.createElement(
+            "div",
+            null,
+            style,
+            React.createElement("div", { className: "popup-row" }, React.createElement("h3", { className: "div-title" }, "Feature")),
+            React.createElement("div", { className: "popup-row" }, React.createElement("hr", { className: "divider" }, null)),
+            React.createElement(checkBoxItem, {
+                name: "My Scrobbles - Last.FM",
+                field: "myScrobbles",
+                onclickFun: async () => {
+                    Spicetify.PopupModal.hide();
+                    setTimeout(restartPopup, 300);
+                },
+            }),
+            React.createElement(checkBoxItem, {
+                name: "Last.FM Play Count",
+                field: "lastfmPlayCount",
+                onclickFun: async () => {
+                    Spicetify.PopupModal.hide();
+                    setTimeout(restartPopup, 300);
+                },
+            }),
+            React.createElement("div", { className: "popup-row" }, React.createElement("hr", { className: "space" }, null)),
+            React.createElement("div", { className: "popup-row" }, React.createElement("h3", { className: "div-title" }, "Artist Sort")),
+            React.createElement("div", { className: "popup-row" }, React.createElement("hr", { className: "divider" }, null)),
+            React.createElement(checkBoxItem, {
+                name: "Remove Duplicate Songs",
+                field: "removeDuplicate",
+                onclickFun: async () => {
+                    // console.log(CONFIG.removeDuplicate);
+                },
+            }),
+            React.createElement(checkBoxItem, {
+                name: "Artist Name Must in Tracks",
+                field: "artistNameMust",
+                onclickFun: async () => {
+                    // console.log(CONFIG.artistNameMust);
+                },
+            }),
+            React.createElement(dropDownItem, {
+                name: "What to Sort in Artist Page",
+                field: "artistMode",
+                options: {
+                    both: "All",
+                    album: "Albums",
+                    single: "Singles & EP",
+                },
+                onclickFun: async () => {
+                    // console.log(CONFIG.artistMode);
+                },
+            }),
+            React.createElement("div", { className: "popup-row" }, React.createElement("hr", { className: "space" }, null)),
+            React.createElement(ButtonItem, {
+                name: "Login with Last.FM",
+                onclickFun: () => {
+                    Spicetify.PopupModal.hide();
+                    setTimeout(setLastFmUsername, 300);
+                },
+            }),
+            React.createElement(ButtonItem, {
+                name: "Like on GitHub 👍",
+                onclickFun: () => {
+                    window.open("https://github.com/Tetrax-10/Spicetify-Extensions");
+                },
+            })
+        );
+
+        Spicetify.PopupModal.display({
+            title: "Sort By Play Count",
+            content: settingsDOMContent,
+        });
+    }
+
+    new Spicetify.Menu.Item("Sort By Play Count", false, settingsPage).register();
 
     function shouldAddSpotifySort(uri) {
         let uriObj = Spicetify.URI.fromString(uri[0]);
@@ -156,18 +443,6 @@ async function initSortByPlay() {
         "heart"
     );
 
-    let playCountItemLastFM = new Spicetify.ContextMenu.Item(
-        "Last.FM Play Count",
-        async (rawUri) => {
-            let uriInfo = rawUri[0].split(":");
-            let type = uriInfo[1];
-            let uri = uriInfo[2];
-            await fetchAndPlay(type, uri, "playCount", "lastfm");
-        },
-        shouldAddLastFmSort,
-        "subtitles"
-    );
-
     let scrobblesItemLastFM = new Spicetify.ContextMenu.Item(
         "Scrobbles",
         async (rawUri) => {
@@ -183,7 +458,8 @@ async function initSortByPlay() {
     let personalScrobblesItemLastFM = new Spicetify.ContextMenu.Item(
         "My Scrobbles",
         async (rawUri) => {
-            if (!(await validateLocalStorage())) {
+            if (!CONFIG.lastFmUserName) {
+                await validateLocalStorage();
                 return;
             }
 
@@ -196,8 +472,28 @@ async function initSortByPlay() {
         "artist"
     );
 
-    let ContextMenuItems = [playCountItemSpotify, popularityItemSpotify, scrobblesItemLastFM, personalScrobblesItemLastFM]; // Add playCountItemLastFM variable to this Array to get Last.Fm Play Count
-    new Spicetify.ContextMenu.SubMenu("Sort by", ContextMenuItems, shouldAddSpotifySort, false).register();
+    let playCountItemLastFM = new Spicetify.ContextMenu.Item(
+        "Last.FM Play Count",
+        async (rawUri) => {
+            let uriInfo = rawUri[0].split(":");
+            let type = uriInfo[1];
+            let uri = uriInfo[2];
+            await fetchAndPlay(type, uri, "playCount", "lastfm");
+        },
+        shouldAddLastFmSort,
+        "subtitles"
+    );
+
+    let contextMenuItems = [playCountItemSpotify, popularityItemSpotify, scrobblesItemLastFM];
+
+    if (CONFIG.myScrobbles) {
+        contextMenuItems.push(personalScrobblesItemLastFM);
+    }
+    if (CONFIG.lastfmPlayCount) {
+        contextMenuItems.push(playCountItemLastFM);
+    }
+
+    new Spicetify.ContextMenu.SubMenu("Sort by", contextMenuItems, shouldAddSpotifySort, false).register();
 
     async function fetchPlaylistTracksSpotify(uri, mode) {
         let playlistRes = await Spicetify.Platform.PlaylistAPI.getContents(`spotify:playlist:${uri}`);
@@ -209,7 +505,7 @@ async function initSortByPlay() {
         let totalTrackCount = playlistRes.items.length ? playlistRes.items.length : 0;
 
         if (totalTrackCount == 0) {
-            Spicetify.showNotification(`${mode} data not available! Try other options`);
+            Spicetify.showNotification(`${mode == "playcount" ? "Play Count" : mode} data not available! Try other options`);
             return [];
         }
 
@@ -240,18 +536,50 @@ async function initSortByPlay() {
         }
 
         if (filteredTrack.length == 0) {
-            Spicetify.showNotification(`${mode} data not available! Try other options`);
+            Spicetify.showNotification(`${mode == "playcount" ? "Play Count" : mode} data not available! Try other options`);
             return [];
         }
 
         return filteredTrack;
     }
 
-    let albumsCount = 0;
-    let singlesCount = 0;
+    let artistFetchType = { album: 0, single: 0 };
+
+    async function scanForTracksFromAlbums(res, allCount, artistName, mode, type) {
+        let allTracks = [];
+        for (let albums of res) {
+            let albumsRes;
+
+            if (!albums.discs) {
+                albumsRes = await Spicetify.CosmosAsync.get(`wg://album/v1/album-app/album/${albums.uri}/desktop`);
+            } else {
+                albumsRes = albums;
+            }
+            artistFetchType[type]++;
+            Spicetify.showNotification(`${artistFetchType[type]} / ${allCount} ${type}s`);
+            for (let tracks of albumsRes.discs) {
+                for (let track of tracks.tracks) {
+                    let condition = true;
+                    if (CONFIG.artistNameMust) {
+                        let artists = track.artists.map((artist) => artist.name);
+                        if (!artists.includes(artistName)) {
+                            condition = false;
+                        }
+                    }
+                    if (track.playable && track[mode] && condition) {
+                        allTracks.push({ playCount: track.playcount, popularity: track.popularity, duration: track.duration, link: track.uri, name: track.name, artist: track.artists[0].name });
+                    }
+                }
+            }
+        }
+        return allTracks;
+    }
 
     async function fetchArtistTracksSpotify(uri, mode) {
         let artistRes = await Spicetify.CosmosAsync.get(`wg://artist/v1/${uri}/desktop?format=json`);
+
+        let artistName = artistRes.info.name;
+
         let artistAlbums = artistRes.releases.albums;
         let artistSingles = artistRes.releases.singles;
 
@@ -265,58 +593,30 @@ async function initSortByPlay() {
             mode = "playcount";
         }
 
-        if (allAlbumsCount != 0) {
-            for (let albums of artistAlbums.releases) {
-                let albumsRes;
-                if (!albums.discs) {
-                    albumsRes = await Spicetify.CosmosAsync.get(`wg://album/v1/album-app/album/${albums.uri}/desktop`);
-                } else {
-                    albumsRes = albums;
-                }
-                albumsCount++;
-                Spicetify.showNotification(`${albumsCount} / ${allAlbumsCount} Albums`);
-                for (let tracks of albumsRes.discs) {
-                    for (let track of tracks.tracks) {
-                        if (track.playable && track[mode]) {
-                            allArtistAlbumsTracks.push({ playCount: track.playcount, popularity: track.popularity, duration: track.duration, link: track.uri, name: track.name, artist: track.artists[0].name });
-                        }
-                    }
-                }
-            }
+        if (allAlbumsCount != 0 && CONFIG.artistMode != "single") {
+            allArtistAlbumsTracks = await scanForTracksFromAlbums(artistAlbums.releases, allAlbumsCount, artistName, mode, "album");
         }
 
-        if (allSinglesCount != 0) {
-            for (let albums of artistSingles.releases) {
-                let albumsRes;
-                if (!albums.discs) {
-                    albumsRes = await Spicetify.CosmosAsync.get(`wg://album/v1/album-app/album/${albums.uri}/desktop`);
-                } else {
-                    albumsRes = albums;
-                }
-                singlesCount++;
-                Spicetify.showNotification(`${singlesCount} / ${allSinglesCount} Singles`);
-                for (let tracks of albumsRes.discs) {
-                    for (let track of tracks.tracks) {
-                        if (track.playable && track[mode]) {
-                            allArtistSinglesTracks.push({ playCount: track.playcount, popularity: track.popularity, duration: track.duration, link: track.uri, name: track.name, artist: track.artists[0].name });
-                        }
-                    }
-                }
-            }
+        if (allSinglesCount != 0 && CONFIG.artistMode != "album") {
+            allArtistSinglesTracks = await scanForTracksFromAlbums(artistSingles.releases, allSinglesCount, artistName, mode, "single");
         }
 
-        // sort the Songs by popularity so the original song will be on top of the array when compared to its duplicate songs
-        let allArtistTracks = await sortByPlay(allArtistAlbumsTracks.concat(allArtistSinglesTracks), "popularity");
-
-        // Duplicate songs will have same playcount and duration buy different popularity.
-        // Song with higher popularity will be listed on top while searching a song in spotify while duplicate once (low popularity) will be below.
-        // So this fill remove all songs that have same playcount and duration except the first occurrence.
-        // as we have sorted songs by popularity the original will be on top
-        allArtistTracks = allArtistTracks.filter((track_, index, array) => array.findIndex((track) => (track.playCount == track_.playCount && track.duration == track_.duration) || track.name == track_.name) == index);
+        let allArtistTracks = allArtistAlbumsTracks.concat(allArtistSinglesTracks);
 
         if (allArtistTracks.length == 0) {
-            Spicetify.showNotification(`${mode} data not available! Try other options`);
+            Spicetify.showNotification(`${mode == "playcount" ? "Play Count" : mode} data not available! Try other options`);
             return [];
+        }
+
+        if (CONFIG.removeDuplicate) {
+            // sort the Songs by popularity so the original song will be on top of the array when compared to its duplicate songs
+            allArtistTracks = await sortByPlay(allArtistTracks, "popularity");
+
+            // Duplicate songs will have same playcount and duration buy different popularity.
+            // Song with higher popularity will be listed on top while searching a song in spotify while duplicate once (low popularity) will be below.
+            // So this fill remove all songs that have same playcount and duration except the first occurrence.
+            // as we have sorted songs by popularity the original will be on top
+            allArtistTracks = allArtistTracks.filter((track_, index, array) => array.findIndex((track) => (track.playCount == track_.playCount && track.duration == track_.duration) || track.name == track_.name || track.playCount == track_.playCount) == index);
         }
 
         return allArtistTracks;
@@ -340,7 +640,7 @@ async function initSortByPlay() {
             });
 
         if (unsortedArray.length == 0) {
-            Spicetify.showNotification(`${mode} data not available! Try other options`);
+            Spicetify.showNotification(`${mode == "playcount" ? "Play Count" : mode} data not available! Try other options`);
         }
 
         return Promise.all(unsortedArray);
@@ -369,7 +669,7 @@ async function initSortByPlay() {
             mode = "userplaycount";
         }
 
-        if (trackInfo.message == "Track not found") {
+        if (trackInfo.message) {
             return null;
         }
         if (trackInfo.track) {
@@ -377,6 +677,7 @@ async function initSortByPlay() {
                 return { playCount: trackInfo.track.listeners ? trackInfo.track.listeners : -1, scrobbles: trackInfo.track.playcount ? trackInfo.track.playcount : -1, personalScrobbles: trackInfo.track.userplaycount ? trackInfo.track.userplaycount : -1, link: track.uri, name: track.name, artist: track.artists[0].name };
             }
         }
+        return null;
     }
 
     async function fetchPlaylistTracksLastfm(uri, mode) {
@@ -388,21 +689,17 @@ async function initSortByPlay() {
             if (mode == "personalScrobbles") {
                 mode = "My Scrobbles";
             }
-            Spicetify.showNotification(`${mode} data not available! Try other options`);
+            Spicetify.showNotification(`${mode == "playcount" ? "Play Count" : mode} data not available! Try other options`);
             return [];
         }
 
-        let unsortedArray = await res.items
-            .filter((track) => track.type == "track" && track.isPlayable && !track.isLocal && !unsupportedChar.test(track.name) && !unsupportedChar.test(track.artists[0].name))
-            .map(async (track) => {
-                return await createDataFromATrack(track, mode);
-            });
+        let unsortedArray = await res.items.filter((track) => track.type == "track" && track.isPlayable && !track.isLocal && !unsupportedChar.test(track.name) && !unsupportedChar.test(track.artists[0].name)).map(async (track) => await createDataFromATrack(track, mode));
 
         if ((await unsortedArray.length) == 0 || (await unsortedArray[0]) == null) {
             if (mode == "personalScrobbles") {
                 mode = "My Scrobbles";
             }
-            Spicetify.showNotification(`${mode} data not available! Try other options`);
+            Spicetify.showNotification(`${mode == "playcount" ? "Play Count" : mode} data not available! Try other options`);
             return [];
         }
 
@@ -422,7 +719,7 @@ async function initSortByPlay() {
             if (mode == "personalScrobbles") {
                 mode = "My Scrobbles";
             }
-            Spicetify.showNotification(`${mode} data not available! Try other options`);
+            Spicetify.showNotification(`${mode == "playcount" ? "Play Count" : mode} data not available! Try other options`);
             return [];
         }
 
@@ -434,46 +731,43 @@ async function initSortByPlay() {
         return sortedArray;
     }
 
-    async function Queue(sortedArray, context, type) {
-        // needed a better queue implementation
-        // console.log(sortedArray); // Prints Final Array you gonna Heaar
-        let list = await sortedArray.map((item) => {
-            try {
-                return item.link;
-            } catch (error) {}
-        });
+    async function sortByPlayForQueue(unsortedArray, mode) {
+        unsortedArray.push({ link: "spotify:delimiter" });
+        let sortedArray = await unsortedArray
+            .filter((item) => item)
+            .sort((item1, item2) => item2[mode] - item1[mode])
+            .map((item) => ({
+                uri: item.link,
+                provider: "context",
+                metadata: {
+                    is_queued: false,
+                },
+            }));
+        return sortedArray;
+    }
 
-        let count = list.length;
-        if (count === 0) {
+    async function Queue(sortedArray, context, type) {
+        // console.log(sortedArray); // Prints Final Array you gonna Heaar
+
+        let count = sortedArray.length;
+        if (count == 1) {
             return;
         }
 
-        list.push("spotify:delimiter");
-
         await Spicetify.Platform.PlayerAPI.clearQueue();
-
-        let isQueue = !context;
 
         await Spicetify.CosmosAsync.put("sp://player/v2/main/queue", {
             queue_revision: Spicetify.Queue?.queueRevision,
-            next_tracks: list.map((uri) => ({
-                uri,
-                provider: isQueue ? "queue" : "context",
-                metadata: {
-                    is_queued: isQueue,
-                },
-            })),
+            next_tracks: sortedArray,
             prev_tracks: Spicetify.Queue?.prevTracks,
         });
 
-        if (!isQueue) {
-            await Spicetify.CosmosAsync.post("sp://player/v2/main/update", {
-                context: {
-                    uri: context,
-                    url: "context://" + context,
-                },
-            });
-        }
+        await Spicetify.CosmosAsync.post("sp://player/v2/main/update", {
+            context: {
+                uri: context,
+                url: "context://" + context,
+            },
+        });
 
         Spicetify.Player.next();
 
@@ -482,14 +776,14 @@ async function initSortByPlay() {
                 Spicetify.showNotification(`Sorted ${count} Songs`);
                 break;
             case "artist":
-                Spicetify.showNotification(`Sorted ${albumsCount} Albums, ${singlesCount} Singles, Totally ${count} Songs`);
+                Spicetify.showNotification(`Sorted ${artistFetchType.album} Albums, ${artistFetchType.single} Singles, Totally ${count} Songs`);
                 break;
             case "album":
                 Spicetify.showNotification(`Sorted ${count} Songs`);
                 break;
         }
-        albumsCount = 0;
-        singlesCount = 0;
+        artistFetchType.album = 0;
+        artistFetchType.single = 0;
     }
 
     async function fetchAndPlay(type, uri, mode, platform) {
@@ -516,7 +810,7 @@ async function initSortByPlay() {
                     break;
             }
 
-            await Queue(await sortByPlay(list, mode), `spotify:${type}:${uri}`, type);
+            await Queue(await sortByPlayForQueue(list, mode), `spotify:${type}:${uri}`, type);
         } catch (error) {
             Spicetify.showNotification(`${error}`);
             console.log(error);
