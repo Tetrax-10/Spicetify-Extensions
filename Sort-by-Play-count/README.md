@@ -18,6 +18,9 @@ Sorted Songs just get Added to Queue, you can even create a playlist by `Ctrl+A`
 
 ![Artist Demo](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Sort-by-Play-count/artist.gif)
 
+
+![Options Menu](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Sort-by-Play-count/options.gif)
+
 <br />
 
 ## Need to Connect Spotify and Last.FM for Personal Scrobbles to Work (Optional Step)
