@@ -22,6 +22,10 @@ Sort Playlists, All songs of a Artist, Albums by :
 
 ![Options Menu](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Sort-by-Play-count/options.gif)
 
+## Sort By Play Count 2.3 Menu Bar
+
+<img src="https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Sort-by-Play-count/options.png" alt="Your image title" width="400" height="640" />
+
 <br />
 
 ## Need to Connect Spotify and Last.FM for Personal Scrobbles to Work (Optional Step)
