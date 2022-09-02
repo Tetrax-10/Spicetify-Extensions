@@ -26,11 +26,11 @@ Sort Playlists, All songs of a Artist, Albums by :
 
 ## Need to Connect Spotify and Last.FM for Personal Scrobbles to Work (Optional Step)
 
-Step 1 : Make a [Last.FM Account](https://www.last.fm/join)
+Step 1 : Create a [Last.FM Account](https://www.last.fm/join)
 
-Step 2 : Connect [Spotify Scrobbling](https://www.last.fm/settings/applications)
+Step 2 : After Creating a last.FM Account just Connect with [Spotify Scrobbling](https://www.last.fm/settings/applications)
 
-Step 3 : Paste your `UserName` in Spotify by going to User (on top right) -> Sort By Play Count -> Register Username
+Step 3 : Then Paste your `UserName` in Spotify by going to User (on top right) -> Sort By Play Count -> Login with Last.FM
 
 ![lastfm Demo](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Sort-by-Play-count/lastfm.gif)
 
