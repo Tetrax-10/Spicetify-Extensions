@@ -444,6 +444,7 @@ async function initSortByPlay() {
         switch (uriObj.type) {
             case Type.PLAYLIST:
             case Type.PLAYLIST_V2:
+            case Type.ARTIST:
                 return true;
         }
         return false;
@@ -640,7 +641,7 @@ async function initSortByPlay() {
         return filteredTrack;
     }
 
-    async function fetchPlaylistTracksSpotifyAPI(uri) {
+    async function fetchPlaylistTracksReleaseDateSpotifyAPI(uri) {
         let playlistRes = await Spicetify.CosmosAsync.get(`sp://core-playlist/v1/playlist/spotify:playlist:${uri}/rows`);
 
         let idString = "";
@@ -682,21 +683,25 @@ async function initSortByPlay() {
 
     async function scanForTracksFromAlbums(res, allCount, artistName, mode, type) {
         let allTracks = [];
+
         for (let albums of res) {
             let albumsRes;
 
             try {
-                if (!albums.discs) {
-                    albumsRes = await Spicetify.CosmosAsync.get(`wg://album/v1/album-app/album/${albums.uri}/desktop`);
-                } else {
+                if (albums.discs) {
                     albumsRes = albums;
+                } else {
+                    albumsRes = await Spicetify.CosmosAsync.get(`wg://album/v1/album-app/album/${albums.uri}/desktop`);
                 }
             } catch (error) {}
 
             artistFetchTypeCount[type]++;
             Spicetify.showNotification(`${artistFetchTypeCount[type]} / ${allCount} ${type}s`);
-            for (let tracks of albumsRes.discs) {
-                for (let track of tracks.tracks) {
+
+            let releaseDate = `${albumsRes.year ? albumsRes.year : ""}${albumsRes.month ? "-" + albumsRes.month : ""}${albumsRes.day ? "-" + albumsRes.day : ""}`;
+
+            for (let disc of albumsRes.discs) {
+                for (let track of disc.tracks) {
                     let condition = true;
                     if (CONFIG.artistNameMust) {
                         let artists = track.artists.map((artist) => artist.name);
@@ -704,12 +709,15 @@ async function initSortByPlay() {
                             condition = false;
                         }
                     }
+
+                    mode = mode == "releaseDate" ? "uri" : mode;
                     if (track.playable && track[mode] && condition) {
-                        allTracks.push({ playCount: track.playcount, popularity: track.popularity, duration: track.duration, link: track.uri, name: track.name, artist: track.artists[0].name });
+                        allTracks.push({ playCount: track.playcount, popularity: track.popularity, duration: track.duration, link: track.uri, name: track.name, artist: track.artists[0].name, releaseDate: releaseDate });
                     }
                 }
             }
         }
+
         return allTracks;
     }
 
@@ -731,16 +739,11 @@ async function initSortByPlay() {
             mode = "playcount";
         }
 
-        if (allAlbumsCount != 0 && CONFIG.artistMode == "album") {
+        if (allAlbumsCount != 0 && CONFIG.artistMode != "single") {
             allArtistAlbumsTracks = await scanForTracksFromAlbums(artistAlbums.releases, allAlbumsCount, artistName, mode, "album");
         }
 
-        if (allSinglesCount != 0 && CONFIG.artistMode == "single") {
-            allArtistSinglesTracks = await scanForTracksFromAlbums(artistSingles.releases, allSinglesCount, artistName, mode, "single");
-        }
-
-        if ((allAlbumsCount != 0 || allSinglesCount != 0) && CONFIG.artistMode == "all") {
-            allArtistAlbumsTracks = await scanForTracksFromAlbums(artistAlbums.releases, allAlbumsCount, artistName, mode, "album");
+        if (allSinglesCount != 0 && CONFIG.artistMode != "album") {
             allArtistSinglesTracks = await scanForTracksFromAlbums(artistSingles.releases, allSinglesCount, artistName, mode, "single");
         }
 
@@ -786,13 +789,15 @@ async function initSortByPlay() {
         }
 
         for (let artistTrack of artistRes.item) {
-            // goto
             if (mode != "popularity") {
                 currentTrack++;
                 Spicetify.showNotification(`${currentTrack} / ${totalTrackCount} Songs`);
+
                 let artistTrackMetaData = artistTrack.trackMetadata;
+
                 if (artistTrackMetaData.playable && !artistTrackMetaData.isLocal && !trackHistory.includes(artistTrackMetaData.album.link)) {
                     let albumRes = await Spicetify.CosmosAsync.get(`wg://album/v1/album-app/album/${artistTrackMetaData.album.link.split(":")[2]}/desktop`);
+
                     for (let tracks of albumRes.discs) {
                         for (let track of tracks.tracks) {
                             allTracks.push(track);
@@ -808,6 +813,7 @@ async function initSortByPlay() {
                 }
             } else {
                 let playlistTrack = artistTrack.trackMetadata;
+
                 if (playlistTrack.link.split(":")[1] == "track" && !playlistTrack.isLocal && playlistTrack.playable && playlistTrack.popularity) {
                     filteredTrack.push({ popularity: playlistTrack.popularity, link: playlistTrack.link, name: playlistTrack.name, artist: playlistTrack.artist[0].name });
                 }
@@ -973,6 +979,7 @@ async function initSortByPlay() {
     async function fetchAlbumTracksLastfm(uri, mode) {
         let res = await Spicetify.CosmosAsync.get(`wg://album/v1/album-app/album/${uri}/desktop`);
         let availables;
+
         for (let disc of res.discs) {
             availables = disc.tracks.filter((track) => track.playable);
         }
@@ -1092,7 +1099,7 @@ async function initSortByPlay() {
                 case Type.PLAYLIST + "spotify":
                 case Type.PLAYLIST_V2 + "spotify":
                     if (mode == "releaseDate") {
-                        list = await fetchPlaylistTracksSpotifyAPI(uri, mode);
+                        list = await fetchPlaylistTracksReleaseDateSpotifyAPI(uri);
                         break;
                     }
                     list = await fetchPlaylistTracksSpotify(uri, mode);
