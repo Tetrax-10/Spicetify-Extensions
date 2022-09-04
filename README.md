@@ -6,17 +6,21 @@ Some Use Full Extension Developed by a Music Lover.
 
 Sort Playlists, All songs of a Artist, Albums by :
 
-* Play Count using Spotify and Last.FM
+![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Sort-by-Play-count/screenshot.png)
 
-* Scrobbles - How many times every single listener has listened to that song
+-   Play Count (Spotify's Playcount)
 
-* Personal Scrobbles - How many times you have listened to that song
+-   Popularity (Spotify's Popularity) (Trending)
 
-Sorted Songs just get Added to Queue, you can even create a playlist by `Ctrl+A` and drag and drop songs to the playlist from Queue
+-   Release Date (Latest and Oldest Supported)
+
+-   Scrobbles - How many times every single listener has listened to that song (Last.FM)
+
+-   Personal Scrobbles - How many times you have listened to that song (Last.FM with Login)
+
+-   Play Count (lastFM's Playcount)
 
 <br />
-
-![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Sort-by-Play-count/screenshot.png)
 
 ## Get it on [Spicetify Marketplace](https://github.com/spicetify/spicetify-marketplace) or [Manually](https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Sort-by-Play-count)
 
