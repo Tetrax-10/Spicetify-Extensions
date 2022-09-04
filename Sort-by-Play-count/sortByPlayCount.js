@@ -1064,6 +1064,11 @@ async function initSortByPlay() {
                 break;
 
             case Type.ARTIST:
+                if (mode == "releaseDate") {
+                    let string = CONFIG.ascending ? "Oldest" : "Latest";
+                    Spicetify.showNotification(`${string} ${count} Songs`);
+                    break;
+                }
                 if (CONFIG.artistMode == "topTen") {
                     Spicetify.showNotification(`Sorted Top ${count} Songs`);
                     break;
