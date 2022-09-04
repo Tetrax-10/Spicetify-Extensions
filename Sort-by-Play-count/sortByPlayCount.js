@@ -3,7 +3,7 @@
 // NAME: Sort By Play Count
 // AUTHOR: Tetrax-10
 // DESCRIPTION: Sorts Songs by Play Count, Popularity, Global Scrobbles, Personal Scrobbles Using Spotify and Last.FM
-// Version: 2.3
+// Version: 2.4
 
 /// <reference path="../globals.d.ts" />
 
@@ -438,6 +438,17 @@ async function initSortByPlay() {
         return false;
     }
 
+    // Release date
+    function shouldAddSpotifyReleaseDate(uri) {
+        let uriObj = Spicetify.URI.fromString(uri[0]);
+        switch (uriObj.type) {
+            case Type.PLAYLIST:
+            case Type.PLAYLIST_V2:
+                return true;
+        }
+        return false;
+    }
+
     // Scrobbles
     function shouldAddLastFmScrobbles(uri) {
         let uriObj = Spicetify.URI.fromString(uri[0]);
@@ -520,6 +531,18 @@ async function initSortByPlay() {
         "heart"
     );
 
+    let releaseDateItemSpotify = new Spicetify.ContextMenu.Item(
+        "Release Date",
+        async (rawUri) => {
+            let uriInfo = rawUri[0].split(":");
+            let type = uriInfo[1];
+            let uri = uriInfo[2];
+            await fetchAndPlay(type, uri, "releaseDate", "spotify");
+        },
+        shouldAddSpotifyReleaseDate,
+        "list-view"
+    );
+
     let scrobblesItemLastFM = new Spicetify.ContextMenu.Item(
         "Scrobbles",
         async (rawUri) => {
@@ -561,16 +584,16 @@ async function initSortByPlay() {
         "subtitles"
     );
 
-    new Spicetify.ContextMenu.SubMenu("Sort by", [playCountItemSpotify, popularityItemSpotify, scrobblesItemLastFM, personalScrobblesItemLastFM, playCountItemLastFM], shouldAddContextMenu, false).register();
+    new Spicetify.ContextMenu.SubMenu("Sort by", [playCountItemSpotify, popularityItemSpotify, releaseDateItemSpotify, scrobblesItemLastFM, personalScrobblesItemLastFM, playCountItemLastFM], shouldAddContextMenu, false).register();
 
     async function fetchPlaylistTracksSpotify(uri, mode) {
-        let playlistRes = await Spicetify.Platform.PlaylistAPI.getContents(`spotify:playlist:${uri}`);
+        let playlistRes = await Spicetify.CosmosAsync.get(`sp://core-playlist/v1/playlist/spotify:playlist:${uri}/rows`);
 
         let trackHistory = [];
         let allTracks = [];
         let filteredTrack = [];
 
-        let totalTrackCount = playlistRes.items.length ? playlistRes.items.length : 0;
+        let totalTrackCount = playlistRes.rows.length ? playlistRes.rows.length : 0;
 
         if (totalTrackCount == 0) {
             Spicetify.showNotification(`${mode == "playcount" ? "Play Count" : mode} data not available! Try other options`);
@@ -583,22 +606,28 @@ async function initSortByPlay() {
             mode = "playcount";
         }
 
-        for (let playlistTrack of playlistRes.items) {
-            currentTrack++;
-            Spicetify.showNotification(`${currentTrack} / ${totalTrackCount} Songs`);
-            if (playlistTrack.type == "track" && playlistTrack.isPlayable && !playlistTrack.isLocal && !trackHistory.includes(playlistTrack.album.uri)) {
-                let albumRes = await Spicetify.CosmosAsync.get(`wg://album/v1/album-app/album/${playlistTrack.album.uri.split(":")[2]}/desktop`);
-                for (let tracks of albumRes.discs) {
-                    for (let track of tracks.tracks) {
-                        allTracks.push(track);
-                        trackHistory.push(playlistTrack.album.uri);
+        for (let playlistTrack of playlistRes.rows) {
+            if (mode != "popularity") {
+                currentTrack++;
+                Spicetify.showNotification(`${currentTrack} / ${totalTrackCount} Songs`);
+                if (playlistTrack.link.split(":")[1] == "track" && playlistTrack.playable && !playlistTrack.isLocal && !trackHistory.includes(playlistTrack.album.link)) {
+                    let albumRes = await Spicetify.CosmosAsync.get(`wg://album/v1/album-app/album/${playlistTrack.album.link.split(":")[2]}/desktop`);
+                    for (let tracks of albumRes.discs) {
+                        for (let track of tracks.tracks) {
+                            allTracks.push(track);
+                            trackHistory.push(playlistTrack.album.link);
+                        }
                     }
                 }
-            }
 
-            for (let track of allTracks) {
-                if (playlistTrack.uri == track.uri && track[mode]) {
-                    filteredTrack.push({ playCount: track.playcount, popularity: track.popularity, link: track.uri, name: track.name, artist: track.artists[0].name });
+                for (let track of allTracks) {
+                    if (playlistTrack.link == track.uri && track[mode]) {
+                        filteredTrack.push({ playCount: track.playcount, popularity: track.popularity, link: track.uri, name: track.name, artist: track.artists[0].name });
+                    }
+                }
+            } else {
+                if (playlistTrack.link.split(":")[1] == "track" && !playlistTrack.isLocal && playlistTrack.playable && playlistTrack.popularity) {
+                    filteredTrack.push({ popularity: playlistTrack.popularity, link: playlistTrack.link, name: playlistTrack.name, artist: playlistTrack.artists[0].name });
                 }
             }
         }
@@ -609,6 +638,44 @@ async function initSortByPlay() {
         }
 
         return filteredTrack;
+    }
+
+    async function fetchPlaylistTracksSpotifyAPI(uri) {
+        let playlistRes = await Spicetify.CosmosAsync.get(`sp://core-playlist/v1/playlist/spotify:playlist:${uri}/rows`);
+
+        let idString = "";
+        let count = 0;
+        for (let track of playlistRes.rows) {
+            let info = track.link.split(":");
+            if (track.playable && !track.isLocal && info[1] == "track") {
+                if (count) {
+                    idString += ",";
+                }
+                idString += info[2];
+                count++;
+                if (count == 50) {
+                    idString += "|";
+                    count = 0;
+                }
+            }
+        }
+
+        let requestArray = idString ? idString.split("|") : [];
+
+        let resRawArray = [];
+
+        for (let apiString of requestArray) {
+            if (apiString.length) {
+                let rawRes = await Spicetify.CosmosAsync.get(`https://api.spotify.com/v1/tracks?ids=${apiString}`);
+                for (let track of rawRes.tracks) {
+                    if (track.album.release_date) {
+                        resRawArray.push({ releaseDate: track.album.release_date, link: track.uri, name: track.name, artist: track.artists[0].name });
+                    }
+                }
+            }
+        }
+
+        return resRawArray;
     }
 
     let artistFetchTypeCount = { album: 0, single: 0 };
@@ -699,7 +766,6 @@ async function initSortByPlay() {
     }
 
     async function fetchArtistLikedTracksSpotify(uri, mode) {
-        // go here
         let artistRes = await Spicetify.CosmosAsync.get(`sp://core-collection/unstable/@/list/tracks/artist/${uri}?responseFormat=protobufJson`);
 
         let trackHistory = [];
@@ -720,22 +786,30 @@ async function initSortByPlay() {
         }
 
         for (let artistTrack of artistRes.item) {
-            currentTrack++;
-            Spicetify.showNotification(`${currentTrack} / ${totalTrackCount} Songs`);
-            let artistTrackMetaData = artistTrack.trackMetadata;
-            if (artistTrackMetaData.playable && !artistTrackMetaData.isLocal && !trackHistory.includes(artistTrackMetaData.album.link)) {
-                let albumRes = await Spicetify.CosmosAsync.get(`wg://album/v1/album-app/album/${artistTrackMetaData.album.link.split(":")[2]}/desktop`);
-                for (let tracks of albumRes.discs) {
-                    for (let track of tracks.tracks) {
-                        allTracks.push(track);
-                        trackHistory.push(artistTrackMetaData.album.link);
+            // goto
+            if (mode != "popularity") {
+                currentTrack++;
+                Spicetify.showNotification(`${currentTrack} / ${totalTrackCount} Songs`);
+                let artistTrackMetaData = artistTrack.trackMetadata;
+                if (artistTrackMetaData.playable && !artistTrackMetaData.isLocal && !trackHistory.includes(artistTrackMetaData.album.link)) {
+                    let albumRes = await Spicetify.CosmosAsync.get(`wg://album/v1/album-app/album/${artistTrackMetaData.album.link.split(":")[2]}/desktop`);
+                    for (let tracks of albumRes.discs) {
+                        for (let track of tracks.tracks) {
+                            allTracks.push(track);
+                            trackHistory.push(artistTrackMetaData.album.link);
+                        }
                     }
                 }
-            }
 
-            for (let track of allTracks) {
-                if (artistTrackMetaData.link == track.uri && track[mode]) {
-                    filteredTrack.push({ playCount: track.playcount, popularity: track.popularity, link: track.uri, name: track.name, artist: track.artists[0].name });
+                for (let track of allTracks) {
+                    if (artistTrackMetaData.link == track.uri && track[mode]) {
+                        filteredTrack.push({ playCount: track.playcount, popularity: track.popularity, link: track.uri, name: track.name, artist: track.artists[0].name });
+                    }
+                }
+            } else {
+                let playlistTrack = artistTrack.trackMetadata;
+                if (playlistTrack.link.split(":")[1] == "track" && !playlistTrack.isLocal && playlistTrack.playable && playlistTrack.popularity) {
+                    filteredTrack.push({ popularity: playlistTrack.popularity, link: playlistTrack.link, name: playlistTrack.name, artist: playlistTrack.artist[0].name });
                 }
             }
         }
@@ -922,13 +996,19 @@ async function initSortByPlay() {
     }
 
     async function sortByPlayForQueue(unsortedArray, mode) {
-        let sortedArray = await unsortedArray.filter((item) => item).sort((item1, item2) => item2[mode] - item1[mode]);
+        let sortedArray;
+
+        if (mode == "releaseDate") {
+            sortedArray = await unsortedArray.sort((track1, track2) => (track1.releaseDate < track2.releaseDate ? 1 : -1));
+        } else {
+            sortedArray = await unsortedArray.filter((track) => track).sort((track1, track2) => track2[mode] - track1[mode]);
+        }
 
         if (CONFIG.ascending) {
             sortedArray.reverse();
         }
 
-        // console.log(mode, sortedArray); // enable to see what you gonna hear
+        // console.log(mode, await sortedArray); // enable to see what you gonna hear
 
         sortedArray.push({ link: "spotify:delimiter" });
         sortedArray = sortedArray.map((item) => ({
@@ -939,10 +1019,10 @@ async function initSortByPlay() {
             },
         }));
 
-        return sortedArray;
+        return await sortedArray;
     }
 
-    async function Queue(sortedArray, context, type) {
+    async function Queue(sortedArray, context, type, mode) {
         let count = sortedArray.length - 1;
         if (count == 0) {
             return;
@@ -968,6 +1048,11 @@ async function initSortByPlay() {
         switch (type) {
             case Type.PLAYLIST:
             case Type.PLAYLIST_V2:
+                if (mode == "releaseDate") {
+                    let string = CONFIG.ascending ? "Oldest" : "Latest";
+                    Spicetify.showNotification(`${string} ${count} Songs`);
+                    break;
+                }
                 Spicetify.showNotification(`Sorted ${count} Songs`);
                 break;
 
@@ -1006,6 +1091,10 @@ async function initSortByPlay() {
             switch (type + platform) {
                 case Type.PLAYLIST + "spotify":
                 case Type.PLAYLIST_V2 + "spotify":
+                    if (mode == "releaseDate") {
+                        list = await fetchPlaylistTracksSpotifyAPI(uri, mode);
+                        break;
+                    }
                     list = await fetchPlaylistTracksSpotify(uri, mode);
                     break;
                 case Type.PLAYLIST + "lastfm":
@@ -1037,7 +1126,7 @@ async function initSortByPlay() {
 
             let sortedSongs = await sortByPlayForQueue(list, mode);
 
-            await Queue(await sortedSongs, `spotify:${type}:${uri}`, type);
+            await Queue(await sortedSongs, `spotify:${type}:${uri}`, type, mode);
         } catch (error) {
             Spicetify.showNotification(`${error}`);
             console.log(error);

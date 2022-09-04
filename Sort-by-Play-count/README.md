@@ -2,23 +2,23 @@
 
 <br />
 
-
 Sort Playlists, All songs of a Artist, Albums by :
 
 ![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Sort-by-Play-count/screenshot.png)
 
-* Play Count (Spotify's Playcount)
+-   Play Count (Spotify's Playcount)
 
-* Popularity (Spotify's Popularity) (Trending)
+-   Popularity (Spotify's Popularity) (Trending)
 
-* Scrobbles - How many times every single listener has listened to that song (Last.FM)
+-   Release Date (Latest and Oldest Supported)
 
-* Personal Scrobbles - How many times you have listened to that song (Last.FM with Login)
+-   Scrobbles - How many times every single listener has listened to that song (Last.FM)
 
-* Play Count (lastFM's Playcount)
+-   Personal Scrobbles - How many times you have listened to that song (Last.FM with Login)
+
+-   Play Count (lastFM's Playcount)
 
 ![Artist Demo](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Sort-by-Play-count/artist.gif)
-
 
 ![Options Menu](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Sort-by-Play-count/options.gif)
 
@@ -51,14 +51,16 @@ Step 3 : Search `Sort By Play Count` Click Install Buttton. Done!
 <br />
 
 ## Install Manually (Recommended)
+
 Copy `sortByPlayCount.js` into your [Spicetify](https://github.com/spicetify/spicetify-cli) extensions directory:
-| **Platform** | **Path**                                                                            |
+| **Platform** | **Path** |
 |------------|-----------------------------------------------------------------------------------|
-| **Linux**      | `~/.config/spicetify/Extensions` or `$XDG_CONFIG_HOME/.config/spicetify/Extensions/` |
-| **MacOS**      | `~/spicetify_data/Extensions` or `$SPICETIFY_CONFIG/Extensions`                      |
-| **Windows**    | `%appdata%\spicetify\Extensions`                                              |
+| **Linux** | `~/.config/spicetify/Extensions` or `$XDG_CONFIG_HOME/.config/spicetify/Extensions/` |
+| **MacOS** | `~/spicetify_data/Extensions` or `$SPICETIFY_CONFIG/Extensions` |
+| **Windows** | `%appdata%\spicetify\Extensions` |
 
 After putting the extension file into the correct folder, run the following command to install the extension:
+
 ```
 spicetify config extensions sortByPlayCount.js
 spicetify apply
@@ -67,9 +69,11 @@ spicetify apply
 <br />
 
 # Credits
+
 [@LucasBares](https://github.com/LucasBares) for Last.FM Register PopupModal
 
 ## Support
+
 🌟 Like it? Gimme Some Love ! 💕
 
 [![Github Stars badge](https://img.shields.io/github/stars/Tetrax-10/Spicetify-Extensions?logo=github&style=social)](https://github.com/Tetrax-10/Spicetify-Extensions)
