@@ -9,7 +9,7 @@
 
 let sortByPlayCount = 0;
 (async function sortByPlay() {
-    if (!(Spicetify.Platform && Spicetify.React && sortByPlayCount < 200)) {
+    if (!(Spicetify.Platform && Spicetify.React) && sortByPlayCount < 200) {
         setTimeout(sortByPlay, 300);
         sortByPlayCount++;
         return;
