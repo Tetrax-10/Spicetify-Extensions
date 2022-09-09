@@ -38,6 +38,16 @@ Step 3 : Then Paste your `UserName` in Spotify by going to User (on top right) -
 
 ![lastfm Demo](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Sort-by-Play-count/lastfm.gif)
 
+## Create Sorted Playlist
+
+Step 1 : Enable Queue in Settings
+
+Step 2 : Sort any Songs in any Page
+
+Step 3 : Open Queue and drag and drop those songs in any playlist you like
+
+![lastfm Sort Demo](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Sort-by-Play-count/create-sorted-playlist.gif)
+
 <br />
 
 ## Get it on Spicetify Marketplace
