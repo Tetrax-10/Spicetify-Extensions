@@ -78,12 +78,6 @@ spicetify config extensions sortByPlayCount.js
 spicetify apply
 ```
 
-<br />
-
-# Credits
-
-[@LucasBares](https://github.com/LucasBares) for Last.FM Register PopupModal
-
 ## Support
 
 🌟 Like it? Gimme Some Love ! 💕
