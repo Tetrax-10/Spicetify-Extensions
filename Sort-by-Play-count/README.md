@@ -2,9 +2,9 @@
 
 <br />
 
-Sort Playlists, All songs of a Artist, Albums by :
-
 ![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Sort-by-Play-count/screenshot.png)
+
+Sort Playlists, All songs of a Artist, Albums by :
 
 -   Play Count (Spotify's Playcount)
 
@@ -20,9 +20,9 @@ Sort Playlists, All songs of a Artist, Albums by :
 
 ![Artist Demo](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Sort-by-Play-count/artist.gif)
 
-![Options Menu](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Sort-by-Play-count/options.gif)
+![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Sort-by-Play-count/release-notes.png)
 
-## Sort By Play Count 2.3 Menu Bar
+## Sort By Play Count 2.6 Menu Bar
 
 <img src="https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Sort-by-Play-count/options.png" alt="Your image title" width="400" height="640" />
 
@@ -40,13 +40,11 @@ Step 3 : Then Paste your `UserName` in Spotify by going to User (on top right) -
 
 ## Create Sorted Playlist
 
-Step 1 : Enable Queue in Settings
+Step 1 : Sort Songs in any Page
 
-Step 2 : Sort Songs in any Page
+Step 2 : Click the `+` Button on Top Bar
 
-Step 3 : Open Queue and drag and drop first song (currently playing) to the playlist
-
-Step 4 : Then drag and drop the rest by selecting all songs (CTRL+A)
+Step 3 : The Sorted Playlist Folder will be contain all sorted playlists
 
 ![lastfm Sort Demo](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Sort-by-Play-count/create-sorted-playlist.gif)
 

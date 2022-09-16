@@ -3,7 +3,7 @@
 // NAME: Sort By Play Count
 // AUTHOR: Tetrax-10
 // DESCRIPTION: Sorts Songs by Play Count, Popularity, Release date, Global Scrobbles, Personal Scrobbles Using Spotify and Last.FM
-// Version: 2.5
+// Version: 2.6
 
 /// <reference path="../globals.d.ts" />
 
@@ -56,7 +56,20 @@ async function initSortByPlay() {
             throw "Config error Sort By Play Count";
         } catch {
             await setLocalStorageDataWithKey("sortByPlayCount:settings", `{}`);
-            return { myScrobbles: true, lastfmPlayCount: false, ascending: false, queue: false, artistMode: "all", removeDuplicate: true, artistNameMust: false, lastFmUserName: "" };
+            // default settings
+            return {
+                myScrobbles: true,
+                lastfmPlayCount: false,
+                ascending: false,
+                queue: false,
+                isPrivate: true,
+                artistMode: "all",
+                removeDuplicate: true,
+                artistNameMust: false,
+                lastFmUserName: "",
+                version: 1.0,
+                releaseNotes: true,
+            };
         }
     }
 
@@ -103,7 +116,7 @@ async function initSortByPlay() {
                     visibility: hidden;
                 }
                 .popup-row .info {
-                    font-size: 13px;
+                    /* font-size: 13px; */
                 }
                 .popup-row .demo {
                     font-size: 13px;
@@ -154,6 +167,13 @@ async function initSortByPlay() {
                     margin: 10px;
                     padding: 5px 10px;
                     text-align: center;
+                }
+                .green {
+                    background-color: #6BCB77;
+                    color: #25316D;
+                }
+                .red {
+                    background-color: #bf616a;
                 }`
     );
 
@@ -165,8 +185,19 @@ async function initSortByPlay() {
             React.createElement(
                 "div",
                 { className: "popup-row" },
-                React.createElement("p", { className: "col description" }, "With Last.FM Integration you can now sort your top songs (your personal play count) with help of this extension. This extension can sort playlists, albums, even artist page with LastFM."),
-                React.createElement("a", { href: "https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Sort-by-Play-count#need-to-connect-spotify-and-lastfm-for-personal-scrobbles-to-work-optional-step", className: "demo" }, "Click for demo")
+                React.createElement(
+                    "p",
+                    { className: "col description" },
+                    "With Last.FM Integration you can now sort your top songs (your personal play count) with help of this extension. This extension can sort playlists, albums, even artist page with LastFM."
+                ),
+                React.createElement(
+                    "a",
+                    {
+                        href: "https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Sort-by-Play-count#need-to-connect-spotify-and-lastfm-for-personal-scrobbles-to-work-optional-step",
+                        className: "demo",
+                    },
+                    "Click for demo"
+                )
             ),
             React.createElement(
                 "div",
@@ -175,11 +206,16 @@ async function initSortByPlay() {
                 React.createElement("p", { className: "popup-row" }, React.createElement("p", null, "Enter your Last.FM Username :")),
                 React.createElement("div", { className: "little-space" }, null),
                 React.createElement("div", { className: "little-space" }, null),
-                React.createElement("p", { className: "popup-row" }, React.createElement("input", { className: "inputbox", placeholder: CONFIG.lastFmUserName ? CONFIG.lastFmUserName : "Last.FM Username", required: true })),
+                React.createElement(
+                    "p",
+                    { className: "popup-row" },
+                    React.createElement("input", { className: "inputbox", placeholder: CONFIG.lastFmUserName ? CONFIG.lastFmUserName : "Last.FM Username", required: true })
+                ),
                 React.createElement("div", { className: "little-space" }, null),
                 React.createElement("div", { className: "little-space" }, null),
                 React.createElement(ButtonItem, {
                     name: "Save",
+                    color: " green",
                     onclickFun: async () => {
                         let name = document.querySelector(".popup-row .inputbox").value.replace(/\n/g, "");
 
@@ -275,11 +311,11 @@ async function initSortByPlay() {
         );
     }
 
-    function ButtonItem({ name, onclickFun }) {
+    function ButtonItem({ name, color = "", onclickFun }) {
         return React.createElement(
             "button",
             {
-                className: "login-button",
+                className: `login-button${color}`,
                 onClick: async () => {
                     onclickFun();
                 },
@@ -295,12 +331,14 @@ async function initSortByPlay() {
             style,
             React.createElement(ButtonItem, {
                 name: "Restart Now",
+                color: " red",
                 onclickFun: async () => {
                     await Spicetify.CosmosAsync.post("sp://desktop/v1/restart");
                 },
             }),
             React.createElement(ButtonItem, {
                 name: "Restart Later",
+                color: " green",
                 onclickFun: async () => {
                     Spicetify.PopupModal.hide();
                 },
@@ -327,6 +365,9 @@ async function initSortByPlay() {
             name: "Last.FM Play Count",
             field: "lastfmPlayCount",
         }),
+        React.createElement("div", { className: "popup-row" }, React.createElement("hr", { className: "space" }, null)),
+        React.createElement("div", { className: "popup-row" }, React.createElement("h3", { className: "div-title" }, "Sort Settings")),
+        React.createElement("div", { className: "popup-row" }, React.createElement("hr", { className: "divider" }, null)),
         React.createElement(checkBoxItem, {
             name: "Ascending Order",
             field: "ascending",
@@ -335,9 +376,15 @@ async function initSortByPlay() {
             name: "Add to Queue",
             field: "queue",
         }),
-        React.createElement("div", { className: "popup-row" }, React.createElement("span", { className: "info" }, "If queue is enabled you can drag and drop sorted songs to a Playlist"), React.createElement("a", { href: "https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Sort-by-Play-count#create-sorted-playlist", className: "demo" }, " (Click for demo)")),
         React.createElement("div", { className: "popup-row" }, React.createElement("hr", { className: "space" }, null)),
-        React.createElement("div", { className: "popup-row" }, React.createElement("h3", { className: "div-title" }, "Artist Sort")),
+        React.createElement("div", { className: "popup-row" }, React.createElement("h3", { className: "div-title" }, "Create Playlist Settings")),
+        React.createElement("div", { className: "popup-row" }, React.createElement("hr", { className: "divider" }, null)),
+        React.createElement(checkBoxItem, {
+            name: "Sorted Playlist Private",
+            field: "isPrivate",
+        }),
+        React.createElement("div", { className: "popup-row" }, React.createElement("hr", { className: "space" }, null)),
+        React.createElement("div", { className: "popup-row" }, React.createElement("h3", { className: "div-title" }, "Artist Sort Settings")),
         React.createElement("div", { className: "popup-row" }, React.createElement("hr", { className: "divider" }, null)),
         React.createElement(dropDownItem, {
             name: "What to Play in Artist Page",
@@ -359,8 +406,16 @@ async function initSortByPlay() {
             field: "artistNameMust",
         }),
         React.createElement("div", { className: "popup-row" }, React.createElement("hr", { className: "space" }, null)),
+        React.createElement("div", { className: "popup-row" }, React.createElement("h3", { className: "div-title" }, "Release Notes Settings")),
+        React.createElement("div", { className: "popup-row" }, React.createElement("hr", { className: "divider" }, null)),
+        React.createElement(checkBoxItem, {
+            name: "Release Notes",
+            field: "releaseNotes",
+        }),
+        React.createElement("div", { className: "popup-row" }, React.createElement("hr", { className: "space" }, null)),
         React.createElement(ButtonItem, {
             name: "Login with Last.FM",
+            color: " green",
             onclickFun: () => {
                 Spicetify.PopupModal.hide();
                 setTimeout(setLastFmUsername, 300);
@@ -378,6 +433,64 @@ async function initSortByPlay() {
         Spicetify.PopupModal.display({
             title: "Sort By Play Count",
             content: settingsDOMContent,
+            isLarge: true,
+        });
+    }
+
+    if (CONFIG.version < 2.6 && CONFIG.releaseNotes) {
+        let releaseNotes = React.createElement(
+            "div",
+            null,
+            style,
+            React.createElement("div", { className: "popup-row" }, React.createElement("span", { className: "info" }, "1) Added Release Notes 😍")),
+            React.createElement("div", { className: "popup-row" }, React.createElement("hr", { className: "space" }, null)),
+            React.createElement(
+                "div",
+                { className: "popup-row" },
+
+                React.createElement("span", { className: "info" }, "2) Now you can add Sorted Songs To Playlist. See Top Bar 🥰"),
+                React.createElement("a", { href: "https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Sort-by-Play-count#create-sorted-playlist", className: "demo" }, " (Click for demo)")
+            ),
+            React.createElement("div", { className: "popup-row" }, React.createElement("hr", { className: "space" }, null)),
+            React.createElement("div", { className: "popup-row" }, React.createElement("span", { className: "info" }, "3) Added More Settings to the Settings Page ⚙️")),
+            React.createElement("div", { className: "popup-row" }, React.createElement("hr", { className: "space" }, null)),
+            React.createElement(
+                "div",
+                { className: "popup-row" },
+                React.createElement("span", { className: "info" }, "4) Now you can add Sorted Songs to Queue. This Supports Multi-Device (Enable it in Settings Page) 🤩")
+            ),
+            React.createElement(ButtonItem, {
+                name: "Close 🥰",
+                color: " green",
+                onclickFun: () => {
+                    Spicetify.PopupModal.hide();
+                },
+            }),
+            React.createElement(ButtonItem, {
+                name: "Like on GitHub 👍",
+                onclickFun: () => {
+                    window.open("https://github.com/Tetrax-10/Spicetify-Extensions");
+                },
+            }),
+            React.createElement(ButtonItem, {
+                name: "Never Show Release Notes 😔",
+                color: " red",
+                onclickFun: async () => {
+                    CONFIG.releaseNotes = false;
+                    await saveConfig();
+                    Spicetify.PopupModal.hide();
+                    notification("You can re-enable Release Notes in Settings");
+                },
+            })
+        );
+
+        CONFIG.version = 2.6;
+        await saveConfig();
+
+        Spicetify.PopupModal.display({
+            title: "Sort By Play Count 2.6 Release Notes",
+            content: releaseNotes,
+            isLarge: true,
         });
     }
 
@@ -570,12 +683,113 @@ async function initSortByPlay() {
         "subtitles"
     );
 
-    new Spicetify.ContextMenu.SubMenu("Sort by", [playCountItemSpotify, popularityItemSpotify, releaseDateItemSpotify, scrobblesItemLastFM, personalScrobblesItemLastFM, playCountItemLastFM], shouldAddContextMenu, false).register();
+    new Spicetify.ContextMenu.SubMenu(
+        "Sort by",
+        [playCountItemSpotify, popularityItemSpotify, releaseDateItemSpotify, scrobblesItemLastFM, personalScrobblesItemLastFM, playCountItemLastFM],
+        shouldAddContextMenu,
+        false
+    ).register();
+
+    new Spicetify.Topbar.Button("Add Sorted Songs to Playlist", "plus2px", createSortedPlaylist);
 
     ////////////////////////////////////// Fetchers ///////////////////////////////////////////
 
+    async function createPlaylist(name, tracks, parentFolder = null) {
+        return await Spicetify.CosmosAsync.post("sp://core-playlist/v1/rootlist", {
+            operation: "create",
+            playlist: true,
+            uris: tracks,
+            name: name,
+            after: parentFolder,
+        });
+    }
+
+    async function makePlaylistPrivate(uri) {
+        setTimeout(async () => {
+            await Spicetify.CosmosAsync.post(`sp://core-playlist/v1/playlist/${uri}/set-base-permission`, {
+                permission_level: "BLOCKED",
+            });
+        }, 1000);
+    }
+
+    async function createFolder(name) {
+        await Spicetify.Platform.RootlistAPI.createFolder(name);
+    }
+
+    async function isFolderCreated() {
+        let root = await Spicetify.Platform.RootlistAPI.getContents();
+        let rated = await root.items.find((item) => item.type === "folder" && item.name === "Sorted Playlist");
+        return (await rated) ? rated.uid : false;
+    }
+
+    let name = "playlist";
+    function createItemName(itemName, platform, mode, type) {
+        let time = CONFIG.ascending ? "Oldest" : "Latest";
+        let personal = mode == "personalScrobbles" ? "My " : "";
+        let order = CONFIG.ascending ? "Least" : "Most";
+        let like = CONFIG.artistMode == "likedSongArtist" ? "Liked " : "";
+        let naming = platform == "spotify" ? (mode == "playcount" ? "Played" : "Popular") : mode == "scrobbles" ? "Scrobbled" : "Played";
+
+        switch (type) {
+            case Type.PLAYLIST:
+            case Type.PLAYLIST_V2:
+                if (mode == "releaseDate") {
+                    name = `${time} Songs from ${itemName}`;
+                    break;
+                }
+                name = `${personal}${order} ${naming} Songs from ${itemName}`;
+                break;
+
+            case Type.ARTIST:
+                if (mode == "releaseDate") {
+                    name = `${time} ${like}Songs from ${itemName}`;
+                    break;
+                }
+                if (CONFIG.artistMode == "topTen") {
+                    name = `Top 10 Songs of ${itemName}`;
+                    break;
+                }
+                if (CONFIG.artistMode == "single") {
+                    name = `${order} ${naming} Singles from ${itemName}`;
+                    break;
+                }
+                if (CONFIG.artistMode == "album") {
+                    name = `${order} ${naming} Album Songs from ${itemName}`;
+                    break;
+                }
+                if (CONFIG.artistMode == "likedSongArtist") {
+                    name = `${personal}${order} ${naming} Liked Songs from ${itemName}`;
+                    break;
+                }
+                name = `${order} ${naming} Songs from ${itemName}`;
+                break;
+            case Type.ALBUM:
+                name = `${personal}${order} ${naming} Songs from ${itemName} Album`;
+                break;
+        }
+    }
+
+    async function createSortedPlaylist() {
+        let folderID = await isFolderCreated();
+        if (folderID) {
+            try {
+                let playlistSongs = sortedSongs.filter((item) => item.link != "spotify:delimiter").map((item) => item.link);
+                let { uri } = await createPlaylist(name, playlistSongs, folderID);
+                if (CONFIG.isPrivate) {
+                    await makePlaylistPrivate(uri);
+                }
+                notification("Playlist Created");
+            } catch {
+                notification("Sort some Songs to Create a playlist");
+            }
+        } else {
+            createFolder("Sorted Playlist");
+            createSortedPlaylist();
+        }
+    }
+
     // Sort by "Play Count" or "Popularity" in Playlist Page - Platform Spotify
-    async function fetchPlaylistTracksSpotify(uri, mode, name) {
+    async function fetchPlaylistTracksSpotify(uri, mode, name, type, platform) {
         let playlistRes = await Spicetify.CosmosAsync.get(`sp://core-playlist/v1/playlist/spotify:playlist:${uri}/rows`);
 
         let trackHistory = [];
@@ -586,6 +800,7 @@ async function initSortByPlay() {
 
         if (totalTrackCount) {
             let currentTrack = 0;
+            createItemName((await Spicetify.Platform.PlaylistAPI.getMetadata(`spotify:playlist:${uri}`)).name, platform, mode, type);
 
             for (let playlistTrack of playlistRes.rows) {
                 if (mode != "popularity") {
@@ -621,7 +836,7 @@ async function initSortByPlay() {
     }
 
     // Sort by "Release Date" in Playlist Page and Artist Page (liked songs) - Platform Spotify API
-    async function fetchPlaylistTracksReleaseDateSpotifyAPI(uri = null, source = null) {
+    async function fetchPlaylistTracksReleaseDateSpotifyAPI(uri = null, source = null, mode = null, type = null, platform = null) {
         let playlistRes;
         let totalTrackCount;
         if (source) {
@@ -631,6 +846,7 @@ async function initSortByPlay() {
             playlistRes = (await Spicetify.CosmosAsync.get(`sp://core-playlist/v1/playlist/spotify:playlist:${uri}/rows`)).rows;
             totalTrackCount = playlistRes.length ? playlistRes.length : 0;
         }
+        createItemName((await Spicetify.Platform.PlaylistAPI.getMetadata(`spotify:playlist:${uri}`)).name, platform, mode, type);
 
         let resRawArray = [];
 
@@ -707,7 +923,15 @@ async function initSortByPlay() {
 
                     mode = mode == "releaseDate" ? "uri" : mode;
                     if (track.playable && track[mode] && condition) {
-                        allTracks.push({ playcount: track.playcount, popularity: track.popularity, duration: track.duration, link: track.uri, name: track.name, artist: track.artists[0].name, releaseDate: releaseDate });
+                        allTracks.push({
+                            playcount: track.playcount,
+                            popularity: track.popularity,
+                            duration: track.duration,
+                            link: track.uri,
+                            name: track.name,
+                            artist: track.artists[0].name,
+                            releaseDate: releaseDate,
+                        });
                     }
                 }
             }
@@ -717,7 +941,7 @@ async function initSortByPlay() {
     }
 
     // Fetch Artist all albums songs or all singles songs or even both - Platform Spotify
-    async function fetchArtistTracksSpotify(uri, mode, name) {
+    async function fetchArtistTracksSpotify(uri, mode, name, type, platform) {
         let artistRes = await Spicetify.CosmosAsync.get(`wg://artist/v1/${uri}/desktop?format=json`);
 
         let artistName = artistRes.info.name;
@@ -748,20 +972,25 @@ async function initSortByPlay() {
 
         if (CONFIG.removeDuplicate) {
             // sort the Songs by popularity so the original song will be on top of the array when compared to its duplicate songs
-            allArtistTracks = await sortByMode(allArtistTracks, "popularity");
+            allArtistTracks = await sortByMode(allArtistTracks, "popularity", false);
 
             // Duplicate songs will have same playcount and duration buy different popularity.
             // Song with higher popularity will be listed on top while searching a song in spotify while duplicate once (low popularity) will be below.
             // So this fill remove all songs that have same playcount and duration except the first occurrence.
             // as we have sorted songs by popularity the original will be on top
-            allArtistTracks = allArtistTracks.filter((track_, index, array) => array.findIndex((track) => (track.playcount == track_.playcount && track.duration == track_.duration) || track.name == track_.name || track.playcount == track_.playcount) == index);
+            allArtistTracks = allArtistTracks.filter(
+                (track_, index, array) =>
+                    array.findIndex((track) => (track.playcount == track_.playcount && track.duration == track_.duration) || track.name == track_.name || track.playcount == track_.playcount) == index
+            );
         }
+
+        createItemName(artistRes.info.name, platform, mode, type);
 
         return allArtistTracks;
     }
 
     // Artist Page liked songs sort - Platform Spotify
-    async function fetchArtistLikedTracksSpotify(uri, mode, name) {
+    async function fetchArtistLikedTracksSpotify(uri, mode, name, type, platform) {
         let artistRes = await Spicetify.CosmosAsync.get(`sp://core-collection/unstable/@/list/tracks/artist/${uri}?responseFormat=protobufJson`);
 
         let trackHistory = [];
@@ -772,6 +1001,7 @@ async function initSortByPlay() {
         let totalTrackCount = artistRes.item ? (artistRes.item.length ? artistRes.item.length : 0) : null;
 
         if (totalTrackCount) {
+            createItemName((await Spicetify.CosmosAsync.get(`https://api.spotify.com/v1/artists/${uri}`)).name, platform, mode, type);
             for (let artistTrack of artistRes.item) {
                 let currentTrack = 0;
 
@@ -819,10 +1049,12 @@ async function initSortByPlay() {
     }
 
     // Artist Page Top 10 Songs sort - Platform Spotify
-    async function fetchArtistTopTenTracksSpotify(uri) {
+    async function fetchArtistTopTenTracksSpotify(uri, mode, type, platform) {
         let artistRes = await Spicetify.CosmosAsync.get(`wg://artist/v1/${uri}/desktop?format=json`);
 
         let topTenTracks = [];
+
+        createItemName(artistRes.info.name, platform, mode, type);
 
         artistRes.top_tracks.tracks.map((track) => {
             if (track.playcount) {
@@ -839,9 +1071,11 @@ async function initSortByPlay() {
     }
 
     // Sort Songs in Album Page - Platform Spotify
-    async function fetchAlbumTracksSpotify(uri, mode, name) {
+    async function fetchAlbumTracksSpotify(uri, mode, name, type, platform) {
         let res = await Spicetify.CosmosAsync.get(`wg://album/v1/album-app/album/${uri}/desktop`);
         let availables = [];
+
+        createItemName(res.name, platform, mode, type);
 
         for (let disc of res.discs) {
             disc.tracks.forEach((track) => {
@@ -907,7 +1141,14 @@ async function initSortByPlay() {
         try {
             if (await trackInfo.track) {
                 if (trackInfo.track[mode]) {
-                    return { playcount: trackInfo.track.listeners ? trackInfo.track.listeners : -1, scrobbles: trackInfo.track.playcount ? trackInfo.track.playcount : -1, personalScrobbles: trackInfo.track.userplaycount ? trackInfo.track.userplaycount : -1, link: link, name: track.name, artist: artistName };
+                    return {
+                        playcount: trackInfo.track.listeners ? trackInfo.track.listeners : -1,
+                        scrobbles: trackInfo.track.playcount ? trackInfo.track.playcount : -1,
+                        personalScrobbles: trackInfo.track.userplaycount ? trackInfo.track.userplaycount : -1,
+                        link: link,
+                        name: track.name,
+                        artist: artistName,
+                    };
                 }
             }
         } catch (error) {}
@@ -916,7 +1157,7 @@ async function initSortByPlay() {
     }
 
     // Sort by "Scrobbles", "My Scrobbles" and "Last.FM Play Count" in Playlist Page - platform last.FM
-    async function fetchPlaylistTracksLastfm(uri, mode, name) {
+    async function fetchPlaylistTracksLastfm(uri, mode, name, type, platform) {
         let res = await Spicetify.Platform.PlaylistAPI.getContents(`spotify:playlist:${uri}`);
 
         let totalTrackCount = res.items.length ? res.items.length : 0;
@@ -924,7 +1165,11 @@ async function initSortByPlay() {
         let unsortedArray;
 
         if (totalTrackCount) {
-            unsortedArray = await res.items.filter((track) => track.type == "track" && track.isPlayable && !track.isLocal && !unsupportedChar.test(track.name) && !unsupportedChar.test(track.artists[0].name)).map(async (track) => await createDataFromATrack(track, mode));
+            createItemName((await Spicetify.Platform.PlaylistAPI.getMetadata(`spotify:playlist:${uri}`)).name, platform, mode, type);
+
+            unsortedArray = await res.items
+                .filter((track) => track.type == "track" && track.isPlayable && !track.isLocal && !unsupportedChar.test(track.name) && !unsupportedChar.test(track.artists[0].name))
+                .map(async (track) => await createDataFromATrack(track, mode));
         }
 
         if (!totalTrackCount || (await unsortedArray.length) == 0 || (await unsortedArray[0]) == null) {
@@ -936,14 +1181,24 @@ async function initSortByPlay() {
     }
 
     // Sort Liked Songs by "Scrobbles", "My Scrobbles" and "Last.FM Play Count" in Artist Page - platform last.FM
-    async function fetchArtistLikedTracksLastfm(uri, mode, name) {
+    async function fetchArtistLikedTracksLastfm(uri, mode, name, type, platform) {
         let res = await Spicetify.CosmosAsync.get(`sp://core-collection/unstable/@/list/tracks/artist/${uri}?responseFormat=protobufJson`);
 
         let totalTrackCount = res.item.length ? res.item.length : 0;
         let unsortedArray;
 
         if (totalTrackCount) {
-            unsortedArray = await res.item.filter((artistTrack) => artistTrack.trackMetadata.playable && !artistTrack.trackMetadata.isLocal && !unsupportedChar.test(artistTrack.trackMetadata.name) && !unsupportedChar.test(artistTrack.trackMetadata.artist[0].name)).map(async (artistTrack) => await createDataFromATrack(artistTrack.trackMetadata, mode, "artist"));
+            createItemName((await Spicetify.CosmosAsync.get(`https://api.spotify.com/v1/artists/${uri}`)).name, platform, mode, type);
+
+            unsortedArray = await res.item
+                .filter(
+                    (artistTrack) =>
+                        artistTrack.trackMetadata.playable &&
+                        !artistTrack.trackMetadata.isLocal &&
+                        !unsupportedChar.test(artistTrack.trackMetadata.name) &&
+                        !unsupportedChar.test(artistTrack.trackMetadata.artist[0].name)
+                )
+                .map(async (artistTrack) => await createDataFromATrack(artistTrack.trackMetadata, mode, "artist"));
         }
 
         if (!totalTrackCount || (await unsortedArray.length) == 0 || (await unsortedArray[0]) == null) {
@@ -955,15 +1210,19 @@ async function initSortByPlay() {
     }
 
     // Sort Songs in Album Page - Platform Last.FM
-    async function fetchAlbumTracksLastfm(uri, mode, name) {
+    async function fetchAlbumTracksLastfm(uri, mode, name, type, platform) {
         let res = await Spicetify.CosmosAsync.get(`wg://album/v1/album-app/album/${uri}/desktop`);
         let availables;
+
+        createItemName(res.name, platform, mode, type);
 
         for (let disc of res.discs) {
             availables = disc.tracks.filter((track) => track.playable);
         }
 
-        let unsortedArray = await availables.filter((track) => track.playable && !unsupportedChar.test(track.name) && !unsupportedChar.test(track.artists[0].name)).map(async (track) => await createDataFromATrack(track, mode));
+        let unsortedArray = await availables
+            .filter((track) => track.playable && !unsupportedChar.test(track.name) && !unsupportedChar.test(track.artists[0].name))
+            .map(async (track) => await createDataFromATrack(track, mode));
 
         if ((await unsortedArray.length) == 0 || (await unsortedArray[0]) == null) {
             notification(`${name} data not available! Try other options`);
@@ -974,13 +1233,8 @@ async function initSortByPlay() {
     }
 
     /////////////////////////////////// SORT AND QUEUE ///////////////////////////////////////
-
-    async function sortByMode(unsortedArray, mode) {
-        let sortedArray = await unsortedArray.filter((item) => item).sort((item1, item2) => item2[mode] - item1[mode]);
-        return sortedArray;
-    }
-
-    async function sortByModeForQueue(unsortedArray, mode) {
+    let sortedSongs;
+    async function sortByMode(unsortedArray, mode, enableReverse = true) {
         let sortedArray;
 
         if (mode == "releaseDate") {
@@ -989,13 +1243,18 @@ async function initSortByPlay() {
             sortedArray = await unsortedArray.filter((track) => track).sort((track1, track2) => track2[mode] - track1[mode]);
         }
 
-        if (CONFIG.ascending) {
-            sortedArray.reverse();
+        if (CONFIG.ascending && enableReverse) {
+            await sortedArray.reverse();
         }
+        sortedSongs = await sortedArray;
 
         // console.log(mode, await sortedArray); // enable to see what you gonna hear
+        return await sortedArray;
+    }
 
+    async function formatForQueue(sortedArray) {
         sortedArray.push({ link: "spotify:delimiter" });
+
         sortedArray = sortedArray.map((item) => ({
             uri: item.link,
             provider: CONFIG.queue ? "queue" : "context",
@@ -1055,7 +1314,7 @@ async function initSortByPlay() {
                 }
                 if (CONFIG.artistMode == "topTen") {
                     let order = CONFIG.ascending ? "Least" : "Most";
-                    notification(`${order} Played ${count} Songs`);
+                    notification(`${order} Played Top 10 Songs`);
                     break;
                 }
                 if (CONFIG.artistMode == "single") {
@@ -1091,39 +1350,39 @@ async function initSortByPlay() {
                 case Type.PLAYLIST + "spotify":
                 case Type.PLAYLIST_V2 + "spotify":
                     if (mode == "releaseDate") {
-                        list = await fetchPlaylistTracksReleaseDateSpotifyAPI(uri);
+                        list = await fetchPlaylistTracksReleaseDateSpotifyAPI(uri, null, mode, type, platform);
                         break;
                     }
-                    list = await fetchPlaylistTracksSpotify(uri, mode, name);
+                    list = await fetchPlaylistTracksSpotify(uri, mode, name, type, platform);
                     break;
 
                 case Type.PLAYLIST + "lastfm":
                 case Type.PLAYLIST_V2 + "lastfm":
-                    list = await fetchPlaylistTracksLastfm(uri, mode, name);
+                    list = await fetchPlaylistTracksLastfm(uri, mode, name, type, platform);
                     break;
 
                 case Type.ARTIST + "spotify":
                     if (CONFIG.artistMode == "likedSongArtist") {
-                        list = await fetchArtistLikedTracksSpotify(uri, mode, name);
+                        list = await fetchArtistLikedTracksSpotify(uri, mode, name, type, platform);
                         break;
                     }
                     if (CONFIG.artistMode == "topTen") {
-                        list = await fetchArtistTopTenTracksSpotify(uri);
+                        list = await fetchArtistTopTenTracksSpotify(uri, mode, type, platform);
                         break;
                     }
-                    list = await fetchArtistTracksSpotify(uri, mode, name);
+                    list = await fetchArtistTracksSpotify(uri, mode, name, type, platform);
                     break;
 
                 case Type.ARTIST + "lastfm":
-                    list = await fetchArtistLikedTracksLastfm(uri, mode, name);
+                    list = await fetchArtistLikedTracksLastfm(uri, mode, name, type, platform);
                     break;
 
                 case Type.ALBUM + "spotify":
-                    list = await fetchAlbumTracksSpotify(uri, mode, name);
+                    list = await fetchAlbumTracksSpotify(uri, mode, name, type, platform);
                     break;
 
                 case Type.ALBUM + "lastfm":
-                    list = await fetchAlbumTracksLastfm(uri, mode, name);
+                    list = await fetchAlbumTracksLastfm(uri, mode, name, type, platform);
                     break;
             }
 
@@ -1131,9 +1390,10 @@ async function initSortByPlay() {
                 return;
             }
 
-            let sortedSongs = await sortByModeForQueue(list, mode);
+            let sortedSongs = await sortByMode(list, mode);
+            let queueList = await formatForQueue(await sortedSongs);
 
-            await addToQueue(await sortedSongs, `spotify:${type}:${uri}`, type, mode, platform);
+            await addToQueue(await queueList, `spotify:${type}:${uri}`, type, mode, platform);
         } catch (error) {
             notification(`${error}`);
             console.log(error);
