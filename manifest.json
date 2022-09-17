@@ -7,6 +7,13 @@
         "readme": "Sort-by-Play-count/README.md"
     },
     {
+        "name": "Spotify Backup",
+        "description": "Backup / Restore Playlist and Settings",
+        "preview": "Spotify-Backup/demo.gif",
+        "main": "Spotify-Backup/spotifyBackup.js",
+        "readme": "Spotify-Backup/README.md"
+    },
+    {
         "name": "Skip or Play Liked Songs",
         "description": "This Extension Skips or Plays Liked Songs only",
         "preview": "Skip-or-Play-Liked-Songs/screenshot.png",
