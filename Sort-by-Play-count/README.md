@@ -44,7 +44,7 @@ Step 1 : Sort Songs in any Page
 
 Step 2 : Click the `+` Button on Top Bar
 
-Step 3 : The Sorted Playlist Folder will be contain all sorted playlists
+Step 3 : The Sorted Playlist Folder will contain all sorted playlists
 
 ![lastfm Sort Demo](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Sort-by-Play-count/create-sorted-playlist.gif)
 
