@@ -1,4 +1,4 @@
-# Skip or Play Liked Songs
+# Spotify Backup
 
 This Extension will Backup and Restore Playlist, Spotify and Marketplace Settings
 
