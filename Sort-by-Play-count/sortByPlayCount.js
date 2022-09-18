@@ -373,7 +373,7 @@ async function initSortByPlay() {
             field: "ascending",
         }),
         React.createElement(checkBoxItem, {
-            name: "Add to Queue",
+            name: "Add to Queue (Supports Multi-Device)",
             field: "queue",
         }),
         React.createElement("div", { className: "popup-row" }, React.createElement("hr", { className: "space" }, null)),
@@ -409,7 +409,7 @@ async function initSortByPlay() {
         React.createElement("div", { className: "popup-row" }, React.createElement("h3", { className: "div-title" }, "Release Notes Settings")),
         React.createElement("div", { className: "popup-row" }, React.createElement("hr", { className: "divider" }, null)),
         React.createElement(checkBoxItem, {
-            name: "Release Notes",
+            name: "Show Release Notes",
             field: "releaseNotes",
         }),
         React.createElement("div", { className: "popup-row" }, React.createElement("hr", { className: "space" }, null)),
