@@ -422,6 +422,14 @@ async function initSortByPlay() {
             },
         }),
         React.createElement(ButtonItem, {
+            name: "Show Release Notes",
+            color: " red",
+            onclickFun: () => {
+                Spicetify.PopupModal.hide();
+                setTimeout(showReleaseNotes, 300);
+            },
+        }),
+        React.createElement(ButtonItem, {
             name: "Like on GitHub 👍",
             onclickFun: () => {
                 window.open("https://github.com/Tetrax-10/Spicetify-Extensions");
@@ -437,62 +445,70 @@ async function initSortByPlay() {
         });
     }
 
-    if (CONFIG.version < 2.6 && CONFIG.releaseNotes) {
-        let releaseNotes = React.createElement(
-            "div",
-            null,
-            style,
-            React.createElement("div", { className: "popup-row" }, React.createElement("span", { className: "info" }, "1) Added Release Notes 😍")),
-            React.createElement("div", { className: "popup-row" }, React.createElement("hr", { className: "space" }, null)),
-            React.createElement(
+    async function showReleaseNotes(forceShow = true) {
+        if ((CONFIG.version < 2.6 && CONFIG.releaseNotes) || forceShow) {
+            let releaseNotes = React.createElement(
                 "div",
-                { className: "popup-row" },
+                null,
+                style,
+                React.createElement("div", { className: "popup-row" }, React.createElement("span", { className: "info" }, "1) Added Release Notes 😍")),
+                React.createElement("div", { className: "popup-row" }, React.createElement("hr", { className: "space" }, null)),
+                React.createElement(
+                    "div",
+                    { className: "popup-row" },
 
-                React.createElement("span", { className: "info" }, "2) Now you can add Sorted Songs To Playlist. See Top Bar 🥰"),
-                React.createElement("a", { href: "https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Sort-by-Play-count#create-sorted-playlist", className: "demo" }, " (Click for demo)")
-            ),
-            React.createElement("div", { className: "popup-row" }, React.createElement("hr", { className: "space" }, null)),
-            React.createElement("div", { className: "popup-row" }, React.createElement("span", { className: "info" }, "3) Added More Settings to the Settings Page ⚙️")),
-            React.createElement("div", { className: "popup-row" }, React.createElement("hr", { className: "space" }, null)),
-            React.createElement(
-                "div",
-                { className: "popup-row" },
-                React.createElement("span", { className: "info" }, "4) Now you can add Sorted Songs to Queue. This Supports Multi-Device (Enable it in Settings Page) 🤩")
-            ),
-            React.createElement(ButtonItem, {
-                name: "Close 🥰",
-                color: " green",
-                onclickFun: () => {
-                    Spicetify.PopupModal.hide();
-                },
-            }),
-            React.createElement(ButtonItem, {
-                name: "Like on GitHub 👍",
-                onclickFun: () => {
-                    window.open("https://github.com/Tetrax-10/Spicetify-Extensions");
-                },
-            }),
-            React.createElement(ButtonItem, {
-                name: "Never Show Release Notes 😔",
-                color: " red",
-                onclickFun: async () => {
-                    CONFIG.releaseNotes = false;
-                    await saveConfig();
-                    Spicetify.PopupModal.hide();
-                    notification("You can re-enable Release Notes in Settings");
-                },
-            })
-        );
+                    React.createElement("span", { className: "info" }, "2) Now you can add Sorted Songs To Playlist. See Top Bar 🥰"),
+                    React.createElement(
+                        "a",
+                        { href: "https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Sort-by-Play-count#create-sorted-playlist", className: "demo" },
+                        " (Click for demo)"
+                    )
+                ),
+                React.createElement("div", { className: "popup-row" }, React.createElement("hr", { className: "space" }, null)),
+                React.createElement("div", { className: "popup-row" }, React.createElement("span", { className: "info" }, "3) Added More Settings to the Settings Page ⚙️")),
+                React.createElement("div", { className: "popup-row" }, React.createElement("hr", { className: "space" }, null)),
+                React.createElement(
+                    "div",
+                    { className: "popup-row" },
+                    React.createElement("span", { className: "info" }, "4) Now you can add Sorted Songs to Queue. This Supports Multi-Device (Enable it in Settings Page) 🤩")
+                ),
+                React.createElement("div", { className: "popup-row" }, React.createElement("hr", { className: "space" }, null)),
+                React.createElement(ButtonItem, {
+                    name: "Close 🥰",
+                    color: " green",
+                    onclickFun: () => {
+                        Spicetify.PopupModal.hide();
+                    },
+                }),
+                React.createElement(ButtonItem, {
+                    name: "Never Show Release Notes 😔",
+                    color: " red",
+                    onclickFun: async () => {
+                        CONFIG.releaseNotes = false;
+                        await saveConfig();
+                        Spicetify.PopupModal.hide();
+                        notification("You can re-enable Release Notes in Settings");
+                    },
+                }),
+                React.createElement(ButtonItem, {
+                    name: "Like on GitHub 👍",
+                    onclickFun: () => {
+                        window.open("https://github.com/Tetrax-10/Spicetify-Extensions");
+                    },
+                })
+            );
 
-        CONFIG.version = 2.6;
-        await saveConfig();
+            CONFIG.version = 2.6;
+            await saveConfig();
 
-        Spicetify.PopupModal.display({
-            title: "Sort By Play Count 2.6 Release Notes",
-            content: releaseNotes,
-            isLarge: true,
-        });
+            Spicetify.PopupModal.display({
+                title: "Sort By Play Count 2.6 Release Notes",
+                content: releaseNotes,
+                isLarge: true,
+            });
+        }
     }
+    await showReleaseNotes(false);
 
     ////////////////////////////////////// Menu ///////////////////////////////////////////
 
