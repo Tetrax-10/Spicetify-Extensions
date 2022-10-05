@@ -2,7 +2,7 @@
 
 Some Use Full Extension Developed by a Music Lover.
 
-# 1.Sort By Play Count
+# 1. Sort By Play Count
 
 Sort Playlists, All songs of a Artist, Albums by :
 
@@ -29,7 +29,21 @@ Search `Sort By Play Count` and Click Install Buttton.
 <br />
 
 
-# 2.Skip or Play Liked Songs
+# 2. Spotify Backup
+
+This Extension will Backup and Restore Playlist, Spotify and Marketplace Settings
+
+<br />
+
+![Demo](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Spotify-Backup/demo.gif)
+
+## Get it on [Spicetify Marketplace](https://github.com/spicetify/spicetify-marketplace) or [Manually](https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Skip-or-Play-Liked-Songs)
+
+Search `Spotify Backup` and Click Install Buttton.
+
+<br />
+
+# 3. Skip or Play Liked Songs
 
 This Extension Skips or Plays Liked Songs only
 
@@ -45,7 +59,7 @@ Search `Skip or Play Liked Songs` and Click Install Buttton.
 
 <br />
 
-# 3.Seek Song
+# 4. Seek Song
 
 This Extension Seeks Song when you press `1 to 9` for `10 % to 90 %` of the song like YouTube.
 
