@@ -164,8 +164,7 @@ async function initSortByPlay() {
                     cursor: pointer;
                     font-size: 14px;
                     height: 40px;
-                    margin: 10px;
-                    margin-right: 20px // edit
+                    margin-right: 20px;
                     padding: 5px 10px;
                     text-align: center;
                 }
