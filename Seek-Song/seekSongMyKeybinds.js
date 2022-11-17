@@ -14,6 +14,8 @@
 
     let skipBackwardValue = 10;
     let skipForwardValue = 10;
+    let ScrollValue = 10;
+    let app = await waitForElement(".Root__main-view .os-viewport");
 
     function setProgressPercent(percent) {
         Spicetify.Player.seek((percent / 100) * getSongLength());
@@ -25,6 +27,60 @@
 
     function eventTriggerWithKey(key, functionToExecute) {
         Spicetify.Mousetrap.bind(key, functionToExecute);
+    }
+
+    async function waitForElement(selector, timeout = null, location = document.body) {
+        return new Promise((resolve) => {
+            if (document.querySelector(selector)) {
+                return resolve(document.querySelector(selector));
+            }
+
+            const observer = new MutationObserver(async () => {
+                if (document.querySelector(selector)) {
+                    resolve(document.querySelector(selector));
+                    observer.disconnect();
+                } else {
+                    if (timeout) {
+                        async function timeOver() {
+                            return new Promise((resolve) => {
+                                setTimeout(() => {
+                                    observer.disconnect();
+                                    resolve(false);
+                                }, timeout);
+                            });
+                        }
+                        resolve(await timeOver());
+                    }
+                }
+            });
+
+            observer.observe(location, {
+                childList: true,
+                subtree: true,
+            });
+        });
+    }
+
+    function appScrollDown() {
+        if (app) {
+            let scrollInterval = setInterval(() => {
+                app.scrollTop += ScrollValue;
+            }, 10);
+            document.addEventListener("keyup", () => {
+                clearInterval(scrollInterval);
+            });
+        }
+    }
+
+    function appScrollUp() {
+        if (app) {
+            let scrollInterval = setInterval(() => {
+                app.scrollTop -= ScrollValue;
+            }, 10);
+            document.addEventListener("keyup", () => {
+                clearInterval(scrollInterval);
+            });
+        }
     }
 
     ////////////////////////////////////// Main ////////////////////////////////////
@@ -82,19 +138,19 @@
         Spicetify.Player.skipForward(skipForwardValue * 1000);
     });
     eventTriggerWithKey("up", () => {
-        Spicetify.Player.increaseVolume();
+        Spicetify.Player.next();
     });
     eventTriggerWithKey("down", () => {
-        Spicetify.Player.decreaseVolume();
-    });
-    eventTriggerWithKey("-", () => {
         Spicetify.Player.seek(0);
         Spicetify.Player.back();
     });
     eventTriggerWithKey("+", () => {
-        Spicetify.Player.next();
+        Spicetify.Player.increaseVolume();
     });
-    eventTriggerWithKey("=", () => {
-        Spicetify.Player.next();
+    eventTriggerWithKey("-", () => {
+        Spicetify.Player.decreaseVolume();
     });
+
+    eventTriggerWithKey("/", appScrollUp);
+    eventTriggerWithKey("*", appScrollDown);
 })();
