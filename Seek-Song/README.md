@@ -8,6 +8,8 @@ This Extension Seeks Song when you press `1 to 9` for `10 % to 90 %` of the song
 
 `,` and `.` Seeks `1 Second` backward and forward like YouTube.
 
+`+` and `-` to change tracks.
+
 <br />
 
 # Demo Video
@@ -27,14 +29,16 @@ Step 3 : Search `Seek Song` Click Install Buttton. Done!
 <br />
 
 ## Install Manually
+
 Copy `seekSong.js` into your [Spicetify](https://github.com/spicetify/spicetify-cli) extensions directory:
-| **Platform** | **Path**                                                                            |
+| **Platform** | **Path** |
 |------------|-----------------------------------------------------------------------------------|
-| **Linux**      | `~/.config/spicetify/Extensions` or `$XDG_CONFIG_HOME/.config/spicetify/Extensions/` |
-| **MacOS**      | `~/spicetify_data/Extensions` or `$SPICETIFY_CONFIG/Extensions`                      |
-| **Windows**    | `%appdata%\spicetify\Extensions`                                              |
+| **Linux** | `~/.config/spicetify/Extensions` or `$XDG_CONFIG_HOME/.config/spicetify/Extensions/` |
+| **MacOS** | `~/spicetify_data/Extensions` or `$SPICETIFY_CONFIG/Extensions` |
+| **Windows** | `%appdata%\spicetify\Extensions` |
 
 After putting the extension file into the correct folder, run the following command to install the extension:
+
 ```
 spicetify config extensions seekSong.js
 spicetify apply
@@ -46,7 +50,6 @@ spicetify apply
 
 Open [seekSong.js](https://github.com/Tetrax-10/Spicetify-Extensions/blob/master/Seek-Song/seekSong.js) in line number 9 just change the value (in seconds).
 
-
 ```javascript
 let skipBackwardValue = 10;
 let skipForwardValue = 10;
@@ -55,6 +58,7 @@ let skipForwardValue = 10;
 <br />
 
 ## Support
+
 🌟 Like it? Gimme Some Love ! 💕
 
 [![Github Stars badge](https://img.shields.io/github/stars/Tetrax-10/Spicetify-Extensions?logo=github&style=social)](https://github.com/Tetrax-10/Spicetify-Extensions)

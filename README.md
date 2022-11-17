@@ -28,7 +28,6 @@ Search `Sort By Play Count` and Click Install Buttton.
 
 <br />
 
-
 # 2. Spotify Backup
 
 This Extension will Backup and Restore Playlist, Spotify and Marketplace Settings
@@ -68,6 +67,8 @@ This Extension Seeks Song when you press `1 to 9` for `10 % to 90 %` of the song
 `up arrow` and `down arrow` Increase and Decrease volume like YouTube.
 
 `,` and `.` Seeks `1 Second` backward and forward like YouTube.
+
+`+` and `-` to change tracks.
 
 <br />
 
