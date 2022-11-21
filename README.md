@@ -80,6 +80,6 @@ Search `Seek Song` and Click Install Buttton.
 
 <br />
 
-🌟 Like it? Gimme Some Love ! 💕. Extensions Made with LOVE from [Chennai](https://www.google.com/maps/place/Chennai,+Tamil+Nadu).
+Like These Extensions? Gimme Some ❤️ by Liking this Repository. Made with ❤️ from [Chennai](https://www.google.com/maps/place/Chennai,+Tamil+Nadu).
 
 [![Github Stars badge](https://img.shields.io/github/stars/Tetrax-10/Spicetify-Extensions?logo=github&style=social)](https://github.com/Tetrax-10/Spicetify-Extensions)
