@@ -29,7 +29,7 @@
     },
     {
         "name": "Play Enhanced Songs",
-        "description": "Plays only the Enhanced Songs from a playlist",
+        "description": "Plays only the Enhanced Songs from a playlist, even other's playlist",
         "preview": "Play-Enhanced-Songs/preview.png",
         "main": "Play-Enhanced-Songs/playEnhancedSongs.js",
         "readme": "Play-Enhanced-Songs/README.md"
