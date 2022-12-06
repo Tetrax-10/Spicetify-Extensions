@@ -4,7 +4,7 @@
 // AUTHOR: Tetrax-10
 // DESCRIPTION: Hide sidebar items like liked songs, create playlist, your podcast.
 
-/// <reference path="../globals.d.ts" />
+/// <reference path="../dev/globals.d.ts" />
 
 (async function seekSong() {
     if (!Spicetify.Player) {

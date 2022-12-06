@@ -5,7 +5,7 @@
 // DESCRIPTION: Backup Spotify Playlist and app data
 // Version: 1.0
 
-/// <reference path="../globals.d.ts" />
+/// <reference path="../dev/globals.d.ts" />
 
 (async function spotifyBackup() {
     if (!(Spicetify.Platform && Spicetify.React)) {

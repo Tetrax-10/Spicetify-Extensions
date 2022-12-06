@@ -4,7 +4,7 @@
 // AUTHOR: Tetrax-10
 // DESCRIPTION: Skip or Play liked songs only
 
-/// <reference path="../globals.d.ts" />
+/// <reference path="../dev/globals.d.ts" />
 let skipOrPlayLikedSongsCount = 0;
 (async function skipOrPlayLikedSongs() {
     if (!(Spicetify.Platform && Spicetify.LocalStorage && Spicetify.Player.data) && skipOrPlayLikedSongsCount < 200) {
