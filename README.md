@@ -80,6 +80,20 @@ Search `Seek Song` and Click Install Buttton.
 
 <br />
 
+# 5. Play Enhanced Songs
+
+This Extension only Plays the Enhanced Songs from a playlist. It even allows you to play Enhanced Songs from other's playlist.
+
+<br />
+
+![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Play-Enhanced-Songs/screenshot.png)
+
+## Get it on [Spicetify Marketplace](https://github.com/spicetify/spicetify-marketplace) or [Manually](https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Play-Enhanced-Songs)
+
+Search `Play Enhanced Songs` and Click Install Buttton.
+
+<br />
+
 Like These Extensions? Gimme Some ❤️ by Liking this Repository. Made with ❤️ from [Chennai](https://www.google.com/maps/place/Chennai,+Tamil+Nadu).
 
 [![Github Stars badge](https://img.shields.io/github/stars/Tetrax-10/Spicetify-Extensions?logo=github&style=social)](https://github.com/Tetrax-10/Spicetify-Extensions)

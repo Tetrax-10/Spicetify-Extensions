@@ -26,5 +26,12 @@
         "preview": "Seek-Song/screenshot.gif",
         "main": "Seek-Song/seekSong.js",
         "readme": "Seek-Song/README.md"
+    },
+    {
+        "name": "Play Enhanced Songs",
+        "description": "Plays only the Enhanced Songs from a playlist",
+        "preview": "Play-Enhanced-Songs/preview.png",
+        "main": "Play-Enhanced-Songs/playEnhancedSongs.js",
+        "readme": "Play-Enhanced-Songs/README.md"
     }
 ]
