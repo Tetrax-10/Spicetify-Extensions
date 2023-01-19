@@ -24,6 +24,8 @@ async function initSortByPlay() {
     const { React } = Spicetify;
     const { useState } = React;
 
+    let sortedFolderName = "Sorted Playlist";
+
     ////////////////////////////////////// CONFIG ///////////////////////////////////////////
 
     async function getLocalStorageDataFromKey(key) {
@@ -638,8 +640,8 @@ async function initSortByPlay() {
 
     async function isFolderCreated() {
         let root = await Spicetify.Platform.RootlistAPI.getContents();
-        let rated = await root.items.find((item) => item.type === "folder" && item.name === "Sorted Playlist");
-        return (await rated) ? rated.uri : false;
+        let folder = await root.items.find((item) => item.type === "folder" && item.name === sortedFolderName);
+        return (await folder) ? folder.uri : false;
     }
 
     let name = "playlist";
@@ -703,7 +705,7 @@ async function initSortByPlay() {
                 notification("Sort some Songs to Create a playlist");
             }
         } else {
-            createFolder("Sorted Playlist");
+            createFolder(sortedFolderName);
             createSortedPlaylist();
         }
     }
