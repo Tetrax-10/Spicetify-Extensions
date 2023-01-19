@@ -77,7 +77,6 @@
             },
         }));
 
-        console.log(tracks);
         return await tracks;
     }
 
