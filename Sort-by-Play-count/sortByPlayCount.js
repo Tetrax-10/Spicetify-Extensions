@@ -1172,8 +1172,6 @@ async function initSortByPlay() {
             },
         }));
 
-        console.log(sortedArray);
-
         return await sortedArray;
     }
 
