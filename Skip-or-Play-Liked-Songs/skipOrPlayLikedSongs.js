@@ -12,10 +12,7 @@ let skipOrPlayLikedSongsCount = 0;
         skipOrPlayLikedSongsCount++;
         return;
     }
-    initSkipOrPlayLikedSongs();
-})();
 
-function initSkipOrPlayLikedSongs() {
     let skipLikedSongsKey = "SkipLikedSongs";
 
     function isLocalStorageInitialized() {
@@ -29,10 +26,7 @@ function initSkipOrPlayLikedSongs() {
         if (getLocalStorageDataFromKey(skipLikedSongsKey) == null) {
             Spicetify.showNotification("Only Liked Songs will be Played as default");
             setTimeout(() => {
-                Spicetify.showNotification("You can Change it in Context Ment Located on Top under User Profile");
-                setTimeout(() => {
-                    Spicetify.showNotification("You can Change it in Context Ment Located on Top under User Profile");
-                }, 3000);
+                Spicetify.showNotification("You can Change it in Context Menu Located on Top under User Profile", false, 3000);
             }, 5000);
             setLocalStorageDataWithKey(skipLikedSongsKey, false);
         }
@@ -44,11 +38,6 @@ function initSkipOrPlayLikedSongs() {
 
     function setLocalStorageDataWithKey(key, value) {
         Spicetify.LocalStorage.set(key, value);
-    }
-
-    function sleep(delay) {
-        let start = new Date().getTime();
-        while (new Date().getTime() < start + delay);
     }
 
     function main() {
@@ -118,12 +107,11 @@ function initSkipOrPlayLikedSongs() {
         function likedSongsMode(mode) {
             if (mode == "play") {
                 playLikedOnly();
-                likedSongsMode("disable");
                 Spicetify.Player.addEventListener("songchange", playLikedOnly);
             }
 
             if (mode == "skip") {
-                likedSongsMode("disable");
+                skipLiked();
                 Spicetify.Player.addEventListener("songchange", skipLiked);
             }
 
@@ -139,11 +127,11 @@ function initSkipOrPlayLikedSongs() {
 
         if (getLocalStorageDataFromKey(skipLikedSongsKey) == "false") {
             likedSongsMode("disable");
-            Spicetify.Player.addEventListener("songchange", playLikedOnly);
+            likedSongsMode("play");
         }
         if (getLocalStorageDataFromKey(skipLikedSongsKey) == "true") {
             likedSongsMode("disable");
-            Spicetify.Player.addEventListener("songchange", skipLiked);
+            likedSongsMode("skip");
         }
         if (getLocalStorageDataFromKey(skipLikedSongsKey) == "disable") {
             likedSongsMode("disable");
@@ -155,7 +143,7 @@ function initSkipOrPlayLikedSongs() {
             skip_Liked_Songs.setState(false);
             disable.setState(false);
             likedSongsMode("disable");
-            Spicetify.Player.addEventListener("songchange", playLikedOnly);
+            likedSongsMode("play");
         });
 
         let skip_Liked_Songs = new Spicetify.Menu.Item("Skip Liked", isSkipLikedSongs, () => {
@@ -164,7 +152,7 @@ function initSkipOrPlayLikedSongs() {
             skip_Liked_Songs.setState(true);
             disable.setState(false);
             likedSongsMode("disable");
-            Spicetify.Player.addEventListener("songchange", skipLiked);
+            likedSongsMode("skip");
         });
 
         let disable = new Spicetify.Menu.Item("Disable", isDisable, () => {
@@ -184,4 +172,4 @@ function initSkipOrPlayLikedSongs() {
         initializeLocalStorage();
         main();
     }
-}
+})();
