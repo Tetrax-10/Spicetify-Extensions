@@ -371,14 +371,14 @@ async function initSortByPlay() {
         React.createElement("div", { className: "popup-row" }, React.createElement("h3", { className: "div-title" }, "Create Playlist Settings")),
         React.createElement("div", { className: "popup-row" }, React.createElement("hr", { className: "divider" }, null)),
         React.createElement(checkBoxItem, {
-            name: "Sorted Playlist Private",
+            name: "Make Sorted Playlist Private",
             field: "isPrivate",
         }),
         React.createElement("div", { className: "popup-row" }, React.createElement("hr", { className: "space" }, null)),
         React.createElement("div", { className: "popup-row" }, React.createElement("h3", { className: "div-title" }, "Artist Sort Settings")),
         React.createElement("div", { className: "popup-row" }, React.createElement("hr", { className: "divider" }, null)),
         React.createElement(dropDownItem, {
-            name: "What to Play in Artist Page",
+            name: "What to Sort in Artist Page",
             field: "artistMode",
             options: {
                 all: "All",
