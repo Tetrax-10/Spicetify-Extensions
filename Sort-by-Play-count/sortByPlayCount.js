@@ -13,10 +13,7 @@ let sortByPlayCount = 0;
         sortByPlayCount++;
         return;
     }
-    await initSortByPlay();
-})();
 
-async function initSortByPlay() {
     let { Type } = Spicetify.URI;
     let LFMApiKey = "44654ea047786d90338c17331a5f5d95";
     let unsupportedChar = /[#&+%\\]/g;
@@ -25,6 +22,9 @@ async function initSortByPlay() {
     const { useState } = React;
 
     let sortedFolderName = "Sorted Playlist";
+    let ratedFolderName = "Rated";
+
+    let ratedFolderUri = await isFolderCreated(ratedFolderName);
 
     ////////////////////////////////////// CONFIG ///////////////////////////////////////////
 
@@ -229,6 +229,56 @@ async function initSortByPlay() {
         });
     }
 
+    function refreshPopup(rawUri) {
+        popupItem({
+            title: "Note",
+            name1: "No, cacel sorting",
+            onclickFun1: () => {
+                Spicetify.PopupModal.hide();
+            },
+            name2: "Yes",
+            onclickFun2: () => {
+                Spicetify.PopupModal.hide();
+                notification("Sorting...");
+                sortByRating(rawUri);
+            },
+        });
+    }
+
+    function popupItem({ title, name1, color1 = "", onclickFun1, name2 = null, color2 = "", onclickFun2 = null }) {
+        Spicetify.PopupModal.hide();
+
+        let DOMcontent = React.createElement(
+            "div",
+            null,
+            style,
+            React.createElement("p", { className: "popup-row" }, "Sorting is done by CHANGING the CUSTOM ORDER"),
+            React.createElement("p", { className: "popup-row" }, "Current Custom Order will be LOST !"),
+            React.createElement("div", { className: "popup-row" }, React.createElement("hr", { className: "space" }, null)),
+            React.createElement("p", { className: "popup-row" }, "Want to Proceed ?"),
+            React.createElement("div", { className: "popup-row" }, React.createElement("hr", { className: "space" }, null)),
+            React.createElement(ButtonItem, {
+                name: name1,
+                color: color1,
+                onclickFun: onclickFun1,
+            }),
+            name2
+                ? React.createElement(ButtonItem, {
+                      name: name2,
+                      color: color2,
+                      onclickFun: onclickFun2,
+                  })
+                : null
+        );
+
+        setTimeout(() => {
+            Spicetify.PopupModal.display({
+                title: title,
+                content: DOMcontent,
+            });
+        }, 100);
+    }
+
     function DisplayIcon({ icon, size }) {
         return React.createElement("svg", {
             width: size,
@@ -425,6 +475,17 @@ async function initSortByPlay() {
 
     new Spicetify.Menu.Item("Sort By Play Count", false, settingsPage).register();
 
+    // Rating
+    function shouldAddSortPlaylistByRating(uri) {
+        let uriObj = Spicetify.URI.fromString(uri[0]);
+        switch (uriObj.type) {
+            case Type.PLAYLIST:
+            case Type.PLAYLIST_V2:
+                return true;
+        }
+        return false;
+    }
+
     // Play Count
     function shouldAddSpotifyPlayCount(uri) {
         let uriObj = Spicetify.URI.fromString(uri[0]);
@@ -610,6 +671,17 @@ async function initSortByPlay() {
         "subtitles"
     );
 
+    if (ratedFolderUri) {
+        new Spicetify.ContextMenu.Item(
+            "Sort Playlist by Rating",
+            async (rawUri) => {
+                refreshPopup(rawUri);
+            },
+            shouldAddSortPlaylistByRating,
+            "visualizer"
+        ).register();
+    }
+
     new Spicetify.ContextMenu.SubMenu("Sort by", [playCountItemSpotify, popularityItemSpotify, releaseDateItemSpotify, scrobblesItemLastFM, personalScrobblesItemLastFM, playCountItemLastFM], shouldAddContextMenu, false).register();
 
     new Spicetify.Topbar.Button("Add Sorted Songs to Playlist", "plus2px", createSortedPlaylist);
@@ -638,9 +710,9 @@ async function initSortByPlay() {
         await Spicetify.Platform.RootlistAPI.createFolder(name, { before: "" });
     }
 
-    async function isFolderCreated() {
+    async function isFolderCreated(folderName) {
         let root = await Spicetify.Platform.RootlistAPI.getContents();
-        let folder = await root.items.find((item) => item.type === "folder" && item.name === sortedFolderName);
+        let folder = await root.items.find((item) => item.type === "folder" && item.name === folderName);
         return (await folder) ? folder.uri : false;
     }
 
@@ -692,7 +764,7 @@ async function initSortByPlay() {
     }
 
     async function createSortedPlaylist() {
-        let folderURI = await isFolderCreated();
+        let folderURI = await isFolderCreated(sortedFolderName);
         if (folderURI) {
             try {
                 let playlistSongs = sortedSongs.filter((item) => item.link != "spotify:delimiter").map((item) => item.link);
@@ -1141,7 +1213,67 @@ async function initSortByPlay() {
         return Promise.all(unsortedArray);
     }
 
+    /////////////////////////////////// Rating ///////////////////////////////////////
+
+    function reorderPlaylist(playlistID, playlistItems) {
+        for (let i = 0; i < playlistItems.length - 1; i++) {
+            Spicetify.Platform.PlaylistAPI.move(playlistID, [playlistItems[i + 1]], { after: playlistItems[i] });
+        }
+    }
+
+    async function getPlaylistContents(uri) {
+        let playlistRes = await Spicetify.CosmosAsync.get(`sp://core-playlist/v1/playlist/${uri}/rows`);
+        return playlistRes.rows.map((item) => {
+            return { name: item.name, uri: item.link, uid: item.rowId };
+        });
+    }
+
+    async function filterRatedPlaylists(playlists) {
+        const RATINGS = ["0.0", "0.5", "1.0", "1.5", "2.0", "2.5", "3.0", "3.5", "4.0", "4.5", "5.0"];
+
+        const result = {};
+        for (let playlist of playlists.items) {
+            if (!RATINGS.includes(playlist.name)) continue;
+            result[playlist.name] = await getPlaylistContents(playlist.uri);
+        }
+        return result;
+    }
+
+    async function getRatedPlaylists() {
+        let root = await Spicetify.Platform.RootlistAPI.getContents();
+        const rated = root.items.find((playlist) => playlist.type === "folder" && playlist.name === ratedFolderName);
+        if (!rated) {
+            return [[], null];
+        }
+        root = rated;
+        return await filterRatedPlaylists(root);
+    }
+
+    async function sortByRating(rawUri) {
+        let ratedPlaylists = await getRatedPlaylists();
+        let selectedPlaylistItem = await getPlaylistContents(rawUri);
+
+        let dataMap = new Map();
+        for (let key in ratedPlaylists) {
+            for (let i = 0; i < ratedPlaylists[key].length; i++) {
+                const { uri } = ratedPlaylists[key][i];
+                dataMap.set(uri, key);
+            }
+        }
+
+        let ratedTracks = selectedPlaylistItem.map((item) => {
+            return { ...item, rating: dataMap.get(item.uri) || false };
+        });
+
+        let sortedRatedTracks = await sortByMode(ratedTracks, "rating");
+        // console.log(sortedRatedTracks); // uncomment to see the order of sorting
+        sortedRatedTracks = sortedRatedTracks.map((track) => track.uid);
+
+        reorderPlaylist(rawUri[0], sortedRatedTracks);
+    }
+
     /////////////////////////////////// SORT AND QUEUE ///////////////////////////////////////
+
     let sortedSongs;
     async function sortByMode(unsortedArray, mode, enableReverse = true) {
         let sortedArray;
@@ -1157,7 +1289,7 @@ async function initSortByPlay() {
         }
         sortedSongs = await sortedArray;
 
-        // console.log(mode, await sortedArray); // enable to see what you gonna hear
+        // console.log(mode, await sortedArray); // uncomment to see what you gonna hear
         return await sortedArray;
     }
 
@@ -1308,4 +1440,4 @@ async function initSortByPlay() {
             console.log(error);
         }
     }
-}
+})();
