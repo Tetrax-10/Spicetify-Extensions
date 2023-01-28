@@ -2,6 +2,10 @@
 
 Some Use Full Extension Developed by a Music Lover.
 
+Wanna discuss or having issues ping `@Tetrax-10` in Discord
+
+<a href="https://discord.gg/VnevqPp2Rr"><img src="https://img.shields.io/discord/842219447716151306?label=chat&logo=discord&logoColor=discord"></a>
+
 # 1. Sort By Play Count
 
 Sort Playlists, All songs of a Artist, Albums by :
@@ -106,6 +110,16 @@ Search `Sort by Rating` and Click Install Buttton.
 
 <br />
 
-Like These Extensions? Gimme Some ❤️ by Liking this Repository. Made with ❤️ from [Chennai](https://www.google.com/maps/place/Chennai,+Tamil+Nadu).
+## Support
+
+### People who Liked these Extensions
+
+Want your name here? Just like this Repo 🤩
+
+[![My Extensions Stargazers](https://reporoster.com/stars/Tetrax-10/Spicetify-Extensions)](https://github.com/Tetrax-10/Spicetify-Extensions/stargazers)
+
+Like These Extensions? Gimme Some ❤️ by Liking this Repository.
+
+Made with ❤️ from [Chennai](https://www.google.com/maps/place/Chennai,+Tamil+Nadu).
 
 [![Github Stars badge](https://img.shields.io/github/stars/Tetrax-10/Spicetify-Extensions?logo=github&style=social)](https://github.com/Tetrax-10/Spicetify-Extensions)
