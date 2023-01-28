@@ -18,7 +18,7 @@
     let ratedFolderName = "📁▸Rated";
     let ratedFolderUri = await isFolderCreated(ratedFolderName);
 
-    const RATINGS = ["5.0", "4.5", "4.0", "3.5", "3.0", "2.5", "2.0", "1.5", "1.0", "0.5", "0.0"];
+    const RATINGS = ["5.0", "4.5", "4.0", "3.5", "3.0", "2.5", "2.0", "1.5", "1.0", "0.5", "0"];
 
     ////////////////////////////////////// Menu ///////////////////////////////////////////
 
@@ -245,24 +245,25 @@
         return await filterRatedPlaylists(root);
     }
 
-    function reorderPlaylist(playlistID, firstItemUid, UidData) {
-        function getFirstUri() {
-            let temp = undefined;
+    function reorderPlaylist(playlistID, firstPlaylistItemUid, UidData) {
+        function getFirstUid() {
+            let uid;
             RATINGS.every((rate) => {
-                if (UidData[rate]) {
-                    temp = UidData[rate][0];
+                if (UidData[rate] && UidData[rate].length != 0) {
+                    uid = UidData[rate][0];
                     return false;
                 }
+                return true;
             });
-            return temp;
+            return uid;
         }
 
-        let prevSequenceLastUid = getFirstUri();
-        let isFirstItemMaxRated = prevSequenceLastUid == firstItemUid;
+        let prevSequenceLastUid = getFirstUid();
+        let isFirstItemMaxRated = prevSequenceLastUid == firstPlaylistItemUid;
         let isFirstSequence = true;
 
         RATINGS.forEach(async (rate) => {
-            if (UidData[rate]) {
+            if (UidData[rate] && UidData[rate].length != 0) {
                 if (!isFirstItemMaxRated && isFirstSequence) {
                     Spicetify.Platform.PlaylistAPI.move(playlistID, UidData[rate], { before: prevSequenceLastUid });
                 } else {
@@ -284,11 +285,25 @@
             });
         }
 
-        let ratedUid = { "1.0": [], "2.0": [], "3.0": [], "4.0": [], "5.0": [] };
+        let ratedUid = {
+            "5.0": [],
+            4.5: [],
+            "4.0": [],
+            3.5: [],
+            "3.0": [],
+            2.5: [],
+            "2.0": [],
+            1.5: [],
+            "1.0": [],
+            0.5: [],
+            0: [],
+        };
 
         playlistItems.forEach((item) => {
             if (hashTable[item.uri]) {
                 ratedUid[hashTable[item.uri]].push(item.uid);
+            } else {
+                ratedUid["0"].push(item.uid);
             }
         });
 
