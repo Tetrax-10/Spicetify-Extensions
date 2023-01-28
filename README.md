@@ -90,7 +90,19 @@ This Extension only Plays the Enhanced Songs from a playlist. It even allows you
 
 ## Get it on [Spicetify Marketplace](https://github.com/spicetify/spicetify-marketplace) or [Manually](https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Play-Enhanced-Songs)
 
-Search `Play Enhanced Songs` and Click Install Buttton.
+<br />
+
+# 6. Play Enhanced Songs
+
+This extension sorts playlist by Rating.
+
+<br />
+
+![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Sort-by-Rating/screenshot.gif)
+
+## Get it on [Spicetify Marketplace](https://github.com/spicetify/spicetify-marketplace) or [Manually](https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Sort-by-Rating)
+
+Search `Sort by Rating` and Click Install Buttton.
 
 <br />
 

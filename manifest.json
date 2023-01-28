@@ -33,5 +33,12 @@
         "preview": "Play-Enhanced-Songs/preview.png",
         "main": "Play-Enhanced-Songs/playEnhancedSongs.js",
         "readme": "Play-Enhanced-Songs/README.md"
+    },
+    {
+        "name": "Sort by Rating",
+        "description": "This extension sorts playlist by Rating",
+        "preview": "Sort-by-Rating/preview.png",
+        "main": "Sort-by-Rating/sortByRating.js",
+        "readme": "Sort-by-Rating/README.md"
     }
 ]
