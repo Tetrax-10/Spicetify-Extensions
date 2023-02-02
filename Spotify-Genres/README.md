@@ -44,6 +44,15 @@ spicetify apply
 
 Inspired from [Spicetify-Genre](https://github.com/Shinyhero36/Spicetify-Genre) Extension by [Shinyhero36](https://github.com/Shinyhero36)
 
+### Extra Features added to Tetrax's Spotify Genres
+
+1. Now `99.9%` of the songs have Genres
+2. Popup view to see all genres
+3. Supports Last FM Tags (user described genres)
+4. Now genres are gathered from all Artists of a Song
+5. Unavailable genres from `The Sounds of Spotify` are now included
+6. Unavailable genres directly head to Search Page
+
 ## Support
 
 🌟 Like it? Gimme Some Love ! 💕
