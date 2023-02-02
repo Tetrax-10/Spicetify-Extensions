@@ -40,6 +40,10 @@ spicetify apply
 
 <br />
 
+## Credits
+
+Inspired from [Spicetify-Genre](https://github.com/Shinyhero36/Spicetify-Genre) Extension by [Shinyhero36](https://github.com/Shinyhero36)
+
 ## Support
 
 🌟 Like it? Gimme Some Love ! 💕
