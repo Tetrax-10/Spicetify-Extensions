@@ -35,6 +35,13 @@
         "readme": "Play-Enhanced-Songs/README.md"
     },
     {
+        "name": "Spotify Genres",
+        "description": "See what Genres you are listening to with Spotify Genres Extension",
+        "preview": "Spotify-Genres/preview.png",
+        "main": "Spotify-Genres/spotifyGenres.js",
+        "readme": "Spotify-Genres/README.md"
+    },
+    {
         "name": "Sort by Rating",
         "description": "This extension sorts playlist by Rating",
         "preview": "Sort-by-Rating/preview.png",

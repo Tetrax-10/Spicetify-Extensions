@@ -94,9 +94,25 @@ This Extension only Plays the Enhanced Songs from a playlist. It even allows you
 
 ## Get it on [Spicetify Marketplace](https://github.com/spicetify/spicetify-marketplace) or [Manually](https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Play-Enhanced-Songs)
 
+Search `Play Enhanced Songs` and Click Install Buttton.
+
 <br />
 
-# 6. Play Enhanced Songs
+# 6. Spotify Genres
+
+See what Genres you are listening to with Spotify Genres Extension
+
+<br />
+
+![genre](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Spotify-Genres/genre.png)
+
+## Get it on [Spicetify Marketplace](https://github.com/spicetify/spicetify-marketplace) or [Manually](https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Spotify-Genres)
+
+Search `Spotify Genres` and Click Install Buttton.
+
+<br />
+
+# 7. Sort by Rating
 
 This extension sorts playlist by Rating.
 
