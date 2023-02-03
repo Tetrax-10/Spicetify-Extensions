@@ -2,7 +2,7 @@
     {
         "name": "Sort By Play Count",
         "description": "Sorts Songs by Play Count, Global Scrobbles, Personal Scrobbles Using Last.FM",
-        "preview": "Sort-by-Play-count/screenshot.png",
+        "preview": "Sort-by-Play-count/preview.png",
         "main": "Sort-by-Play-count/sortByPlayCount.js",
         "readme": "Sort-by-Play-count/README.md"
     },
@@ -16,7 +16,7 @@
     {
         "name": "Skip or Play Liked Songs",
         "description": "This Extension Skips or Plays Liked Songs only",
-        "preview": "Skip-or-Play-Liked-Songs/screenshot.png",
+        "preview": "Skip-or-Play-Liked-Songs/preview.png",
         "main": "Skip-or-Play-Liked-Songs/skipOrPlayLikedSongs.js",
         "readme": "Skip-or-Play-Liked-Songs/README.md"
     },
