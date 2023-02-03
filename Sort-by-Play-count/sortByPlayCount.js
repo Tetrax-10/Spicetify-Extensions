@@ -16,7 +16,6 @@ let sortByPlayCount = 0;
 
     let { Type } = Spicetify.URI;
     let LFMApiKey = "44654ea047786d90338c17331a5f5d95";
-    let unsupportedChar = /[#&+%\\]/g;
 
     const { React } = Spicetify;
     const { useState } = React;
@@ -1017,7 +1016,7 @@ let sortByPlayCount = 0;
 
     // get data from Last.FM
     async function fetchTrackInfoFromLastFM(artist, trackName, lastFmUsername) {
-        let url = `https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=${LFMApiKey}&artist=${artist}&track=${trackName}&format=json&username=${lastFmUsername}`;
+        let url = `https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=${LFMApiKey}&artist=${encodeURIComponent(artist)}&track=${encodeURIComponent(trackName)}&format=json&username=${encodeURIComponent(lastFmUsername)}`;
 
         try {
             let initialRequest = await fetch(url);
@@ -1083,7 +1082,7 @@ let sortByPlayCount = 0;
         if (totalTrackCount) {
             createItemName((await Spicetify.Platform.PlaylistAPI.getMetadata(`spotify:playlist:${uri}`)).name, platform, mode, type);
 
-            unsortedArray = await res.items.filter((track) => track.type == "track" && track.isPlayable && !track.isLocal && !unsupportedChar.test(track.name) && !unsupportedChar.test(track.artists[0].name)).map(async (track) => await createDataFromATrack(track, mode));
+            unsortedArray = await res.items.filter((track) => track.type == "track" && track.isPlayable && !track.isLocal).map(async (track) => await createDataFromATrack(track, mode));
         }
 
         if (!totalTrackCount || (await unsortedArray.length) == 0 || (await unsortedArray[0]) == null) {
@@ -1104,9 +1103,7 @@ let sortByPlayCount = 0;
         if (totalTrackCount) {
             createItemName((await Spicetify.CosmosAsync.get(`https://api.spotify.com/v1/artists/${uri}`)).name, platform, mode, type);
 
-            unsortedArray = await res.item
-                .filter((artistTrack) => artistTrack.trackMetadata.playable && !artistTrack.trackMetadata.isLocal && !unsupportedChar.test(artistTrack.trackMetadata.name) && !unsupportedChar.test(artistTrack.trackMetadata.artist[0].name))
-                .map(async (artistTrack) => await createDataFromATrack(artistTrack.trackMetadata, mode, "artist"));
+            unsortedArray = await res.item.filter((artistTrack) => artistTrack.trackMetadata.playable && !artistTrack.trackMetadata.isLocal).map(async (artistTrack) => await createDataFromATrack(artistTrack.trackMetadata, mode, "artist"));
         }
 
         if (!totalTrackCount || (await unsortedArray.length) == 0 || (await unsortedArray[0]) == null) {
@@ -1128,7 +1125,7 @@ let sortByPlayCount = 0;
             availables = disc.tracks.filter((track) => track.playable);
         }
 
-        let unsortedArray = await availables.filter((track) => track.playable && !unsupportedChar.test(track.name) && !unsupportedChar.test(track.artists[0].name)).map(async (track) => await createDataFromATrack(track, mode));
+        let unsortedArray = await availables.filter((track) => track.playable).map(async (track) => await createDataFromATrack(track, mode));
 
         if ((await unsortedArray.length) == 0 || (await unsortedArray[0]) == null) {
             notification(`${name} data not available! Try other options`);
