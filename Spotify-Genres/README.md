@@ -4,9 +4,13 @@ See what Genres you are listening to with Spotify Genres Extension
 
 <br />
 
-![genre](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Spotify-Genres/genre.png)
+## Genres in Player Bar and Artist Page
+
+![genre](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Spotify-Genres/artist-page.png)
 
 ## View all Genres and Last FM Tags
+
+### Just right clicking on a genre in the Player Bar will Open this Popup
 
 ![popup](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Spotify-Genres/popup.png)
 

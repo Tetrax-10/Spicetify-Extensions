@@ -16,10 +16,13 @@
         genrePopup();
     };
 
+    window.artistPageGenreOnClick = (dataValue) => {
+        artistPageGenreOnClick(dataValue);
+    };
+
     /////////////////////////////////// CONST ///////////////////////////////////////
 
     let LFMApiKey = "44654ea047786d90338c17331a5f5d95";
-    let unsupportedChar = /[#&+%\\]/g;
     let allGenresForPopupModal = [];
     let lastFmTags = [];
 
@@ -154,7 +157,7 @@
         return ArtistsURI;
     }
 
-    async function getAllArtistsGenres(allArtistURI) {
+    async function getAllArtistsGenres(allArtistURI, src = null) {
         let allGenres = allArtistURI.map(async (uri, i) => {
             let artistGenre = await fetchGenres(uri.split(":")[2]);
             return artistGenre;
@@ -166,8 +169,7 @@
         if (allGenres.length == 0) {
             let artistRes = await Spicetify.CosmosAsync.get(`wg://artist/v1/${Spicetify.Player.data?.track.metadata.artist_uri.split(":")[2]}/desktop?format=json`);
             if (!artistRes.related_artists.artists) {
-                allGenresForPopupModal = [];
-                return;
+                return null;
             }
             let tempAllArtistURI = artistRes.related_artists?.artists.map((artist) => artist.uri);
 
@@ -179,7 +181,9 @@
         }
 
         allGenres = new Set(allGenres);
-        allGenres = allGenresForPopupModal = Array.from(allGenres);
+        allGenres = Array.from(allGenres);
+        if (!src) allGenresForPopupModal = allGenres;
+
         return allGenres.slice(0, 5);
     }
 
@@ -187,7 +191,11 @@
         let allArtistURI = getAllArtistsURIFromCurrentTrack();
         let allGenres = await getAllArtistsGenres(allArtistURI);
 
-        if (!allGenres) return;
+        if (!allGenres) {
+            allGenresForPopupModal = [];
+            removeGenresFromUI();
+            return;
+        }
 
         let allGenreElements = allGenres.map(async (genre) => {
             const uri = await fetchSoundOfSpotifyPlaylist(genre);
@@ -388,31 +396,30 @@
 
     // get data from Last.FM
     async function fetchDataFromLastFM(artistName, trackName) {
-        let url = `https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=${LFMApiKey}&artist=${artistName}&track=${trackName}&format=json`;
+        let url = `https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=${LFMApiKey}&artist=${encodeURIComponent(artistName)}&track=${encodeURIComponent(trackName)}&format=json`;
 
         try {
             let initialRequest = await fetch(url);
             let response = await initialRequest.json();
             return response;
-        } catch (error) {}
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     async function updateLastFmTags() {
         let artistName = Spicetify.Player.data.track.metadata["artist_name"];
         let trackName = Spicetify.Player.data.track.metadata["title"];
 
-        if (unsupportedChar.test(artistName) || unsupportedChar.test(trackName)) {
-            lastFmTags = [];
-            return;
-        } else {
-            let res = await fetchDataFromLastFM(artistName, trackName);
+        let res = await fetchDataFromLastFM(artistName, trackName);
 
-            lastFmTags = [];
+        lastFmTags = [];
 
-            for (let tag of res.track.toptags.tag) {
-                if (!/\d/.test(tag.name)) {
-                    lastFmTags.push(tag.name);
-                }
+        if (typeof res.track.toptags.tag == "undefined") return;
+
+        for (let tag of res.track.toptags.tag) {
+            if (!/\d/.test(tag.name)) {
+                lastFmTags.push(tag.name);
             }
         }
     }
@@ -484,16 +491,58 @@
         main();
     })();
 
+    async function removeGenresFromUI() {
+        infoContainer = await waitForElement("div.main-trackInfo-container");
+        try {
+            infoContainer.removeChild(genreContainer);
+        } catch (error) {}
+    }
+
     async function updateGenres() {
         if (Spicetify.Player.data.track.metadata.is_local || !Spicetify.URI.isTrack(Spicetify.Player.data.track.uri)) {
-            infoContainer = await waitForElement("div.main-trackInfo-container");
-            try {
-                infoContainer.removeChild(genreContainer);
-            } catch (error) {}
+            removeGenresFromUI();
             return;
         }
         injectGenre();
         updateLastFmTags();
+    }
+
+    function artistPageGenreOnClick(dataValue) {
+        Spicetify.Platform.History.push(`/search/${dataValue}/playlists`);
+    }
+
+    async function makeDOMForArtistPage(allGenres) {
+        let allGenreElements = allGenres.map(async (genre) => {
+            const uri = await fetchSoundOfSpotifyPlaylist(genre);
+            if (uri !== null) {
+                return [[`<a class="main-entityHeader-genreLink" href="${uri.includes("|||") ? '#"' + ` data-value="${genre}" onclick="artistPageGenreOnClick(this.getAttribute('data-value'))" ` : uri + '"'} style="color: var(--spice-subtext); font-size: 1rem">${genre}</a>`], [`<span>, </span>`]];
+            }
+        });
+
+        allGenreElements = await Promise.all(allGenreElements);
+        allGenreElements = allGenreElements.flat(Infinity);
+
+        if (allGenreElements[allGenreElements.length - 1] == "<span>, </span>") {
+            allGenreElements.pop();
+        }
+
+        allGenreElements.unshift("<span>Artist Genres : </span>");
+        allGenreElements = allGenreElements.join("");
+        let genreContainer = document.createElement("div");
+        genreContainer.className = "main-entityHeader-detailsText";
+        genreContainer.innerHTML = allGenreElements;
+
+        let infoContainer = await waitForElement("div.main-entityHeader-headerText");
+        let monthlyListeners = await waitForElement("span.main-entityHeader-detailsText");
+        infoContainer.insertBefore(genreContainer, monthlyListeners);
+    }
+
+    async function updateArtistPage(pathname) {
+        let pathData = pathname.split("/");
+        if (!(pathData[1] == "artist" && pathData.length == 3)) return;
+
+        let artistGenres = await getAllArtistsGenres(["spotify:artist:" + pathData[2]], "artist");
+        makeDOMForArtistPage(artistGenres);
     }
 
     async function main() {
@@ -505,7 +554,14 @@
         genreContainer.addEventListener("contextmenu", genrePopup);
 
         updateGenres();
+
         Spicetify.Player.addEventListener("songchange", updateGenres);
+
+        updateArtistPage(Spicetify.Platform.History.location.pathname);
+
+        Spicetify.Platform.History.listen((data) => {
+            updateArtistPage(data.pathname);
+        });
     }
 })();
 
