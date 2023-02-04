@@ -56,6 +56,7 @@ Inspired from [Spicetify-Genre](https://github.com/Shinyhero36/Spicetify-Genre) 
 4. Now genres are gathered from all Artists of a Song
 5. Unavailable genres from `The Sounds of Spotify` are now included
 6. Unavailable genres directly head to Search Page
+7. Genres in Artist Page
 
 ## Support
 
