@@ -104,7 +104,7 @@ See what Genres you are listening to with Spotify Genres Extension
 
 <br />
 
-![genre](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Spotify-Genres/genre.png)
+![genre](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Spotify-Genres/artist-page.png)
 
 ## Get it on [Spicetify Marketplace](https://github.com/spicetify/spicetify-marketplace) or [Manually](https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Spotify-Genres)
 
