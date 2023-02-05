@@ -158,7 +158,7 @@
     }
 
     async function getAllArtistsGenres(allArtistURI, src = null) {
-        let allGenres = allArtistURI.map(async (uri, i) => {
+        let allGenres = allArtistURI.map(async (uri) => {
             let artistGenre = await fetchGenres(uri.split(":")[2]);
             return artistGenre;
         });
@@ -167,7 +167,15 @@
         allGenres = allGenres.flat(Infinity);
 
         if (allGenres.length == 0) {
-            let artistRes = await Spicetify.CosmosAsync.get(`wg://artist/v1/${Spicetify.Player.data?.track.metadata.artist_uri.split(":")[2]}/desktop?format=json`);
+            let targetedArtistID;
+            if (src == "artist") {
+                targetedArtistID = allArtistURI[0].split(":")[2];
+            } else if (src == "recursive") {
+                return [];
+            } else {
+                targetedArtistID = Spicetify.Player.data?.track.metadata.artist_uri.split(":")[2];
+            }
+            let artistRes = await Spicetify.CosmosAsync.get(`wg://artist/v1/${targetedArtistID}/desktop?format=json`);
             if (!artistRes.related_artists.artists) {
                 return null;
             }
@@ -175,8 +183,12 @@
 
             let count = 5;
             while (count != 25) {
-                allGenres = await getAllArtistsGenres(tempAllArtistURI.slice(count - 5, count));
-                if (allGenres.length != 0) count = 25;
+                allGenres = await getAllArtistsGenres(tempAllArtistURI.slice(count - 5, count), "recursive");
+                if (allGenres.length != 0) {
+                    count = 25;
+                } else {
+                    count += 5;
+                }
             }
         }
 
@@ -512,6 +524,7 @@
     }
 
     async function makeDOMForArtistPage(allGenres) {
+        if (!allGenres) return;
         let allGenreElements = allGenres.map(async (genre) => {
             const uri = await fetchSoundOfSpotifyPlaylist(genre);
             if (uri !== null) {
@@ -529,8 +542,12 @@
         allGenreElements.unshift("<span>Artist Genres : </span>");
         allGenreElements = allGenreElements.join("");
         let genreContainer = document.createElement("div");
-        genreContainer.className = "main-entityHeader-detailsText";
+        genreContainer.className = "main-entityHeader-detailsText genre-container";
         genreContainer.innerHTML = allGenreElements;
+
+        try {
+            document.querySelector(".genre-container").remove();
+        } catch (err) {}
 
         let infoContainer = await waitForElement("div.main-entityHeader-headerText");
         let monthlyListeners = await waitForElement("span.main-entityHeader-detailsText");
