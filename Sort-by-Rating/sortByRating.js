@@ -18,6 +18,8 @@
     let ratedFolderName = "Rated";
     let ratedFolderUri = await isFolderCreated(ratedFolderName);
 
+    let isV2 = await isAppLaterThan("1.2.5.1006.g22820f93");
+
     const RATINGS = ["5.0", "4.5", "4.0", "3.5", "3.0", "2.5", "2.0", "1.5", "1.0", "0.5", "0"];
 
     ////////////////////////////////////// Menu ///////////////////////////////////////////
@@ -265,9 +267,21 @@
         RATINGS.forEach(async (rate) => {
             if (UidData[rate] && UidData[rate].length != 0) {
                 if (!isFirstItemMaxRated && isFirstSequence) {
-                    Spicetify.Platform.PlaylistAPI.move(playlistID, UidData[rate], { before: prevSequenceLastUid });
+                    Spicetify.Platform.PlaylistAPI.move(playlistID, isV2 ? UidData[rate].map((uid) => ({ uid: uid })) : UidData[rate], {
+                        before: isV2
+                            ? {
+                                  uid: prevSequenceLastUid,
+                              }
+                            : prevSequenceLastUid,
+                    });
                 } else {
-                    Spicetify.Platform.PlaylistAPI.move(playlistID, UidData[rate], { after: prevSequenceLastUid });
+                    Spicetify.Platform.PlaylistAPI.move(playlistID, isV2 ? UidData[rate].map((uid) => ({ uid: uid })) : UidData[rate], {
+                        after: isV2
+                            ? {
+                                  uid: prevSequenceLastUid,
+                              }
+                            : prevSequenceLastUid,
+                    });
                 }
                 isFirstSequence = false;
                 prevSequenceLastUid = UidData[rate].slice(-1)[0];
@@ -308,6 +322,13 @@
         });
 
         return ratedUid;
+    }
+
+    async function isAppLaterThan(specifiedVersion) {
+        let appInfo = await Spicetify.CosmosAsync.get("sp://desktop/v1/version");
+        let result = appInfo.version.localeCompare(specifiedVersion, undefined, { numeric: true, sensitivity: "base" });
+
+        return result === 1;
     }
 
     async function sortPlaylistByRating(uri) {
