@@ -1,8 +1,8 @@
-# Sort by Rating
+# Sort by Rating (deprecated)
+
+Sort by Rating feature has been moved to [Star Ratings](https://github.com/duffey/spicetify-star-ratings) extension.
 
 This extension sorts playlist by Rating.
-
-To Rate songs install Star Rating Extension
 
 <br />
 
