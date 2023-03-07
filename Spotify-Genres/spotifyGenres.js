@@ -212,7 +212,7 @@
         let allGenreElements = allGenres.map(async (genre) => {
             const uri = await fetchSoundOfSpotifyPlaylist(genre);
             if (uri !== null) {
-                return [[`<a href="${uri.includes("|||") ? '#"' + ' onclick="genrePopup()" ' : uri + '"'} style="color: var(--spice-subtext); font-size: 12px">${genre}</a>`], [`<span>, </span>`]];
+                return [[`<a href="${uri.includes("|||") ? '#"' + ' onclick="genrePopup()" ' : uri + '"'} style="color: var(--spice-subtext); font-size: 12px">${genre.replace(/(^\w{1})|([\s-]+\w{1})/g, (letter) => letter.toUpperCase())}</a>`], [`<span>, </span>`]];
             }
         });
 
@@ -392,7 +392,7 @@
 
         return value.map((name) => {
             return React.createElement(ButtonItem, {
-                name: name,
+                name: name.replace(/(^\w{1})|([\s-]+\w{1})/g, (letter) => letter.toUpperCase()),
                 onclickFun: async () => {
                     let uri = await fetchSoundOfSpotifyPlaylist(name);
                     if (uri === null || uri.includes("|||")) {
@@ -455,7 +455,7 @@
             React.createElement("div", { className: "popup-row" }, React.createElement("h1", { className: "div-title" }, "Last FM Tags")),
             value.map((name) => {
                 return React.createElement(ButtonItem, {
-                    name: name,
+                    name: name.replace(/(^\w{1})|([\s-]+\w{1})/g, (letter) => letter.toUpperCase()),
                     onclickFun: async () => {
                         Spicetify.Platform.History.push(`/search/${name}/playlists`);
                         Spicetify.PopupModal.hide();
@@ -528,7 +528,15 @@
         let allGenreElements = allGenres.map(async (genre) => {
             const uri = await fetchSoundOfSpotifyPlaylist(genre);
             if (uri !== null) {
-                return [[`<a class="main-entityHeader-genreLink" href="${uri.includes("|||") ? '#"' + ` data-value="${genre}" onclick="artistPageGenreOnClick(this.getAttribute('data-value'))" ` : uri + '"'} style="color: var(--spice-subtext); font-size: 1rem">${genre}</a>`], [`<span>, </span>`]];
+                return [
+                    [
+                        `<a class="main-entityHeader-genreLink" href="${uri.includes("|||") ? '#"' + ` data-value="${genre}" onclick="artistPageGenreOnClick(this.getAttribute('data-value'))" ` : uri + '"'} style="color: var(--spice-subtext); font-size: 1rem">${genre.replace(
+                            /(^\w{1})|([\s-]+\w{1})/g,
+                            (letter) => letter.toUpperCase()
+                        )}</a>`,
+                    ],
+                    [`<span>, </span>`],
+                ];
             }
         });
 
