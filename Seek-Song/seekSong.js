@@ -1,8 +1,8 @@
 // @ts-chec
 
-// NAME: Hide Sidebar Items
+// NAME: Seek Song
 // AUTHOR: Tetrax-10
-// DESCRIPTION: Hide sidebar items like liked songs, create playlist, your podcast.
+// DESCRIPTION: Brings YouTube Keybinds in Spotify
 
 /// <reference path="../dev/globals.d.ts" />
 
