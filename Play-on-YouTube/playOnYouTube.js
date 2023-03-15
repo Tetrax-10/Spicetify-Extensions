@@ -229,7 +229,7 @@
         });
     }
 
-    new Spicetify.Menu.Item("Play on YouTube", false, setAPIKey).register();
+    new Spicetify.Menu.Item("Play on YouTube", false, setAPIKey, YouTubeSVG).register();
 
     /////////////////////////////////// MAIN ///////////////////////////////////////
 
