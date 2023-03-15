@@ -10,11 +10,13 @@ This extension Plays the Video Song of a Track in YouTube
 
 # Use your API Key for the best experiance
 
-Without your YouTube Api Key you will be taken to relavent YouTube search page.
+By using you own YouTube API key you will be taken directly to the video song of the track like the above video, else you will be taken to the relavent YouTube search page like the below pic.
 
 [How to get my API key?](https://www.youtube.com/watch?v=44OBOSBd73M) ( 1 min YouTube video )
 
 ![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Play-on-YouTube/yt-search-page.png)
+
+If your API quota got exceeded (you can open 100 songs a day) you will be taken to the relavent search page.
 
 ## Just paste your API Key here
 
