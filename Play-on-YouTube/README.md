@@ -2,13 +2,27 @@
 
 This extension Plays the Video Song of a Track in YouTube
 
-<br />
-
 # Demo
 
 ![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Play-on-YouTube/Play-on-YouTube-demo.gif)
 
 <br />
+
+# Use your API Key for the best experiance
+
+Without your YouTube Api Key you will be taken to relavent YouTube search page.
+
+[How to get my API key?](https://www.youtube.com/watch?v=44OBOSBd73M) ( 1 min YouTube video )
+
+![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Play-on-YouTube/yt-search-page.png)
+
+## Just paste your API Key here
+
+To open this pop up click on your profile on top right corner and click `Play on YouTube`
+
+![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Play-on-YouTube/popup-menu.png)
+
+![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Play-on-YouTube/api-key-popup.png)
 
 ## Get it on Spicetify Marketplace
 
