@@ -276,7 +276,7 @@
         let youtubeVideoKey = youtubeRes.items[0].id.videoId;
 
         youtubeRes.items.every((video) => {
-            if (video.snippet.title.includes(trimmedSongName)) {
+            if (video.snippet.title.toLowerCase().includes(trimmedSongName.toLowerCase())) {
                 youtubeVideoKey = video.id.videoId;
                 return false;
             }
