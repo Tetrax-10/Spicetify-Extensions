@@ -126,7 +126,28 @@ Search `Sort by Rating` and Click Install Buttton.
 
 <br />
 
-## Support
+# Development
+
+### Always run the Prettier formatter before making the Pull Request
+
+```sh
+npm run format
+```
+
+### For Extensions made with [spicetify-creator](https://github.com/spicetify/spicetify-creator) follow these steps additionally
+
+**Make sure you run these commands in extension's directory just before making the Pull Request**
+
+```sh
+npm run build-local
+npm run build-local-minify
+```
+
+[How to build and watch Extensions made with spicetify-creator](https://spicetify.app/docs/development/spicetify-creator/building-and-testing)
+
+<br />
+
+# Support
 
 ### People who Liked these Extensions
 
