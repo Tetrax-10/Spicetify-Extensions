@@ -1,0 +1,6 @@
+dist
+minify-dist
+LICENSE
+package-lock.json
+node_modules
+dev

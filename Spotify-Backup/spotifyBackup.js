@@ -7,51 +7,51 @@
 
 /// <reference path="../dev/globals.d.ts" />
 
-(async function spotifyBackup() {
+;(async function spotifyBackup() {
     if (!(Spicetify.Platform && Spicetify.React)) {
-        setTimeout(spotifyBackup, 300);
-        return;
+        setTimeout(spotifyBackup, 300)
+        return
     }
-    await initSpotifyBackup();
-})();
+    await initSpotifyBackup()
+})()
 
 async function initSpotifyBackup() {
-    const { React } = Spicetify;
-    const { useState } = React;
+    const { React } = Spicetify
+    const { useState } = React
 
     ////////////////////////////////////// CONFIG ///////////////////////////////////////////
 
     async function getLocalStorageData(key) {
-        return Spicetify.LocalStorage.get(key);
+        return Spicetify.LocalStorage.get(key)
     }
 
     async function setLocalStorageData(key, value) {
-        Spicetify.LocalStorage.set(key, value);
+        Spicetify.LocalStorage.set(key, value)
     }
 
     function notification(text) {
-        Spicetify.showNotification(text);
+        Spicetify.showNotification(text)
     }
 
     async function getConfig() {
         try {
-            const parsed = JSON.parse(await getLocalStorageData("spotifyBackup:settings"));
+            const parsed = JSON.parse(await getLocalStorageData("spotifyBackup:settings"))
             if (parsed && typeof parsed === "object") {
-                return parsed;
+                return parsed
             }
-            throw "Config error Spotify Backup";
+            throw "Config error Spotify Backup"
         } catch {
-            await setLocalStorageData("spotifyBackup:settings", `{}`);
-            return { restoreMode: "all", restoreOthers: true, restoreFolders: false };
+            await setLocalStorageData("spotifyBackup:settings", `{}`)
+            return { restoreMode: "all", restoreOthers: true, restoreFolders: false }
         }
     }
 
     async function saveConfig() {
-        await setLocalStorageData("spotifyBackup:settings", JSON.stringify(CONFIG));
+        await setLocalStorageData("spotifyBackup:settings", JSON.stringify(CONFIG))
     }
 
-    const CONFIG = await getConfig();
-    await saveConfig();
+    const CONFIG = await getConfig()
+    await saveConfig()
 
     ////////////////////////////////////// UI ///////////////////////////////////////////
 
@@ -141,7 +141,7 @@ async function initSpotifyBackup() {
                     padding: 5px 10px;
                     text-align: center;
                 }`
-    );
+    )
 
     function DisplayIcon({ icon, size }) {
         return React.createElement("svg", {
@@ -152,11 +152,11 @@ async function initSpotifyBackup() {
             dangerouslySetInnerHTML: {
                 __html: icon,
             },
-        });
+        })
     }
 
     function checkBoxItem({ name, field, onclickFun = () => {} }) {
-        let [value, setValue] = useState(CONFIG[field]);
+        let [value, setValue] = useState(CONFIG[field])
         return React.createElement(
             "div",
             { className: "popup-row" },
@@ -169,11 +169,11 @@ async function initSpotifyBackup() {
                     {
                         className: "checkbox" + (value ? "" : " disabled"),
                         onClick: async () => {
-                            let state = !value;
-                            CONFIG[field] = state;
-                            setValue(state);
-                            await saveConfig();
-                            onclickFun();
+                            let state = !value
+                            CONFIG[field] = state
+                            setValue(state)
+                            await saveConfig()
+                            onclickFun()
                         },
                     },
                     React.createElement(DisplayIcon, {
@@ -182,11 +182,11 @@ async function initSpotifyBackup() {
                     })
                 )
             )
-        );
+        )
     }
 
     function dropDownItem({ name, field, options, onclickFun = () => {} }) {
-        const [value, setValue] = useState(CONFIG[field]);
+        const [value, setValue] = useState(CONFIG[field])
         return React.createElement(
             "div",
             { className: "popup-row" },
@@ -199,10 +199,10 @@ async function initSpotifyBackup() {
                     {
                         value,
                         onChange: async (e) => {
-                            setValue(e.target.value);
-                            CONFIG[field] = e.target.value;
-                            await saveConfig();
-                            onclickFun();
+                            setValue(e.target.value)
+                            CONFIG[field] = e.target.value
+                            await saveConfig()
+                            onclickFun()
                         },
                     },
                     Object.keys(options).map((item) =>
@@ -216,7 +216,7 @@ async function initSpotifyBackup() {
                     )
                 )
             )
-        );
+        )
     }
 
     function ButtonItem({ name, onclickFun }) {
@@ -225,11 +225,11 @@ async function initSpotifyBackup() {
             {
                 className: "login-button",
                 onClick: async () => {
-                    onclickFun();
+                    onclickFun()
                 },
             },
             name
-        );
+        )
     }
 
     function restorePage() {
@@ -260,16 +260,16 @@ async function initSpotifyBackup() {
             React.createElement(ButtonItem, {
                 name: "Restore",
                 onclickFun: async () => {
-                    await restore();
-                    Spicetify.PopupModal.hide();
+                    await restore()
+                    Spicetify.PopupModal.hide()
                 },
             })
-        );
+        )
 
         Spicetify.PopupModal.display({
             title: "Restore",
             content: restoreContainer,
-        });
+        })
     }
 
     let settingsDOMContent = React.createElement(
@@ -298,42 +298,42 @@ async function initSpotifyBackup() {
             React.createElement(ButtonItem, {
                 name: "Backup",
                 onclickFun: async () => {
-                    await backup();
-                    Spicetify.PopupModal.hide();
+                    await backup()
+                    Spicetify.PopupModal.hide()
                 },
             }),
             React.createElement(ButtonItem, {
                 name: "Restore",
                 onclickFun: async () => {
-                    Spicetify.PopupModal.hide();
-                    setTimeout(restorePage, 300);
+                    Spicetify.PopupModal.hide()
+                    setTimeout(restorePage, 300)
                 },
             })
         )
-    );
+    )
 
     function settingsPage() {
         Spicetify.PopupModal.display({
             title: "Spotify Backup",
             content: settingsDOMContent,
-        });
+        })
     }
 
     ////////////////////////////////////// Menu ///////////////////////////////////////////
 
-    new Spicetify.Menu.Item("Backup", false, settingsPage).register();
+    new Spicetify.Menu.Item("Backup", false, settingsPage).register()
 
     ////////////////////////////////////// Core ///////////////////////////////////////////
 
     async function fetchPlaylistTracks(uri) {
         let playlistRes = await Spicetify.CosmosAsync.get(`sp://core-playlist/v1/playlist/spotify:playlist:${uri}/rows`, {
             policy: { link: true, playable: true },
-        });
+        })
 
         if (playlistRes.rows.length) {
-            return playlistRes.rows.map((track) => track.link);
+            return playlistRes.rows.map((track) => track.link)
         } else {
-            return null;
+            return null
         }
     }
 
@@ -341,36 +341,36 @@ async function initSpotifyBackup() {
         if (item.rows) {
             let root = await item.rows.map(async (item) => {
                 if (item.type == "playlist") {
-                    let uri = item.link.split(":")[2];
+                    let uri = item.link.split(":")[2]
                     return {
                         type: "playlist",
                         name: item.name,
                         isRestoreTrack: item.ownedBySelf,
                         isValid: item.loadState != "forbidden" ? (item.totalLength ? true : false) : false,
                         link: item.loadState != "forbidden" ? (item.ownedBySelf ? await fetchPlaylistTracks(uri) : item.link) : null,
-                    };
+                    }
                 } else {
                     return {
                         type: "folder",
                         name: item.name,
                         isValid: item.folders || item.playlists ? true : false,
                         playlist: await getTracksFromRes(item),
-                    };
+                    }
                 }
-            });
+            })
 
-            return Promise.all(root);
+            return Promise.all(root)
         } else {
-            return null;
+            return null
         }
     }
 
     async function fetchAllPlaylist() {
-        let rootRes = await Spicetify.CosmosAsync.get("sp://core-playlist/v1/rootlist");
+        let rootRes = await Spicetify.CosmosAsync.get("sp://core-playlist/v1/rootlist")
 
-        let root = await getTracksFromRes(rootRes);
+        let root = await getTracksFromRes(rootRes)
 
-        return Promise.all(root);
+        return Promise.all(root)
     }
 
     async function createPlaylist(name, tracks) {
@@ -379,58 +379,58 @@ async function initSpotifyBackup() {
             playlist: true,
             uris: tracks,
             name: name,
-        });
+        })
     }
 
     async function createFolder(name) {
-        return await Spicetify.Platform.RootlistAPI.createFolder(name);
+        return await Spicetify.Platform.RootlistAPI.createFolder(name)
     }
 
     async function likePlaylist(playlist) {
-        await Spicetify.Platform.RootlistAPI.add([playlist]);
+        await Spicetify.Platform.RootlistAPI.add([playlist])
     }
 
     async function fetchLocalStorage() {
         let data = Object.keys(localStorage).map(async (key) => {
-            return { key: key, value: await getLocalStorageData(key) };
-        });
+            return { key: key, value: await getLocalStorageData(key) }
+        })
 
-        return await Promise.all(data);
+        return await Promise.all(data)
     }
 
     async function setLocalStorage(keysAndValues) {
         keysAndValues.forEach(async (item) => {
-            await setLocalStorageData(item.key, item.value);
-        });
+            await setLocalStorageData(item.key, item.value)
+        })
     }
 
     async function JSONToString(data) {
-        return JSON.stringify(data);
+        return JSON.stringify(data)
     }
 
     async function stringToJSON(data) {
-        return JSON.parse(data);
+        return JSON.parse(data)
     }
 
     async function sendToClipboard(data, text) {
         if (data) {
-            await Spicetify.Platform.ClipboardAPI.copy(data);
-            notification(`${text}`);
+            await Spicetify.Platform.ClipboardAPI.copy(data)
+            notification(`${text}`)
         }
     }
 
     async function getFromClipboard() {
-        return await Spicetify.Platform.ClipboardAPI.paste();
+        return await Spicetify.Platform.ClipboardAPI.paste()
     }
 
     async function backup() {
-        let backup = { playlist: null, appData: null };
+        let backup = { playlist: null, appData: null }
 
-        backup.playlist = await fetchAllPlaylist();
+        backup.playlist = await fetchAllPlaylist()
 
-        backup.appData = await fetchLocalStorage();
+        backup.appData = await fetchLocalStorage()
 
-        await sendToClipboard(await JSONToString(backup), "Backup Data Copied");
+        await sendToClipboard(await JSONToString(backup), "Backup Data Copied")
     }
 
     async function restoreAllPlaylist(items) {
@@ -438,36 +438,36 @@ async function initSpotifyBackup() {
             if (item.isValid) {
                 if (item.type == "playlist") {
                     if (item.isRestoreTrack) {
-                        await createPlaylist(item.name, item.link);
+                        await createPlaylist(item.name, item.link)
                     } else {
                         try {
                             if (CONFIG.restoreOthers) {
-                                await likePlaylist(item.link);
+                                await likePlaylist(item.link)
                             }
                         } catch {
-                            throw "Playlist already liked";
+                            throw "Playlist already liked"
                         }
                     }
                 } else {
                     if (CONFIG.restoreFolders) {
-                        await createFolder(item.name);
+                        await createFolder(item.name)
                     }
-                    await restoreAllPlaylist(item.playlist.reverse());
+                    await restoreAllPlaylist(item.playlist.reverse())
                 }
             }
-        });
+        })
     }
 
     async function restore() {
-        let backup = await stringToJSON(await getFromClipboard());
+        let backup = await stringToJSON(await getFromClipboard())
 
         if (CONFIG.restoreMode != "app") {
-            await restoreAllPlaylist(backup.playlist.reverse());
+            await restoreAllPlaylist(backup.playlist.reverse())
         }
         if (CONFIG.restoreMode != "playlist") {
-            setLocalStorage(backup.appData);
+            setLocalStorage(backup.appData)
         }
 
-        notification("Restored Successfully");
+        notification("Restored Successfully")
     }
 }

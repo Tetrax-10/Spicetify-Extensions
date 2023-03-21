@@ -4,7 +4,7 @@ This extension Plays the Video Song of a Track in YouTube
 
 # Demo
 
-![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Play-on-YouTube/Play-on-YouTube-demo.gif)
+![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Play-on-YouTube/assets/Play-on-YouTube-demo.gif)
 
 <br />
 
@@ -14,7 +14,7 @@ By using you own YouTube API key you will be taken directly to the video song of
 
 [How to get my API key?](https://www.youtube.com/watch?v=44OBOSBd73M) ( 1 min YouTube video )
 
-![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Play-on-YouTube/yt-search-page.png)
+![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Play-on-YouTube/assets/yt-search-page.png)
 
 If your API quota got exceeded (you can open 100 songs a day) you will be taken to the relavent search page.
 
@@ -22,9 +22,9 @@ If your API quota got exceeded (you can open 100 songs a day) you will be taken 
 
 To open this pop up click on your profile on top right corner and click `Play on YouTube`
 
-![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Play-on-YouTube/popup-menu.png)
+![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Play-on-YouTube/assets/popup-menu.png)
 
-![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Play-on-YouTube/api-key-popup.png)
+![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Play-on-YouTube/assets/api-key-popup.png)
 
 ## Get it on Spicetify Marketplace
 
@@ -38,7 +38,7 @@ Step 3 : Search `Play on YouTube` Click Install Buttton. Done!
 
 ## Install Manually
 
-Copy `playOnYouTube.js` into your [Spicetify](https://github.com/spicetify/spicetify-cli) extensions directory:
+Copy `minify-dist/playOnYouTube.js` into your [Spicetify](https://github.com/spicetify/spicetify-cli) extensions directory:
 | **Platform** | **Path** |
 |------------|-----------------------------------------------------------------------------------|
 | **Linux** | `~/.config/spicetify/Extensions` or `$XDG_CONFIG_HOME/.config/spicetify/Extensions/` |

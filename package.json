@@ -1,0 +1,20 @@
+{
+    "name": "spicetify-extensions",
+    "description": "Spotify Extensions Developed by a Music Lover",
+    "author": "Tetrax-10",
+    "license": "MIT",
+    "homepage": "https://github.com/Tetrax-10/Spicetify-Extensions#readme",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Tetrax-10/Spicetify-Extensions.git"
+    },
+    "bugs": {
+        "url": "https://github.com/Tetrax-10/Spicetify-Extensions/issues"
+    },
+    "scripts": {
+        "format": "prettier --write ."
+    },
+    "devDependencies": {
+        "prettier": "^2.8.6"
+    }
+}

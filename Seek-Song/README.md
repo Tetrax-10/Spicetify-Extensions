@@ -51,8 +51,8 @@ spicetify apply
 Open [seekSong.js](https://github.com/Tetrax-10/Spicetify-Extensions/blob/master/Seek-Song/seekSong.js) in line number 9 just change the value (in seconds).
 
 ```javascript
-let skipBackwardValue = 10;
-let skipForwardValue = 10;
+let skipBackwardValue = 10
+let skipForwardValue = 10
 ```
 
 <br />

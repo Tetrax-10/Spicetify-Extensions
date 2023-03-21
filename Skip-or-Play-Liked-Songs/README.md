@@ -21,14 +21,16 @@ Step 3 : Search `Skip or Play Liked Songs` Click Install Buttton. Done!
 <br />
 
 ## Install Manually
+
 Copy `skipOrPlayLikedSongs.js` into your [Spicetify](https://github.com/spicetify/spicetify-cli) extensions directory:
-| **Platform** | **Path**                                                                            |
+| **Platform** | **Path** |
 |------------|-----------------------------------------------------------------------------------|
-| **Linux**      | `~/.config/spicetify/Extensions` or `$XDG_CONFIG_HOME/.config/spicetify/Extensions/` |
-| **MacOS**      | `~/spicetify_data/Extensions` or `$SPICETIFY_CONFIG/Extensions`                      |
-| **Windows**    | `%appdata%\spicetify\Extensions`                                              |
+| **Linux** | `~/.config/spicetify/Extensions` or `$XDG_CONFIG_HOME/.config/spicetify/Extensions/` |
+| **MacOS** | `~/spicetify_data/Extensions` or `$SPICETIFY_CONFIG/Extensions` |
+| **Windows** | `%appdata%\spicetify\Extensions` |
 
 After putting the extension file into the correct folder, run the following command to install the extension:
+
 ```
 spicetify config extensions skipOrPlayLikedSongs.js
 spicetify apply
@@ -37,6 +39,7 @@ spicetify apply
 <br />
 
 ## Support
+
 🌟 Like it? Gimme Some Love ! 💕
 
 [![Github Stars badge](https://img.shields.io/github/stars/Tetrax-10/Spicetify-Extensions?logo=github&style=social)](https://github.com/Tetrax-10/Spicetify-Extensions)

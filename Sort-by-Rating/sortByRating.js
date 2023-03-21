@@ -6,68 +6,68 @@
 
 /// <reference path="../dev/globals.d.ts" />
 
-(async function sortByRating() {
+;(async function sortByRating() {
     if (!(Spicetify.Platform && Spicetify.React)) {
-        setTimeout(sortByRating, 300);
-        return;
+        setTimeout(sortByRating, 300)
+        return
     }
 
-    const { Type } = Spicetify.URI;
-    const { React } = Spicetify;
+    const { Type } = Spicetify.URI
+    const { React } = Spicetify
 
-    let ratedFolderName = "Rated";
-    let ratedFolderUri = await isFolderCreated(ratedFolderName);
+    let ratedFolderName = "Rated"
+    let ratedFolderUri = await isFolderCreated(ratedFolderName)
 
-    let isV2 = await isAppLaterThan("1.2.5.1006.g22820f93");
+    let isV2 = await isAppLaterThan("1.2.5.1006.g22820f93")
 
-    const RATINGS = ["5.0", "4.5", "4.0", "3.5", "3.0", "2.5", "2.0", "1.5", "1.0", "0.5", "0"];
+    const RATINGS = ["5.0", "4.5", "4.0", "3.5", "3.0", "2.5", "2.0", "1.5", "1.0", "0.5", "0"]
 
     ////////////////////////////////////// Menu ///////////////////////////////////////////
 
     function shouldAddSortPlaylistByRating(uri) {
-        let uriObj = Spicetify.URI.fromString(uri[0]);
+        let uriObj = Spicetify.URI.fromString(uri[0])
         switch (uriObj.type) {
             case Type.PLAYLIST:
             case Type.PLAYLIST_V2:
-                return true;
+                return true
         }
-        return false;
+        return false
     }
 
     function notification(text, isError = false, msTimeout) {
-        Spicetify.showNotification(text, isError, msTimeout);
+        Spicetify.showNotification(text, isError, msTimeout)
     }
 
     new Spicetify.ContextMenu.Item(
         "Sort Playlist by Rating",
         async (uri) => {
             if (ratedFolderUri) {
-                refreshPopup(uri);
+                refreshPopup(uri)
             } else {
-                notification("Install Star Rating Extension to Rate Songs", false, 3500);
+                notification("Install Star Rating Extension to Rate Songs", false, 3500)
                 setTimeout(() => {
-                    notification("After rating you can Sort Playlist with Sort By Rating Extension", false, 6000);
-                }, 3000);
+                    notification("After rating you can Sort Playlist with Sort By Rating Extension", false, 6000)
+                }, 3000)
             }
         },
         shouldAddSortPlaylistByRating,
         "visualizer"
-    ).register();
+    ).register()
 
     function refreshPopup(uri) {
         popupItem({
             title: "Note",
             name1: "No, cacel sorting",
             onclickFun1: () => {
-                Spicetify.PopupModal.hide();
+                Spicetify.PopupModal.hide()
             },
             name2: "Yes",
             onclickFun2: () => {
-                Spicetify.PopupModal.hide();
-                notification("Sorting...");
-                sortPlaylistByRating(uri);
+                Spicetify.PopupModal.hide()
+                notification("Sorting...")
+                sortPlaylistByRating(uri)
             },
-        });
+        })
     }
 
     ////////////////////////////////////// UI ///////////////////////////////////////////
@@ -165,7 +165,7 @@
                     .red {
                         background-color: #bf616a;
                     }`
-    );
+    )
 
     function ButtonItem({ name, color = "", onclickFun }) {
         return React.createElement(
@@ -173,15 +173,15 @@
             {
                 className: `login-button${color}`,
                 onClick: async () => {
-                    onclickFun();
+                    onclickFun()
                 },
             },
             name
-        );
+        )
     }
 
     function popupItem({ title, name1, color1 = "", onclickFun1, name2 = null, color2 = "", onclickFun2 = null }) {
-        Spicetify.PopupModal.hide();
+        Spicetify.PopupModal.hide()
 
         let DOMcontent = React.createElement(
             "div",
@@ -203,66 +203,66 @@
                       onclickFun: onclickFun2,
                   })
                 : null
-        );
+        )
 
         setTimeout(() => {
             Spicetify.PopupModal.display({
                 title: title,
                 content: DOMcontent,
-            });
-        }, 100);
+            })
+        }, 100)
     }
 
     /////////////////////////////////// Helpers ///////////////////////////////////////
 
     async function isFolderCreated(folderName) {
-        let root = await Spicetify.Platform.RootlistAPI.getContents();
-        let folder = await root.items.find((item) => item.type === "folder" && item.name === folderName);
-        return (await folder) ? folder.uri : false;
+        let root = await Spicetify.Platform.RootlistAPI.getContents()
+        let folder = await root.items.find((item) => item.type === "folder" && item.name === folderName)
+        return (await folder) ? folder.uri : false
     }
 
     async function getPlaylistItems(uri) {
-        let playlistRes = await Spicetify.CosmosAsync.get(`sp://core-playlist/v1/playlist/${uri}/rows`);
+        let playlistRes = await Spicetify.CosmosAsync.get(`sp://core-playlist/v1/playlist/${uri}/rows`)
         return playlistRes.rows.map((item) => {
-            return { name: item.name, uri: item.link, uid: item.rowId };
-        });
+            return { name: item.name, uri: item.link, uid: item.rowId }
+        })
     }
 
     async function filterRatedPlaylists(playlists) {
-        const result = {};
+        const result = {}
         for (let playlist of playlists.items) {
-            if (!RATINGS.includes(playlist.name)) continue;
-            result[playlist.name] = await getPlaylistItems(playlist.uri);
+            if (!RATINGS.includes(playlist.name)) continue
+            result[playlist.name] = await getPlaylistItems(playlist.uri)
         }
-        return result;
+        return result
     }
 
     async function getRatedPlaylistsItems() {
-        let root = await Spicetify.Platform.RootlistAPI.getContents();
-        const rated = root.items.find((playlist) => playlist.type === "folder" && playlist.name === ratedFolderName);
+        let root = await Spicetify.Platform.RootlistAPI.getContents()
+        const rated = root.items.find((playlist) => playlist.type === "folder" && playlist.name === ratedFolderName)
         if (!rated) {
-            return [[], null];
+            return [[], null]
         }
-        root = rated;
-        return await filterRatedPlaylists(root);
+        root = rated
+        return await filterRatedPlaylists(root)
     }
 
     function reorderPlaylist(playlistID, firstPlaylistItemUid, UidData) {
         function getFirstUid() {
-            let uid;
+            let uid
             RATINGS.every((rate) => {
                 if (UidData[rate] && UidData[rate].length != 0) {
-                    uid = UidData[rate][0];
-                    return false;
+                    uid = UidData[rate][0]
+                    return false
                 }
-                return true;
-            });
-            return uid;
+                return true
+            })
+            return uid
         }
 
-        let prevSequenceLastUid = getFirstUid();
-        let isFirstItemMaxRated = prevSequenceLastUid == firstPlaylistItemUid;
-        let isFirstSequence = true;
+        let prevSequenceLastUid = getFirstUid()
+        let isFirstItemMaxRated = prevSequenceLastUid == firstPlaylistItemUid
+        let isFirstSequence = true
 
         RATINGS.forEach(async (rate) => {
             if (UidData[rate] && UidData[rate].length != 0) {
@@ -273,7 +273,7 @@
                                   uid: prevSequenceLastUid,
                               }
                             : prevSequenceLastUid,
-                    });
+                    })
                 } else {
                     Spicetify.Platform.PlaylistAPI.move(playlistID, isV2 ? UidData[rate].map((uid) => ({ uid: uid })) : UidData[rate], {
                         after: isV2
@@ -281,22 +281,22 @@
                                   uid: prevSequenceLastUid,
                               }
                             : prevSequenceLastUid,
-                    });
+                    })
                 }
-                isFirstSequence = false;
-                prevSequenceLastUid = UidData[rate].slice(-1)[0];
+                isFirstSequence = false
+                prevSequenceLastUid = UidData[rate].slice(-1)[0]
             }
-        });
+        })
     }
 
     function getPlaylistItemsRatingAndUid(playlistItems, ratedPlaylistsItems) {
-        let hashTable = {};
+        let hashTable = {}
         for (const key in ratedPlaylistsItems) {
             ratedPlaylistsItems[key].forEach((data) => {
                 if (!hashTable[data.uri]) {
-                    hashTable[data.uri] = key;
+                    hashTable[data.uri] = key
                 }
-            });
+            })
         }
 
         let ratedUid = {
@@ -311,34 +311,34 @@
             "1.0": [],
             0.5: [],
             0: [],
-        };
+        }
 
         playlistItems.forEach((item) => {
             if (hashTable[item.uri]) {
-                ratedUid[hashTable[item.uri]].push(item.uid);
+                ratedUid[hashTable[item.uri]].push(item.uid)
             } else {
-                ratedUid["0"].push(item.uid);
+                ratedUid["0"].push(item.uid)
             }
-        });
+        })
 
-        return ratedUid;
+        return ratedUid
     }
 
     async function isAppLaterThan(specifiedVersion) {
-        let appInfo = await Spicetify.CosmosAsync.get("sp://desktop/v1/version");
-        let result = appInfo.version.localeCompare(specifiedVersion, undefined, { numeric: true, sensitivity: "base" });
+        let appInfo = await Spicetify.CosmosAsync.get("sp://desktop/v1/version")
+        let result = appInfo.version.localeCompare(specifiedVersion, undefined, { numeric: true, sensitivity: "base" })
 
-        return result === 1;
+        return result === 1
     }
 
     async function sortPlaylistByRating(uri) {
-        let playlistItems = await getPlaylistItems(uri);
-        if (playlistItems.length < 2) return;
+        let playlistItems = await getPlaylistItems(uri)
+        if (playlistItems.length < 2) return
 
-        let ratedPlaylistsItems = await getRatedPlaylistsItems();
+        let ratedPlaylistsItems = await getRatedPlaylistsItems()
 
-        let ratedUid = getPlaylistItemsRatingAndUid(playlistItems, ratedPlaylistsItems);
+        let ratedUid = getPlaylistItemsRatingAndUid(playlistItems, ratedPlaylistsItems)
 
-        reorderPlaylist(uri, playlistItems[0].uid, ratedUid);
+        reorderPlaylist(uri, playlistItems[0].uid, ratedUid)
     }
-})();
+})()

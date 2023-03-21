@@ -1,0 +1,106 @@
+.tetrax-settings-menu[aria-label="YouTube API key"] {
+    .popup-row {
+        &::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        .col {
+            display: flex;
+            padding: 10px 0;
+            align-items: center;
+        }
+        .col.description {
+            float: left;
+            padding-right: 15px;
+        }
+        .col.action {
+            float: right;
+            text-align: right;
+        }
+        .div-title {
+            color: var(--spice-text);
+        }
+        .divider {
+            height: 2px;
+            border-width: 0;
+            background-color: var(--spice-button-disabled);
+        }
+        .space {
+            margin-bottom: 20px;
+            visibility: hidden;
+        }
+        .demo {
+            font-size: 13px;
+            color: #59ce8f;
+        }
+        .little-space {
+            margin-bottom: 10px;
+        }
+        .inputbox {
+            width: -webkit-fill-available;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            border-radius: 15px;
+            border: 0;
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.06);
+        }
+        .input-wrapper {
+            display: flex;
+        }
+    }
+
+    button.checkbox {
+        align-items: center;
+        border: 0px;
+        border-radius: 50%;
+        background-color: rgba(var(--spice-rgb-shadow), 0.7);
+        color: var(--spice-text);
+        cursor: pointer;
+        display: flex;
+        margin-inline-start: 12px;
+        padding: 8px;
+    }
+    button.checkbox.disabled {
+        color: rgba(var(--spice-rgb-text), 0.3);
+    }
+    select {
+        color: var(--spice-text);
+        background: rgba(var(--spice-rgb-shadow), 0.7);
+        border: 0;
+        height: 32px;
+    }
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+    .login-button {
+        background-color: var(--spice-button);
+        border-radius: 8px;
+        border-style: none;
+        color: var(--spice-text);
+        cursor: pointer;
+        font-size: 14px;
+        height: 40px;
+        margin-right: 20px;
+        padding: 5px 10px;
+        text-align: center;
+    }
+    .center-button {
+        display: block;
+        margin: 10px auto;
+    }
+    .green-btn {
+        background-color: #6bcb77;
+        color: #25316d;
+    }
+    .red-btn {
+        background-color: #bf616a;
+    }
+    .green-text {
+        color: #6bcb77;
+    }
+    .red-text {
+        color: #bf616a;
+    }
+}

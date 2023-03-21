@@ -9,9 +9,9 @@
     {
         "name": "Play on YouTube",
         "description": "Plays the Video Song of a Track in YouTube",
-        "preview": "Play-on-YouTube/preview.png",
-        "main": "Play-on-YouTube/playOnYouTube.js",
-        "readme": "Play-on-YouTube/README.md"
+        "preview": "Play-on-YouTube/assets/preview.png",
+        "main": "Play-on-YouTube/minify-dist/playOnYouTube.js",
+        "readme": "Play-on-YouTube/assets/README.md"
     },
     {
         "name": "Spotify Backup",
