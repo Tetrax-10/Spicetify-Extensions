@@ -502,7 +502,6 @@
     /////////////////////////////////// MAIN ///////////////////////////////////////
 
     let infoContainer, genreContainer
-
     ;(function initMain() {
         if (!Spicetify.Player.data) {
             setTimeout(initMain, 1000)

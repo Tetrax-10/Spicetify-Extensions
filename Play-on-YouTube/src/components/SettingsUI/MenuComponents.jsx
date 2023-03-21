@@ -101,7 +101,7 @@ export function InputItem({ field = undefined, onChangeHandler: onChangeHandlerC
     )
 }
 
-export function DynamicInputItem({ value = undefined, onChangeHandler: onChangeHandlerCallback = () => {}, onClickHandler: onClickHandlerCallback = () => {} }) {
+export function DynamicInputItem({ value = undefined, isLastItem = false, onChangeHandler: onChangeHandlerCallback = () => {}, onClickHandler: onClickHandlerCallback = () => {} }) {
     if (value === undefined) return null
 
     const [inputValue, setInputValue] = useState(value)
@@ -119,7 +119,7 @@ export function DynamicInputItem({ value = undefined, onChangeHandler: onChangeH
         <>
             <div className="popup-row">
                 <div className="input-wrapper">
-                    <input className="inputbox" value={inputValue} placeholder="Your API key" onChange={onChangeHandler}></input>
+                    <input className={isLastItem ? "inputbox last-item" : "inputbox"} value={inputValue} placeholder="Your API key" onChange={onChangeHandler}></input>
                     <button className="checkbox" type="button" onClick={onClickHandlerCallback}>
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" dangerouslySetInnerHTML={{ __html: Spicetify.SVGIcons.x }}></svg>
                     </button>
@@ -151,6 +151,10 @@ export function DynamicMultipleInputItem({ color = "", children = "Button" } = {
         if (backupApiKeys[backupApiKeys.length - 1] || backupApiKeys.length === 0) {
             setbackupApiKeys([...backupApiKeys, ""])
         }
+
+        setTimeout(() => {
+            document.querySelector(".inputbox.last-item")?.focus()
+        }, 10)
     }
 
     const isFirstRender = useRef(true)
@@ -171,6 +175,7 @@ export function DynamicMultipleInputItem({ color = "", children = "Button" } = {
                     <>
                         <DynamicInputItem
                             value={value}
+                            isLastItem={index === backupApiKeys.length - 1}
                             onChangeHandler={(value) => {
                                 updateInput(value, index)
                             }}

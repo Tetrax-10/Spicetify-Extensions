@@ -8,6 +8,14 @@ This extension Plays the Video Song of a Track in YouTube
 
 <br />
 
+# Search Mode
+
+Press `Ctrl` to switch to `Search mode`
+
+![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Play-on-YouTube/assets/search-mode.png)
+
+<br />
+
 # Use your API Key for the best experiance
 
 By using you own YouTube API key you will be taken directly to the video song of the track like the above video, else you will be taken to the relavent YouTube search page like the below pic.
