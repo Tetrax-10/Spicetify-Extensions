@@ -162,7 +162,7 @@ var playOnYouTube = (() => {
       onChange: onChangeHandler
     }));
   }
-  function DynamicInputItem({ value = void 0, onChangeHandler: onChangeHandlerCallback = () => {
+  function DynamicInputItem({ value = void 0, isLastItem = false, onChangeHandler: onChangeHandlerCallback = () => {
   }, onClickHandler: onClickHandlerCallback = () => {
   } }) {
     if (value === void 0)
@@ -180,7 +180,7 @@ var playOnYouTube = (() => {
     }, /* @__PURE__ */ import_react.default.createElement("div", {
       className: "input-wrapper"
     }, /* @__PURE__ */ import_react.default.createElement("input", {
-      className: "inputbox",
+      className: isLastItem ? "inputbox last-item" : "inputbox",
       value: inputValue,
       placeholder: "Your API key",
       onChange: onChangeHandler
@@ -206,12 +206,18 @@ var playOnYouTube = (() => {
     function deleteApiKey(index) {
       let tempBackupApiKeys = [...backupApiKeys];
       tempBackupApiKeys.splice(index, 1);
-      setbackupApiKeys(tempBackupApiKeys);
+      setTimeout(() => {
+        setbackupApiKeys(tempBackupApiKeys);
+      }, 10);
     }
     function createNewInput() {
       if (backupApiKeys[backupApiKeys.length - 1] || backupApiKeys.length === 0) {
         setbackupApiKeys([...backupApiKeys, ""]);
       }
+      setTimeout(() => {
+        var _a;
+        (_a = document.querySelector(".inputbox.last-item")) == null ? void 0 : _a.focus();
+      }, 10);
     }
     const isFirstRender = (0, import_react.useRef)(true);
     (0, import_react.useEffect)(() => {
@@ -224,6 +230,7 @@ var playOnYouTube = (() => {
     return /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, backupApiKeys.map((value, index) => {
       return /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement(DynamicInputItem, {
         value,
+        isLastItem: index === backupApiKeys.length - 1,
         onChangeHandler: (value2) => {
           updateInput(value2, index);
         },
@@ -425,7 +432,7 @@ var playOnYouTube = (() => {
       var el = document.createElement('style');
       el.id = `playOnYouTube`;
       el.textContent = (String.raw`
-  /* C:/Users/ragha/AppData/Local/Temp/tmp-5068-QOYJ9Che1Vb5/1870408afa80/SettingsUI.css */
+  /* C:/Users/ragha/AppData/Local/Temp/tmp-11388-Ide35P3PTb6w/1870822cd390/SettingsUI.css */
 .tetrax-settings-menu[aria-label="YouTube API key"] .popup-row::after {
   content: "";
   display: table;

@@ -144,7 +144,11 @@ export function DynamicMultipleInputItem({ color = "", children = "Button" } = {
         tempBackupApiKeys.splice(index, 1)
 
         // BUG: when clicking the last delete button the Popup modal closes due to setbackupApiKeys()
-        setbackupApiKeys(tempBackupApiKeys) // removing this line doesn't cause this issue
+        // setbackupApiKeys(tempBackupApiKeys) // removing this line doesn't cause this issue
+
+        setTimeout(() => {
+            setbackupApiKeys(tempBackupApiKeys) // using setTimeout some how fixes this bug, but don't know how and why
+        }, 10)
     }
 
     function createNewInput() {
