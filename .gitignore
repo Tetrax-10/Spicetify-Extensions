@@ -2,3 +2,4 @@ dev
 .vscode
 node_modules
 package-lock.json
+no-minify-dist

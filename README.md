@@ -32,7 +32,35 @@ Search `Sort By Play Count` and Click Install Buttton.
 
 <br />
 
-# 2. Spotify Backup
+# 2. Play on YouTube
+
+Plays the Video Song of a Track in YouTube
+
+<br />
+
+![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Play-on-YouTube/assets/Play-on-YouTube-demo.gif)
+
+## Get it on [Spicetify Marketplace](https://github.com/spicetify/spicetify-marketplace) or [Manually](https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Play-on-YouTube)
+
+Search `Play on YouTube` and Click Install Buttton.
+
+<br />
+
+# 3. Spotify Genres
+
+See what Genres you are listening to with Spotify Genres Extension
+
+<br />
+
+![genre](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Spotify-Genres/artist-page.png)
+
+## Get it on [Spicetify Marketplace](https://github.com/spicetify/spicetify-marketplace) or [Manually](https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Spotify-Genres)
+
+Search `Spotify Genres` and Click Install Buttton.
+
+<br />
+
+# 4. Spotify Backup
 
 This Extension will Backup and Restore Playlist, Spotify and Marketplace Settings
 
@@ -40,29 +68,13 @@ This Extension will Backup and Restore Playlist, Spotify and Marketplace Setting
 
 ![Demo](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Spotify-Backup/demo.gif)
 
-## Get it on [Spicetify Marketplace](https://github.com/spicetify/spicetify-marketplace) or [Manually](https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Skip-or-Play-Liked-Songs)
+## Get it on [Spicetify Marketplace](https://github.com/spicetify/spicetify-marketplace) or [Manually](https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Spotify-Backup)
 
 Search `Spotify Backup` and Click Install Buttton.
 
 <br />
 
-# 3. Skip or Play Liked Songs
-
-This Extension Skips or Plays Liked Songs only
-
-Very Useful if you are Discovering new Songs or want to play your Fav Songs in a PlayList or Album.
-
-<br />
-
-![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Skip-or-Play-Liked-Songs/screenshot.png)
-
-## Get it on [Spicetify Marketplace](https://github.com/spicetify/spicetify-marketplace) or [Manually](https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Skip-or-Play-Liked-Songs)
-
-Search `Skip or Play Liked Songs` and Click Install Buttton.
-
-<br />
-
-# 4. Seek Song
+# 5. Seek Song
 
 This Extension Seeks Song when you press `1 to 9` for `10 % to 90 %` of the song like YouTube.
 
@@ -84,7 +96,7 @@ Search `Seek Song` and Click Install Buttton.
 
 <br />
 
-# 5. Play Enhanced Songs
+# 6. Play Enhanced Songs
 
 This Extension only Plays the Enhanced Songs from a playlist. It even allows you to play Enhanced Songs from other's playlist.
 
@@ -98,31 +110,31 @@ Search `Play Enhanced Songs` and Click Install Buttton.
 
 <br />
 
-# 6. Spotify Genres
+# 7. Skip or Play Liked Songs
 
-See what Genres you are listening to with Spotify Genres Extension
+This Extension Skips or Plays Liked Songs only
 
-<br />
-
-![genre](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Spotify-Genres/artist-page.png)
-
-## Get it on [Spicetify Marketplace](https://github.com/spicetify/spicetify-marketplace) or [Manually](https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Spotify-Genres)
-
-Search `Spotify Genres` and Click Install Buttton.
+Very Useful if you are Discovering new Songs or want to play your Fav Songs in a PlayList or Album.
 
 <br />
 
-# 7. Sort by Rating
+![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Skip-or-Play-Liked-Songs/screenshot.png)
+
+## Get it on [Spicetify Marketplace](https://github.com/spicetify/spicetify-marketplace) or [Manually](https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Skip-or-Play-Liked-Songs)
+
+Search `Skip or Play Liked Songs` and Click Install Buttton.
+
+<br />
+
+# 8. Sort by Rating (deprecated)
+
+Sort by Rating feature has been moved to [Star Ratings](https://github.com/duffey/spicetify-star-ratings) extension.
 
 This extension sorts playlist by Rating.
 
 <br />
 
 ![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Sort-by-Rating/screenshot.gif)
-
-## Get it on [Spicetify Marketplace](https://github.com/spicetify/spicetify-marketplace) or [Manually](https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Sort-by-Rating)
-
-Search `Sort by Rating` and Click Install Buttton.
 
 <br />
 
@@ -134,13 +146,13 @@ Search `Sort by Rating` and Click Install Buttton.
 npm run format
 ```
 
-### For Extensions made with [spicetify-creator](https://github.com/spicetify/spicetify-creator) follow these steps additionally
+### For Extensions made with [spicetify-creator](https://github.com/spicetify/spicetify-creator)
 
 **Make sure you run these commands in extension's directory just before making the Pull Request**
 
 ```sh
+npm run format
 npm run build-local
-npm run build-local-minify
 ```
 
 [How to build and watch Extensions made with spicetify-creator](https://spicetify.app/docs/development/spicetify-creator/building-and-testing)

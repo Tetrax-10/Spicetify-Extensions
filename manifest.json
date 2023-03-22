@@ -10,8 +10,15 @@
         "name": "Play on YouTube",
         "description": "Plays the Video Song of a Track in YouTube",
         "preview": "Play-on-YouTube/assets/preview.png",
-        "main": "Play-on-YouTube/minify-dist/playOnYouTube.js",
+        "main": "Play-on-YouTube/dist/playOnYouTube.js",
         "readme": "Play-on-YouTube/assets/README.md"
+    },
+    {
+        "name": "Spotify Genres",
+        "description": "See what Genres you are listening to with Spotify Genres Extension",
+        "preview": "Spotify-Genres/preview.png",
+        "main": "Spotify-Genres/spotifyGenres.js",
+        "readme": "Spotify-Genres/README.md"
     },
     {
         "name": "Spotify Backup",
@@ -19,13 +26,6 @@
         "preview": "Spotify-Backup/demo.gif",
         "main": "Spotify-Backup/spotifyBackup.js",
         "readme": "Spotify-Backup/README.md"
-    },
-    {
-        "name": "Skip or Play Liked Songs",
-        "description": "This Extension Skips or Plays Liked Songs only",
-        "preview": "Skip-or-Play-Liked-Songs/preview.png",
-        "main": "Skip-or-Play-Liked-Songs/skipOrPlayLikedSongs.js",
-        "readme": "Skip-or-Play-Liked-Songs/README.md"
     },
     {
         "name": "Seek Song",
@@ -42,10 +42,10 @@
         "readme": "Play-Enhanced-Songs/README.md"
     },
     {
-        "name": "Spotify Genres",
-        "description": "See what Genres you are listening to with Spotify Genres Extension",
-        "preview": "Spotify-Genres/preview.png",
-        "main": "Spotify-Genres/spotifyGenres.js",
-        "readme": "Spotify-Genres/README.md"
+        "name": "Skip or Play Liked Songs",
+        "description": "This Extension Skips or Plays Liked Songs only",
+        "preview": "Skip-or-Play-Liked-Songs/preview.png",
+        "main": "Skip-or-Play-Liked-Songs/skipOrPlayLikedSongs.js",
+        "readme": "Skip-or-Play-Liked-Songs/README.md"
     }
 ]
