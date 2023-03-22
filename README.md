@@ -140,6 +140,40 @@ This extension sorts playlist by Rating.
 
 # Development
 
+## Clone this Repo
+
+```sh
+gh repo clone Tetrax-10/Spicetify-Extensions
+```
+
+## Install Repository dependencies
+
+```sh
+npm install
+```
+
+<br />
+
+## Developing Extensions made with [spicetify-creator](https://github.com/spicetify/spicetify-creator)
+
+Change Directory to respective Extension folder
+
+```sh
+cd Play-on-YouTube
+```
+
+## Install Extension dependencies
+
+```sh
+npm install
+```
+
+### For Building and Watching Extension please reffer [spicetify-creator docs](https://spicetify.app/docs/development/spicetify-creator/building-and-testing)
+
+<br />
+
+## Before Making Pull Request
+
 ### Always run the Prettier formatter before making the Pull Request
 
 ```sh
@@ -148,14 +182,12 @@ npm run format
 
 ### For Extensions made with [spicetify-creator](https://github.com/spicetify/spicetify-creator)
 
-**Make sure you run these commands in extension's directory just before making the Pull Request**
+**Make sure you run these commands in respective Extension's folder just before making the Pull Request**
 
 ```sh
 npm run format
 npm run build-local
 ```
-
-[How to build and watch Extensions made with spicetify-creator](https://spicetify.app/docs/development/spicetify-creator/building-and-testing)
 
 <br />
 
