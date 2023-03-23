@@ -6,5 +6,5 @@ export default async function initPlayOnYouTube() {
         return
     }
     await playOnYouTube()
-    console.log("gh actions test")
+    // console.log("gh actions test")
 }
