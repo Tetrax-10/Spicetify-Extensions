@@ -24,8 +24,10 @@ jobs:
             - name: Build project
               run: |
                   if [[ ${{ github.event_name }} == 'push' ]]; then
+                      extension_name=$(basename "${{ github.event.path }}")
                       cd "${{ github.workspace }}/${{ github.event.path }}"
                       echo "${{ github.workspace }}/${{ github.event.path }}"
+                      echo "${{ github.workspace }}/${extension_name}"
                       pwd
                       npm install
                       npm run build-local
