@@ -3,8 +3,8 @@ name: Build and Publish Extensions
 on:
     push:
         branches: [master]
-        paths:
-            - Play-on-YouTube/**
+        # paths:
+        #     - Play-on-YouTube/**
 
 jobs:
     build_and_publish:
