@@ -2,7 +2,7 @@
 
 Some Use Full Extension Developed by a Music Lover.
 
-Wanna discuss or having issues ping `@Tetrax-10` in Discord
+Wanna discuss or having issues with my Extensions? Just ping `@Tetrax-10` in Discord.
 
 <a href="https://discord.gg/VnevqPp2Rr"><img src="https://img.shields.io/discord/842219447716151306?label=chat&logo=discord&logoColor=discord"></a>
 
@@ -149,6 +149,7 @@ gh repo clone Tetrax-10/Spicetify-Extensions
 ## Install Repository dependencies
 
 ```sh
+cd Spicetify-Extensions
 npm install
 ```
 
@@ -156,19 +157,16 @@ npm install
 
 ## Developing Extensions made with [spicetify-creator](https://github.com/spicetify/spicetify-creator)
 
-Change Directory to respective Extension folder
-
-```sh
-cd Play-on-YouTube
-```
-
 ## Install Extension dependencies
 
 ```sh
+cd Play-on-YouTube
 npm install
 ```
 
 ### For Building and Watching Extension please reffer [spicetify-creator docs](https://spicetify.app/docs/development/spicetify-creator/building-and-testing)
+
+**Note:** No need to [build locally](https://spicetify.app/docs/development/spicetify-creator/building-and-testing#building-locally). Github Actions will automatically build and publish extensions in [dist](https://github.com/Tetrax-10/Spicetify-Extensions/tree/dist) branch.
 
 <br />
 
@@ -177,14 +175,7 @@ npm install
 ### Always run the Prettier formatter before making the Pull Request
 
 ```sh
-npm run format
-```
-
-### For Extensions made with [spicetify-creator](https://github.com/spicetify/spicetify-creator)
-
-**Make sure you run these commands in respective Extension's folder just before making the Pull Request**
-
-```sh
+cd Spicetify-Extensions
 npm run format
 ```
 
