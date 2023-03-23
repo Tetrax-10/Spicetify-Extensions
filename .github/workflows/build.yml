@@ -2,7 +2,8 @@ name: Build and Publish Extensions
 
 on:
     push:
-        branches: [master]
+        branches:
+            - master
         paths:
             - "Play-on-YouTube/**"
 
@@ -23,25 +24,17 @@ jobs:
             - name: Build project
               run: |
                   if [[ ${{ github.event_name }} == 'push' ]]; then
-                    valid_path=false
-                    for path in "${{ github.event.paths }}"; do
-                      if [[ "${{ github.event.path }}" == $path* ]]; then
-                        valid_path=true
-                        break
-                      fi
-                    done
-
-                    if $valid_path; then
                       cd "${{ github.workspace }}/${{ github.event.path }}"
-                      npm ci
-                      npm run build-local-test
+                      echo "${{ github.workspace }}/${{ github.event.path }}"
+                      pwd
+                      npm install
+                      npm run build-local
 
-                      name: Push new build
+                      # Publish build to dist branch
                       uses: s0/git-publish-subdir-action@develop
                       with:
-                        REPO: self
-                        BRANCH: dist
-                        FOLDER: ${{ github.event.path }}
-                        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                    fi
+                          branch: dist
+                          folder: "dist-${{ github.event.path }}"
+                          remote: origin
+                          github_token: ${{ secrets.GITHUB_TOKEN }}
                   fi
