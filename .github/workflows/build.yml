@@ -26,11 +26,11 @@ jobs:
             - name: Install dependencies
               run: npm ci
 
+            - name: Create dist folder
+              run: mkdir dist
+
             - name: Build extensions
               run: |
-                  mkdir dist
-                  ls
-                  echo gg
                   for folder in $FOLDERS; do
                     cd $folder
                     npm ci
@@ -41,6 +41,7 @@ jobs:
                     ls
                     echo __________
                     cd ..
+                    ls
                     cd ..
                   done
 
