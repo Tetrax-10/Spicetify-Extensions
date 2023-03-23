@@ -34,7 +34,7 @@ jobs:
                     if $valid_path; then
                       cd "${{ github.workspace }}/${{ github.event.path }}"
                       npm ci
-                      npm run build-local
+                      npm run build-local-test
 
                       name: Push new build
                       uses: s0/git-publish-subdir-action@develop
