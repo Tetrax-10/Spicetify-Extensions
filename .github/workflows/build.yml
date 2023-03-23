@@ -10,7 +10,7 @@ jobs:
         runs-on: ubuntu-latest
 
         env:
-            # Add the extension folders that needs to be built
+            # Add the names of the extension's folders that were created with spicetify-creator and need to be built with GitHub Actions
             FOLDERS: "Play-on-YouTube"
 
         steps:
@@ -41,7 +41,7 @@ jobs:
                   done
 
             - name: Move License and Readme.md
-              run: npm run copy-to-dist
+              run: npm run copyfiles-to-dist
 
             - name: Publish extensions
               uses: s0/git-publish-subdir-action@develop

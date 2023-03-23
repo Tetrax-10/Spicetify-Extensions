@@ -13,7 +13,7 @@
     },
     "scripts": {
         "format": "prettier --write .",
-        "copy-to-dist": "copyfiles README.md LICENSE dist/"
+        "copyfiles-to-dist": "copyfiles README.md LICENSE dist/"
     },
     "devDependencies": {
         "@types/react": "^18.0.28",
