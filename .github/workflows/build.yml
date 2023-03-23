@@ -2,15 +2,15 @@ name: Build and Publish Extensions
 
 on:
     push:
-        branches:
-            - master
-        paths:
-            - "Play-on-YouTube/**"
+        branches: [master]
 
 jobs:
     build_and_publish:
         name: Setup Linux environment
         runs-on: ubuntu-latest
+
+        env:
+            FOLDERS: "Play-on-YouTube Sort-by-Play-count Spotify-Genres"
 
         steps:
             - name: Checkout repository
@@ -21,22 +21,15 @@ jobs:
               with:
                   node-version: 16
 
-            - name: Build project
-              run: |
-                  if [[ ${{ github.event_name }} == 'push' ]]; then
-                      extension_name=$(basename "${{ github.event.path }}")
-                      cd "${{ github.workspace }}/${{ github.event.path }}"
-                      echo "${{ github.workspace }}/${{ github.event.path }}"
-                      echo "${{ github.workspace }}/${extension_name}"
-                      pwd
-                      npm install
-                      npm run build-local
+            - name: Install dependencies
+              run: npm ci
 
-                      # Publish build to dist branch
-                      uses: s0/git-publish-subdir-action@develop
-                      with:
-                          branch: dist
-                          folder: "dist-${{ github.event.path }}"
-                          remote: origin
-                          github_token: ${{ secrets.GITHUB_TOKEN }}
-                  fi
+            - name: Build extensions
+              run: |
+                  for folder in $FOLDERS; do
+                    cd $folder
+                    npm ci
+                    npm run build-local
+                    ls
+                    cd ..
+                  done

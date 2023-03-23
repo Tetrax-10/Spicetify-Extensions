@@ -12,8 +12,7 @@
         "url": "https://github.com/Tetrax-10/Spicetify-Extensions/issues"
     },
     "scripts": {
-        "format": "prettier --write .",
-        "build-local-test": "spicetify-creator --out=Play-on-YouTube --minify"
+        "format": "prettier --write ."
     },
     "devDependencies": {
         "prettier": "^2.8.6"
