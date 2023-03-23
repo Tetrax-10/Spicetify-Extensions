@@ -3,8 +3,6 @@ name: Build and Publish Extensions
 on:
     push:
         branches: [master]
-        # paths:
-        #     - Play-on-YouTube/**
 
 jobs:
     build_and_publish:
@@ -12,6 +10,7 @@ jobs:
         runs-on: ubuntu-latest
 
         env:
+            # Add the extension folders that needs to be built
             FOLDERS: "Play-on-YouTube"
 
         steps:
@@ -35,6 +34,8 @@ jobs:
                     cd $folder
                     npm ci
                     npm run build-local
+                    mv -f assets/preview* $folder
+                    mv -f README.md $folder
                     mv -f $folder ../dist
                     cd ..
                   done
