@@ -39,6 +39,9 @@ jobs:
                     cd ..
                   done
 
+            - name: Move License and Readme.md
+              run: npm run copy-to-dist
+
             - name: Publish extensions
               uses: s0/git-publish-subdir-action@develop
               env:

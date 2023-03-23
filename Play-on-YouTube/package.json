@@ -1,7 +1,9 @@
 {
     "name": "play-on-youtube",
-    "version": "1.0.0",
     "description": "This extension Plays the Video Song of a Track in YouTube",
+    "author": "Tetrax-10",
+    "license": "MIT",
+    "homepage": "https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Play-on-YouTube#readme",
     "main": "./src/app.tsx",
     "scripts": {
         "format": "prettier --write .",
@@ -9,11 +11,5 @@
         "build": "spicetify-creator",
         "build-local": "spicetify-creator --out=Play-on-YouTube --minify"
     },
-    "license": "MIT",
-    "devDependencies": {
-        "@types/react": "^18.0.28",
-        "@types/react-dom": "^18.0.11",
-        "sass": "^1.59.3",
-        "spicetify-creator": "^1.0.12"
-    }
+    "devDependencies": {}
 }
