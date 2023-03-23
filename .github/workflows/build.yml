@@ -36,7 +36,7 @@ jobs:
                     npm ci
                     npm run build-local
                     mv -f $folder ../dist
-                    cd..
+                    cd ..
                   done
 
             - name: Publish extensions
