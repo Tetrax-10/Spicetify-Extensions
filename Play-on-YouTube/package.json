@@ -7,7 +7,7 @@
         "format": "prettier --write .",
         "watch": "spicetify-creator --watch",
         "build": "spicetify-creator",
-        "build-local": "spicetify-creator --out=dist --minify",
+        "build-local": "spicetify-creator --out=Play-on-YouTube --minify",
         "build-local-no-minify": "spicetify-creator --out=no-minify-dist"
     },
     "license": "MIT",

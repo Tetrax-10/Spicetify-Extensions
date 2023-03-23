@@ -1,0 +1,47 @@
+name: Build and Publish Extensions
+
+on:
+    push:
+        branches: [master]
+        paths:
+            - "Play-on-YouTube/**"
+
+jobs:
+    build_and_publish:
+        name: Setup Linux environment
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+
+            - name: Install Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 16
+
+            - name: Build project
+              run: |
+                  if [[ ${{ github.event_name }} == 'push' ]]; then
+                    valid_path=false
+                    for path in "${{ github.event.paths }}"; do
+                      if [[ "${{ github.event.path }}" == $path* ]]; then
+                        valid_path=true
+                        break
+                      fi
+                    done
+
+                    if $valid_path; then
+                      cd "${{ github.workspace }}/${{ github.event.path }}"
+                      npm ci
+                      npm run build-local
+
+                      name: Push new build
+                      uses: s0/git-publish-subdir-action@develop
+                      with:
+                        REPO: self
+                        BRANCH: dist
+                        FOLDER: ${{ github.event.path }}
+                        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                    fi
+                  fi
