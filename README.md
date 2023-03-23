@@ -186,7 +186,6 @@ npm run format
 
 ```sh
 npm run format
-npm run build-local
 ```
 
 <br />
