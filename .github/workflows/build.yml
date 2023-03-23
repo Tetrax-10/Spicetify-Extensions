@@ -35,20 +35,14 @@ jobs:
                     cd $folder
                     npm ci
                     npm run build-local
-                    ls
-                    echo __________
-                    cd dist
-                    ls
-                    echo __________
-                    cd ..
-                    ls
-                    cd ..
+                    mv -f $folder ../dist
+                    cd..
                   done
 
-            # - name: Publish extensions
-            #   uses: s0/git-publish-subdir-action@develop
-            #   env:
-            #       REPO: self
-            #       BRANCH: dist
-            #       FOLDER: "dist"
-            #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: Publish extensions
+              uses: s0/git-publish-subdir-action@develop
+              env:
+                  REPO: self
+                  BRANCH: dist
+                  FOLDER: "dist"
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
