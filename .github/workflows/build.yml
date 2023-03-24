@@ -10,7 +10,6 @@ jobs:
         runs-on: ubuntu-latest
 
         env:
-            # Add the names of the extension's folders that were created with spicetify-creator and need to be built with GitHub Actions
             FOLDERS: "Play-on-YouTube"
 
         steps:
@@ -20,13 +19,13 @@ jobs:
             - name: Install Node.js
               uses: actions/setup-node@v3
               with:
-                  node-version: 16
+                  node-version: 16.x
 
-            - name: Install dependencies
+            - name: Install repository dependencies
               run: npm ci
 
-            - name: Create dist folder
-              run: mkdir dist
+            - name: Create publish folder
+              run: mkdir publish
 
             - name: Build extensions
               run: |
@@ -38,17 +37,17 @@ jobs:
                     mv -f dist/* $folder
                     mv -f assets/preview* $folder
                     mv -f README.md $folder
-                    mv -f $folder ../dist
+                    mv -f $folder ../publish
                     cd ..
                   done
 
             - name: Move License and Readme.md
-              run: mv -f README.md LICENSE dist/
+              run: mv -f README.md LICENSE publish/
 
             - name: Publish extensions
               uses: s0/git-publish-subdir-action@develop
               env:
                   REPO: self
                   BRANCH: dist
-                  FOLDER: "dist"
+                  FOLDER: "publish"
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

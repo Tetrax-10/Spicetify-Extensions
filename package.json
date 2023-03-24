@@ -12,13 +12,11 @@
         "url": "https://github.com/Tetrax-10/Spicetify-Extensions/issues"
     },
     "scripts": {
-        "format": "prettier --write .",
-        "copyfiles-to-dist": "copyfiles README.md LICENSE dist/"
+        "format": "prettier --write ."
     },
     "devDependencies": {
         "@types/react": "^18.0.28",
         "@types/react-dom": "^18.0.11",
-        "copyfiles": "^2.4.1",
         "prettier": "^2.8.6",
         "sass": "^1.59.3",
         "spicetify-creator": "^1.0.12"
