@@ -2,7 +2,15 @@ name: Build and Publish Extensions
 
 on:
     push:
-        branches: [master]
+        paths:
+            - README.md
+            - LICENSE
+            - Play-on-YouTube/**
+    pull_request:
+        paths:
+            - README.md
+            - LICENSE
+            - Play-on-YouTube/**
 
 jobs:
     build_and_publish:

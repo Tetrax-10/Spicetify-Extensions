@@ -1,4 +1,4 @@
 dev
 .vscode
 node_modules
-no-minify*/
+dist
