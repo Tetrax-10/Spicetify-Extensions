@@ -46,7 +46,7 @@ Step 3 : Search `Play on YouTube` Click Install Buttton. Done!
 
 ## Install Manually
 
-Copy `minify-dist/playOnYouTube.js` into your [Spicetify](https://github.com/spicetify/spicetify-cli) extensions directory:
+Copy `playOnYouTube/playOnYouTube.js` from [dist](https://github.com/Tetrax-10/Spicetify-Extensions/tree/dist) branch into your [Spicetify](https://github.com/spicetify/spicetify-cli) extensions directory:
 | **Platform** | **Path** |
 |------------|-----------------------------------------------------------------------------------|
 | **Linux** | `~/.config/spicetify/Extensions` or `$XDG_CONFIG_HOME/.config/spicetify/Extensions/` |

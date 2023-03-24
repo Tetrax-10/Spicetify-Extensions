@@ -6,4 +6,5 @@ export default async function initPlayOnYouTube() {
         return
     }
     await playOnYouTube()
+    console.log("test")
 }
