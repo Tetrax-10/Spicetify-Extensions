@@ -166,7 +166,7 @@ npm install
 
 ### For Building and Watching Extension please reffer [spicetify-creator docs](https://spicetify.app/docs/development/spicetify-creator/building-and-testing)
 
-**Note:** No need to [build locally](https://spicetify.app/docs/development/spicetify-creator/building-and-testing#building-locally). Github Actions will automatically build and publish extensions in [dist](https://github.com/Tetrax-10/Spicetify-Extensions/tree/dist) branch.
+**Note:** No need to [build locally](https://spicetify.app/docs/development/spicetify-creator/building-and-testing#building-locally). Github Actions will automatically build and publish extensions to [dist](https://github.com/Tetrax-10/Spicetify-Extensions/tree/dist) branch.
 
 <br />
 
