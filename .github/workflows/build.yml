@@ -6,7 +6,7 @@ on:
             - README.md
             - LICENSE
             # - Play-on-YouTube/**
-            - {*/}tsconfig.json
+            - "{*/}tsconfig.json"
     pull_request:
         paths:
             - README.md
