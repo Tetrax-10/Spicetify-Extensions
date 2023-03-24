@@ -24,7 +24,7 @@ By using you own YouTube API key you will be taken directly to the video song of
 
 ![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Play-on-YouTube/assets/yt-search-page.png)
 
-If your API quota got exceeded (you can open 100 songs a day) you will be taken to the relavent search page.
+<br />
 
 ## Just paste your API Key here
 
@@ -33,6 +33,8 @@ To open this pop up click on your profile on top right corner and click `Play on
 ![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Play-on-YouTube/assets/popup-menu.png)
 
 ![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Play-on-YouTube/assets/api-key-popup.png)
+
+<br />
 
 ## Get it on Spicetify Marketplace
 
