@@ -1,5 +1,5 @@
 // @ts-chec
-//
+
 // NAME: Seek Song
 // AUTHOR: Tetrax-10
 // DESCRIPTION: Brings YouTube Keybinds in Spotify
