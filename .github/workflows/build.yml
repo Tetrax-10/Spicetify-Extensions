@@ -32,8 +32,10 @@ jobs:
               run: |
                   for folder in $FOLDERS; do
                     cd $folder
+                    mkdir $folder
                     npm ci
                     npm run build-local
+                    mv -f dist/* $folder
                     mv -f assets/preview* $folder
                     mv -f README.md $folder
                     mv -f $folder ../dist
@@ -41,7 +43,7 @@ jobs:
                   done
 
             - name: Move License and Readme.md
-              run: npm run copyfiles-to-dist
+              run: mv -f README.md LICENSE dist/
 
             - name: Publish extensions
               uses: s0/git-publish-subdir-action@develop
