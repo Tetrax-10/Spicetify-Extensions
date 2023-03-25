@@ -1,9 +1,9 @@
 import playOnYouTube from "./playOnYouTube"
 
-export default async function initPlayOnYouTube() {
+export default function initPlayOnYouTube() {
     if (!(Spicetify?.Menu && Spicetify?.ContextMenu)) {
         setTimeout(initPlayOnYouTube, 300)
         return
     }
-    await playOnYouTube()
+    playOnYouTube()
 }

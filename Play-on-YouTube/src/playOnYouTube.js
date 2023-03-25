@@ -4,7 +4,7 @@ import { isCached, openYouTubeRelaventSearchPage, playYouTubeVideo } from "./uti
 import { fetchTrackInfo, fetchVideoID, fetchVideoIdWithAllApiKeys } from "./utils/api"
 import { YouTubeSVG } from "./constants/svg"
 
-export default async function playOnYouTube() {
+export default function playOnYouTube() {
     /////////////////////////////////// CONSTANTS ///////////////////////////////////////
 
     let CONFIG = getConfig()
