@@ -6,11 +6,13 @@ on:
             - README.md
             - LICENSE
             - Play-on-YouTube/**
+            - Image-Opener/**
     pull_request:
         paths:
             - README.md
             - LICENSE
             - Play-on-YouTube/**
+            - Image-Opener/**
 
 jobs:
     build_and_publish:
@@ -18,7 +20,7 @@ jobs:
         runs-on: ubuntu-latest
 
         env:
-            FOLDERS: "Play-on-YouTube"
+            FOLDERS: "Play-on-YouTube Image-Opener"
 
         steps:
             - name: Checkout repository

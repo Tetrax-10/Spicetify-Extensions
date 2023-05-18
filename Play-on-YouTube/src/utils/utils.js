@@ -15,7 +15,7 @@ export function trimName(name) {
     return name
         .replace(/\(.+?\)/g, "")
         .replace(/\[.+?\]/g, "")
-        .replace(/\s\-\s.+?$/, "")
+        .replace(/\s-\s.+?$/, "")
         .replace(/,.+?$/, "")
         .trim()
 }

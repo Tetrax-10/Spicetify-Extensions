@@ -1,9 +1,9 @@
 {
-    "name": "play-on-youtube",
-    "description": "This extension Plays the Video Song of a Track in YouTube",
+    "name": "image-opener",
+    "description": "Opens high res image of tracks, artists, playlists, profiles etc...",
     "author": "Tetrax-10",
     "license": "MIT",
-    "homepage": "https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Play-on-YouTube#readme",
+    "homepage": "https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Image-Opener#readme",
     "main": "./src/app.tsx",
     "scripts": {
         "format": "prettier --write .",
@@ -14,8 +14,10 @@
         "build-local": "spicetify-creator --out=dist --minify",
         "watch-ext": "spicetify-creator --watch",
         "spicetify-enable-devtools": "spicetify enable-devtools -q",
-        "spicetify-watch": "spicetify -e watch playOnYouTube.js -q",
+        "spicetify-watch": "spicetify -e watch imageOpener.js -q",
         "update-types": "curl -s -o ./src/types/globals.d.ts https://raw.githubusercontent.com/spicetify/spicetify-cli/master/globals.d.ts"
     },
-    "devDependencies": {}
+    "dependencies": {
+        "copy-image-clipboard": "^2.1.2"
+    }
 }

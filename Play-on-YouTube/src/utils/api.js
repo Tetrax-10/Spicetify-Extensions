@@ -22,7 +22,7 @@ export async function fetchVideoIdWithAllApiKeys(searchString) {
     for (let apiKey of CONFIG.backupApiKeys) {
         let { firstVideoID = null, allVideos = null } = await fetchVideoID(searchString, apiKey)
         if (firstVideoID) {
-            return { firstVideoID, allVideos }
+            return { firstVideoID: firstVideoID, allVideos: allVideos }
         }
     }
     return { firstVideoID: null, allVideos: null }

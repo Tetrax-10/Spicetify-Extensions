@@ -17,6 +17,10 @@
     "devDependencies": {
         "@types/react": "^18.0.28",
         "@types/react-dom": "^18.0.11",
+        "concurrently": "^8.0.1",
+        "eslint": "^8.40.0",
+        "eslint-plugin-import": "^2.27.5",
+        "eslint-plugin-react": "^7.32.2",
         "prettier": "^2.8.6",
         "sass": "^1.59.3",
         "spicetify-creator": "^1.0.12"
