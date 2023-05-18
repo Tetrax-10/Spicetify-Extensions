@@ -1,38 +1,10 @@
-# Play on YouTube
+# Image Opener
 
 This extension Opens high res image of tracks, artists, playlists, profiles etc...
 
-# Demo
+![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Image-Opener/assets/showcase.png)
 
-![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Play-on-YouTube/assets/Play-on-YouTube-demo.gif)
-
-<br />
-
-# Search Mode
-
-Press `Ctrl` to switch to `Search mode`
-
-![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Play-on-YouTube/assets/search-mode.png)
-
-<br />
-
-# Use your API Key for the best experiance
-
-By using you own YouTube API key you will be taken directly to the video song of the track like the above video, else you will be taken to the relavent YouTube search page like the below pic.
-
-[How to get my API key?](https://www.youtube.com/watch?v=44OBOSBd73M) ( 1 min YouTube video )
-
-![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Play-on-YouTube/assets/yt-search-page.png)
-
-<br />
-
-## Just paste your API Key here
-
-To open this pop up click on your profile on top right corner and click `Play on YouTube`
-
-![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Play-on-YouTube/assets/popup-menu.png)
-
-![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Play-on-YouTube/assets/api-key-popup.png)
+![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Image-Opener/assets/opened-image.png)
 
 <br />
 
@@ -42,13 +14,13 @@ Step 1 : Follow [Spicetify Marketplace](https://github.com/spicetify/spicetify-m
 
 Step 2 : Open Spotify App -> Marketplace -> Extensions
 
-Step 3 : Search `Play on YouTube` Click Install Buttton. Done!
+Step 3 : Search `Image Opener` Click Install Buttton. Done!
 
 <br />
 
 ## Install Manually
 
-Copy `playOnYouTube/playOnYouTube.js` from [dist](https://github.com/Tetrax-10/Spicetify-Extensions/tree/dist) branch into your [Spicetify](https://github.com/spicetify/spicetify-cli) extensions directory:
+Copy `Image-Opener/imageOpener.js` from [dist](https://github.com/Tetrax-10/Spicetify-Extensions/tree/dist) branch into your [Spicetify](https://github.com/spicetify/spicetify-cli) extensions directory:
 | **Platform** | **Path** |
 |------------|-----------------------------------------------------------------------------------|
 | **Linux** | `~/.config/spicetify/Extensions` or `$XDG_CONFIG_HOME/.config/spicetify/Extensions/` |
@@ -58,7 +30,7 @@ Copy `playOnYouTube/playOnYouTube.js` from [dist](https://github.com/Tetrax-10/S
 After putting the extension file into the correct folder, run the following command to install the extension:
 
 ```
-spicetify config extensions playOnYouTube.js
+spicetify config extensions imageOpener.js
 spicetify apply
 ```
 
