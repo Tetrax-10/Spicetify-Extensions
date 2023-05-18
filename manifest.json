@@ -15,6 +15,14 @@
         "branch": "dist"
     },
     {
+        "name": "Image Opener",
+        "description": "Opens high res image of tracks, artists, playlists, profiles etc...",
+        "preview": "Image-Opener/preview.png",
+        "main": "Image-Opener/imageOpener.js",
+        "readme": "Image-Opener/README.md",
+        "branch": "dist"
+    },
+    {
         "name": "Spotify Genres",
         "description": "See what Genres you are listening to with Spotify Genres Extension",
         "preview": "Spotify-Genres/preview.png",
