@@ -14,6 +14,10 @@ See what Genres you are listening to with Spotify Genres Extension
 
 ![popup](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Spotify-Genres/popup.png)
 
+### Enable or Disable Spotify genres
+
+![demo](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Spotify-Genres/widget-demo.gif)
+
 <br />
 
 ## Get it on Spicetify Marketplace
