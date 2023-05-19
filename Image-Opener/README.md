@@ -6,6 +6,8 @@ This extension Opens high res image of tracks, artists, playlists, profiles etc.
 
 ![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Image-Opener/assets/opened-image.png)
 
+![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Image-Opener/assets/copy-local-files-image.png)
+
 <br />
 
 ## Get it on Spicetify Marketplace
