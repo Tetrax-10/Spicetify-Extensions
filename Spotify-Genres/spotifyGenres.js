@@ -9,7 +9,7 @@
 /// <reference path="../dev/globals.d.ts" />
 
 ;(async function spotifyGenres() {
-    if (!(Spicetify.CosmosAsync && Spicetify.Platform)) {
+    if (!(Spicetify.CosmosAsync && Spicetify.Platform && Spicetify.URI && Spicetify.Player.data)) {
         setTimeout(spotifyGenres, 300)
         return
     }
@@ -524,7 +524,7 @@
     }
 
     async function updateGenres() {
-        if (!CONFIG.state || Spicetify.Player.data.track.metadata.is_local || !Spicetify.URI.isTrack(Spicetify.Player.data.track.uri)) {
+        if (!CONFIG.state || Spicetify.Player.data.track.metadata.is_local || Spicetify.URI.fromString(Spicetify.Player.data.track.uri).type !== "track") {
             removeGenresFromUI()
             return
         }
