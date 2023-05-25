@@ -602,16 +602,16 @@
 
         if (Spicetify.Playbar?.Widget) {
             new Spicetify.Playbar.Widget(
-                CONFIG.state ? "Disable Spotify Genres" : "Enable Spotify Genres",
+                CONFIG.state ? "Hide Spotify Genres" : "Show Spotify Genres",
                 CONFIG.state ? iconActive : icon,
                 (element) => {
                     if (CONFIG.state) {
                         element.icon = icon
-                        element.label = "Enable Spotify Genres"
+                        element.label = "Show Spotify Genres"
                         CONFIG.state = false
                     } else {
                         element.icon = iconActive
-                        element.label = "Disable Spotify Genres"
+                        element.label = "Hide Spotify Genres"
                         CONFIG.state = true
                     }
 
