@@ -596,29 +596,31 @@
 
         updateArtistPage(Spicetify.Platform.History.location.pathname)
 
-        new Spicetify.Playbar.Widget(
-            CONFIG.state ? "Disable Spotify Genres" : "Enable Spotify Genres",
-            CONFIG.state ? iconActive : icon,
-            (element) => {
-                if (CONFIG.state) {
-                    element.icon = icon
-                    element.label = "Enable Spotify Genres"
-                    CONFIG.state = false
-                } else {
-                    element.icon = iconActive
-                    element.label = "Disable Spotify Genres"
-                    CONFIG.state = true
-                }
-
-                saveConfig("state", CONFIG.state)
-                updateGenres()
-            },
-            false
-        )
-
         Spicetify.Platform.History.listen((data) => {
             updateArtistPage(data.pathname)
         })
+
+        if (Spicetify.Playbar.Widget) {
+            new Spicetify.Playbar.Widget(
+                CONFIG.state ? "Disable Spotify Genres" : "Enable Spotify Genres",
+                CONFIG.state ? iconActive : icon,
+                (element) => {
+                    if (CONFIG.state) {
+                        element.icon = icon
+                        element.label = "Enable Spotify Genres"
+                        CONFIG.state = false
+                    } else {
+                        element.icon = iconActive
+                        element.label = "Disable Spotify Genres"
+                        CONFIG.state = true
+                    }
+
+                    saveConfig("state", CONFIG.state)
+                    updateGenres()
+                },
+                false
+            )
+        }
     }
 })()
 
