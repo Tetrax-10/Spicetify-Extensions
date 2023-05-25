@@ -1,4 +1,5 @@
 import Utils from "../utils/utils"
+import GraphQL from "../api/graphQL"
 
 import { ImageIcon } from "../svg/svg"
 
@@ -46,7 +47,7 @@ const PlaylistContextMenu = (() => {
 
         if (!(uriType === Spicetify.URI.Type.PLAYLIST || uriType === Spicetify.URI.Type.PLAYLIST_V2) || playlistData[uri]?.avatar !== undefined) return
 
-        const rawRes = await Spicetify.GraphQL.Request(Spicetify.GraphQL.Definitions.fetchPlaylistMetadata, { uri: uri, offset: 0, limit: 0 })
+        const rawRes = await Spicetify.GraphQL.Request(GraphQL.Definitions.fetchPlaylistMetadata, { uri: uri, offset: 0, limit: 0 })
 
         playlistData[uri] = playlistData[uri] ?? {}
 

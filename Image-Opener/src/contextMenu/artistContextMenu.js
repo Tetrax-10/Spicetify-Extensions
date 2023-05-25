@@ -1,4 +1,5 @@
 import Utils from "../utils/utils"
+import GraphQL from "../api/graphQL"
 
 import { ImageIcon } from "../svg/svg"
 
@@ -28,7 +29,7 @@ const ArtistContextMenu = (() => {
 
         if (uriType !== Spicetify.URI.Type.ARTIST || artistData[uri]?.avatar !== undefined) return
 
-        const rawRes = await Spicetify.GraphQL.Request(Spicetify.GraphQL.Definitions.queryArtistOverview, { uri: uri, locale: "en" })
+        const rawRes = await Spicetify.GraphQL.Request(GraphQL.Definitions.queryArtistOverview, { uri: uri, locale: "en" })
 
         artistData[uri] = artistData[uri] ?? {}
         artistData[uri].avatar = rawRes.data.artistUnion.visuals?.avatarImage?.sources[0]?.url ?? null
