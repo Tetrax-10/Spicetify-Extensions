@@ -2,10 +2,6 @@
 
 Some Use Full Extension Developed by a Music Lover.
 
-Wanna discuss or having issues with my Extensions? Just ping `@Tetrax-10` in Discord.
-
-<a href="https://discord.gg/VnevqPp2Rr"><img src="https://img.shields.io/discord/842219447716151306?label=chat&logo=discord&logoColor=discord"></a>
-
 # 1. Sort By Play Count
 
 Sort Playlists, All songs of a Artist, Albums by :
