@@ -600,7 +600,7 @@
             updateArtistPage(data.pathname)
         })
 
-        if (Spicetify.Playbar.Widget) {
+        if (Spicetify.Playbar?.Widget) {
             new Spicetify.Playbar.Widget(
                 CONFIG.state ? "Disable Spotify Genres" : "Enable Spotify Genres",
                 CONFIG.state ? iconActive : icon,
