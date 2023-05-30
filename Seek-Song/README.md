@@ -10,6 +10,10 @@ This Extension Seeks Song when you press `1 to 9` for `10 % to 90 %` of the song
 
 `+` and `-` to change tracks.
 
+Wanna discuss or having issues with my extensions? Ping `@Tetrax-10` on Discord
+
+<p align="left"><a href="https://discord.gg/DaUbPmbDwr"><img src="https://raw.githubusercontent.com/Tetrax-10/Nord-Spotify/master/assets/join-discord-button.png" width="150px"></a></p>
+
 <br />
 
 # Demo Video

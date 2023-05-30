@@ -4,6 +4,10 @@ This Extension only Plays the Enhanced Songs from a playlist. It even allows you
 
 Very Useful if you are Discovering new Songs.
 
+Wanna discuss or having issues with my extensions? Ping `@Tetrax-10` on Discord
+
+<p align="left"><a href="https://discord.gg/DaUbPmbDwr"><img src="https://raw.githubusercontent.com/Tetrax-10/Nord-Spotify/master/assets/join-discord-button.png" width="150px"></a></p>
+
 <br />
 
 # Play Enhanced Songs on Other's Playlist

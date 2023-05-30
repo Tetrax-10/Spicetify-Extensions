@@ -2,6 +2,10 @@
 
 See what Genres you are listening to with Spotify Genres Extension
 
+Wanna discuss or having issues with my extensions? Ping `@Tetrax-10` on Discord
+
+<p align="left"><a href="https://discord.gg/DaUbPmbDwr"><img src="https://raw.githubusercontent.com/Tetrax-10/Nord-Spotify/master/assets/join-discord-button.png" width="150px"></a></p>
+
 <br />
 
 ## Genres in Player Bar and Artist Page
