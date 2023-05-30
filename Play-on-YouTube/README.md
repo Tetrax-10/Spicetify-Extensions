@@ -2,6 +2,10 @@
 
 This extension Plays the Video Song of a Track in YouTube
 
+Wanna discuss or having issues with my extensions? Ping `@Tetrax-10` on Discord
+
+<p align="left"><a href="https://discord.gg/DaUbPmbDwr"><img src="https://raw.githubusercontent.com/Tetrax-10/Nord-Spotify/master/assets/join-discord-button.png" width="150px"></a></p>
+
 # Demo
 
 ![Screenshot](https://raw.githubusercontent.com/Tetrax-10/Spicetify-Extensions/master/Play-on-YouTube/assets/Play-on-YouTube-demo.gif)
