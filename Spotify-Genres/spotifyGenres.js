@@ -253,133 +253,139 @@
         "style",
         null,
         `.popup-row::after {
-                  content: "";
-                  display: table;
-                  clear: both;
-              }
-              .popup-row .col {
-                  display: flex;
-                  padding: 10px 0;
-                  align-items: center;
-              }
-              .popup-row .col.description {
-                  float: left;
-                  padding-right: 15px;
-              }
-              .popup-row .col.action {
-                  float: right;
-                  text-align: right;
-              }
-              .popup-row .div-title {
-                  color: var(--spice-text);
-              }                
-              .popup-row .divider {
-                  height: 2px;
-                  border-width: 0;
-                  background-color: var(--spice-button-disabled);
-              }
-              .popup-row .space {
-                  margin-bottom: 20px;
-                  visibility: hidden;
-              }
-              .popup-row .info {
-                  /* font-size: 13px; */
-              }
-              .popup-row .red {
-                  font-size: 13px;
-                  color: #59CE8F;
-              }
-              .popup-row .demo {
-                  font-size: 13px;
-                  color: #59CE8F;
-              }
-              .popup-row .little-space {
-                  margin-bottom: 10px;
-              }
-              .popup-row .inputbox {
-                  padding: 10px;
-                  border-radius: 15px;
-                  border: 0;
-                  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.06);
-              }
-              button.checkbox {
-                  align-items: center;
-                  color: var(--spice-text);
-                  cursor: pointer;
-                  display: flex;
-                  margin-inline-start: 12px;
-              }
-              button.checkbox.disabled {
-                  color: rgba(var(--spice-rgb-text), 0.3);
-              }
-              select {
-                  color: var(--spice-text);
-                  background: rgba(var(--spice-rgb-shadow), 0.7);
-                  border: 0;
-                  height: 32px;
-              }
-              ::-webkit-scrollbar {
-                  width: 8px;
-              }
-              .login-button {
-                  background-color: var(--spice-button);
-                  border-radius: 8px;
-                  border-style: none;
-                  color: var(--spice-text);
-                  cursor: pointer;
-                  font-size: 14px;
-                  height: 40px;
-                  margin: 10px;
-                  padding: 5px 10px;
-                  text-align: center;
-              }
-              .green {
-                  background-color: #76ba99;
-                  color: #25316D;
-              }
-              .red {
-                  background-color: #A9555E;
-              }
-              .small-button.red {
-                  background-color: #A9555E !important;
-              }
-              input.small-input {
-                  padding: 5px !important;
-                  border-radius: 6px !important;
-                  right: 0px !important;
-                  margin: 5px;
-              }
-              .small-button {
-                  margin-right: 20px;
-              }
-              .popup-row .inputbox[type="color"] {
-                  background-color: var(--spice-custom-main-secondary) !important;
-                  padding: 0px;
-                  border-radius: 5px !important;
-                  border: none;
-                  margin-right: 10px;
-              }
-              .popup-row .inputbox[type="color"]::-webkit-color-swatch {
-                  border-radius: 5px !important;
-                  border: none;
-              }
-              .popup-row.search-div .col {
-                  position: relative;
-              }
-              .popup-row .nord-search-container {
-                  width: 100%;
-              }
-              .popup-row .nord-search-icon {
-                  position: absolute;
-                  margin: 10px;
-              }
-              .popup-row .nord-search {
-                  padding: 10px 36px !important;
-                  width: 100%;
-              }
-              .popup-row .display-none {
-                  display: none !important;
-              }`
+            content: "";
+            display: table;
+            clear: both;
+        }
+        .popup-row .col {
+            display: flex;
+            padding: 10px 0;
+            align-items: center;
+        }
+        .popup-row .col.description {
+            float: left;
+            padding-right: 15px;
+        }
+        .popup-row .col.action {
+            float: right;
+            text-align: right;
+        }
+        .popup-row .div-title {
+            color: var(--spice-text);
+        }                
+        .popup-row .divider {
+            height: 2px;
+            border-width: 0;
+            background-color: var(--spice-button-disabled);
+        }
+        .popup-row .space {
+            margin-bottom: 20px;
+            visibility: hidden;
+        }
+        .popup-row .info {
+            /* font-size: 13px; */
+        }
+        .popup-row .red {
+            font-size: 13px;
+            color: #59CE8F;
+        }
+        .popup-row .demo {
+            font-size: 13px;
+            color: #59CE8F;
+        }
+        .popup-row .little-space {
+            margin-bottom: 10px;
+        }
+        .popup-row .inputbox {
+            padding: 10px;
+            border-radius: 15px;
+            border: 0;
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.06);
+        }
+        button.checkbox {
+            align-items: center;
+            color: var(--spice-text);
+            cursor: pointer;
+            display: flex;
+            margin-inline-start: 12px;
+        }
+        button.checkbox.disabled {
+            color: rgba(var(--spice-rgb-text), 0.3);
+        }
+        select {
+            color: var(--spice-text);
+            background: rgba(var(--spice-rgb-shadow), 0.7);
+            border: 0;
+            height: 32px;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        .login-button {
+            background-color: var(--spice-button);
+            border-radius: 8px;
+            border-style: none;
+            color: var(--spice-text);
+            cursor: pointer;
+            font-size: 14px;
+            height: 40px;
+            margin: 10px;
+            padding: 5px 10px;
+            text-align: center;
+        }
+        .green {
+            background-color: #76ba99;
+            color: #25316D;
+        }
+        .red {
+            background-color: #A9555E;
+        }
+        .small-button.red {
+            background-color: #A9555E !important;
+        }
+        input.small-input {
+            padding: 5px !important;
+            border-radius: 6px !important;
+            right: 0px !important;
+            margin: 5px;
+        }
+        .small-button {
+            margin-right: 20px;
+        }
+        .popup-row .inputbox[type="color"] {
+            background-color: var(--spice-custom-main-secondary) !important;
+            padding: 0px;
+            border-radius: 5px !important;
+            border: none;
+            margin-right: 10px;
+        }
+        .popup-row .inputbox[type="color"]::-webkit-color-swatch {
+            border-radius: 5px !important;
+            border: none;
+        }
+        .popup-row.search-div .col {
+            position: relative;
+        }
+        .popup-row .nord-search-container {
+            width: 100%;
+        }
+        .popup-row .nord-search-icon {
+            position: absolute;
+            margin: 10px;
+        }
+        .popup-row .nord-search {
+            padding: 10px 36px !important;
+            width: 100%;
+        }
+        .popup-row .display-none {
+            display: none !important;
+        }
+        .GenericModal[aria-label*="Genres of"] .main-trackCreditsModal-header .tetrax-settings-discord-link {
+            color: var(--spice-custom-success);
+        }
+        .GenericModal[aria-label*="Genres of"] .main-trackCreditsModal-header .tetrax-settings-discord-link:hover {
+            color: var(--spice-custom-link-hover);
+        }`
     )
 
     function ButtonItem({ name, color = "", onclickFun = () => {} }) {
@@ -503,6 +509,19 @@
             content: settingsDOMContent,
             isLarge: true,
         })
+
+        const headerSection = document.querySelector(".main-trackCreditsModal-header")
+
+        const linkElement = document.createElement("a")
+        linkElement.textContent = "Join our discord server for help and discussions"
+        linkElement.href = "https://discord.gg/DaUbPmbDwr"
+        linkElement.className = "tetrax-settings-discord-link"
+
+        const container = document.createElement("div")
+        container.appendChild(document.querySelector("h1.main-type-alto"))
+        container.appendChild(linkElement)
+
+        headerSection.prepend(container)
     }
 
     /////////////////////////////////// MAIN ///////////////////////////////////////

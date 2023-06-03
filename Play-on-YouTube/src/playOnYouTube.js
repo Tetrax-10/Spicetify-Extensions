@@ -85,6 +85,19 @@ export default function playOnYouTube() {
                 content: SettingsUI(),
                 isLarge: true,
             })
+
+            const headerSection = document.querySelector(".main-trackCreditsModal-header")
+
+            const linkElement = document.createElement("a")
+            linkElement.textContent = "Join our discord server for help and discussions"
+            linkElement.href = "https://discord.gg/DaUbPmbDwr"
+            linkElement.className = "tetrax-settings-discord-link"
+
+            const container = document.createElement("div")
+            container.appendChild(document.querySelector("h1.main-type-alto"))
+            container.appendChild(linkElement)
+
+            headerSection.prepend(container)
         },
         YouTubeSVG
     ).register()

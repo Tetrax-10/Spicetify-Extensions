@@ -81,95 +81,101 @@ let sortByPlayCount = 0
         "style",
         null,
         `.popup-row::after {
-                    content: "";
-                    display: table;
-                    clear: both;
-                }
-                .popup-row .col {
-                    display: flex;
-                    padding: 10px 0;
-                    align-items: center;
-                }
-                .popup-row .col.description {
-                    float: left;
-                    padding-right: 15px;
-                }
-                .popup-row .col.action {
-                    float: right;
-                    text-align: right;
-                }
-                .popup-row .div-title {
-                    color: var(--spice-text);
-                }                
-                .popup-row .divider {
-                    height: 2px;
-                    border-width: 0;
-                    background-color: var(--spice-button-disabled);
-                }
-                .popup-row .space {
-                    margin-bottom: 20px;
-                    visibility: hidden;
-                }
-                .popup-row .info {
-                    /* font-size: 13px; */
-                }
-                .popup-row .demo {
-                    font-size: 13px;
-                    color: #59CE8F;
-                }
-                .popup-row .little-space {
-                    margin-bottom: 10px;
-                }
-                .popup-row .inputbox {
-                    display: flex;
-                    flex-direction: column;
-                    padding: 15px;
-                    border-radius: 15px;
-                    border: 0;
-                    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.06);
-                }
-                button.checkbox {
-                    align-items: center;
-                    border: 0px;
-                    border-radius: 50%;
-                    background-color: rgba(var(--spice-rgb-shadow), 0.7);
-                    color: var(--spice-text);
-                    cursor: pointer;
-                    display: flex;
-                    margin-inline-start: 12px;
-                    padding: 8px;
-                }
-                button.checkbox.disabled {
-                    color: rgba(var(--spice-rgb-text), 0.3);
-                }
-                select {
-                    color: var(--spice-text);
-                    background: rgba(var(--spice-rgb-shadow), 0.7);
-                    border: 0;
-                    height: 32px;
-                }
-                ::-webkit-scrollbar {
-                    width: 8px;
-                }
-                .login-button {
-                    background-color: var(--spice-button);
-                    border-radius: 8px;
-                    border-style: none;
-                    color: var(--spice-text);
-                    cursor: pointer;
-                    font-size: 14px;
-                    height: 40px;
-                    margin-right: 20px;
-                    padding: 5px 10px;
-                    text-align: center;
-                }
-                .green {
-                    background-color: #6BCB77;
-                    color: #25316D;
-                }
-                .red {
-                    background-color: #bf616a;
-                }`
+            content: "";
+            display: table;
+            clear: both;
+        }
+        .popup-row .col {
+            display: flex;
+            padding: 10px 0;
+            align-items: center;
+        }
+        .popup-row .col.description {
+            float: left;
+            padding-right: 15px;
+        }
+        .popup-row .col.action {
+            float: right;
+            text-align: right;
+        }
+        .popup-row .div-title {
+            color: var(--spice-text);
+        }                
+        .popup-row .divider {
+            height: 2px;
+            border-width: 0;
+            background-color: var(--spice-button-disabled);
+        }
+        .popup-row .space {
+            margin-bottom: 20px;
+            visibility: hidden;
+        }
+        .popup-row .info {
+            /* font-size: 13px; */
+        }
+        .popup-row .demo {
+            font-size: 13px;
+            color: #59CE8F;
+        }
+        .popup-row .little-space {
+            margin-bottom: 10px;
+        }
+        .popup-row .inputbox {
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+            border-radius: 15px;
+            border: 0;
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.06);
+        }
+        button.checkbox {
+            align-items: center;
+            border: 0px;
+            border-radius: 50%;
+            background-color: rgba(var(--spice-rgb-shadow), 0.7);
+            color: var(--spice-text);
+            cursor: pointer;
+            display: flex;
+            margin-inline-start: 12px;
+            padding: 8px;
+        }
+        button.checkbox.disabled {
+            color: rgba(var(--spice-rgb-text), 0.3);
+        }
+        select {
+            color: var(--spice-text);
+            background: rgba(var(--spice-rgb-shadow), 0.7);
+            border: 0;
+            height: 32px;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        .login-button {
+            background-color: var(--spice-button);
+            border-radius: 8px;
+            border-style: none;
+            color: var(--spice-text);
+            cursor: pointer;
+            font-size: 14px;
+            height: 40px;
+            margin-right: 20px;
+            padding: 5px 10px;
+            text-align: center;
+        }
+        .green {
+            background-color: #6BCB77;
+            color: #25316D;
+        }
+        .red {
+            background-color: #bf616a;
+        }
+        .GenericModal[aria-label="Sort By Play Count"] .main-trackCreditsModal-header .tetrax-settings-discord-link {
+            color: var(--spice-custom-success);
+        }
+        .GenericModal[aria-label="Sort By Play Count"] .main-trackCreditsModal-header .tetrax-settings-discord-link:hover {
+            color: var(--spice-custom-link-hover);
+        }`
     )
 
     function setLastFmUsername() {
@@ -423,6 +429,19 @@ let sortByPlayCount = 0
             content: settingsDOMContent,
             isLarge: true,
         })
+
+        const headerSection = document.querySelector(".main-trackCreditsModal-header")
+
+        const linkElement = document.createElement("a")
+        linkElement.textContent = "Join our discord server for help and discussions"
+        linkElement.href = "https://discord.gg/DaUbPmbDwr"
+        linkElement.className = "tetrax-settings-discord-link"
+
+        const container = document.createElement("div")
+        container.appendChild(document.querySelector("h1.main-type-alto"))
+        container.appendChild(linkElement)
+
+        headerSection.prepend(container)
     }
 
     ////////////////////////////////////// Menu ///////////////////////////////////////////

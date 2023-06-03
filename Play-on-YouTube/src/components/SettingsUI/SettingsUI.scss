@@ -104,3 +104,11 @@
         color: #bf616a;
     }
 }
+
+.GenericModal[aria-label="YouTube API key"] .main-trackCreditsModal-header .tetrax-settings-discord-link {
+    color: var(--spice-custom-success);
+
+    &:hover {
+        color: var(--spice-custom-link-hover);
+    }
+}
