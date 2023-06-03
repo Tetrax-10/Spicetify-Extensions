@@ -137,19 +137,19 @@ let skipOrPlayLikedSongsCount = 0
             likedSongsMode("disable")
         }
 
-        let play_Liked_Songs = new Spicetify.Menu.Item("Play Liked Only", isPlayLikedSongs, () => {
+        let playLikedSongs = new Spicetify.Menu.Item("Play Liked Only", isPlayLikedSongs, () => {
             setLocalStorageDataWithKey(skipLikedSongsKey, false)
-            play_Liked_Songs.setState(true)
-            skip_Liked_Songs.setState(false)
+            playLikedSongs.setState(true)
+            skipLikedSongs.setState(false)
             disable.setState(false)
             likedSongsMode("disable")
             likedSongsMode("play")
         })
 
-        let skip_Liked_Songs = new Spicetify.Menu.Item("Skip Liked", isSkipLikedSongs, () => {
+        let skipLikedSongs = new Spicetify.Menu.Item("Skip Liked", isSkipLikedSongs, () => {
             setLocalStorageDataWithKey(skipLikedSongsKey, true)
-            play_Liked_Songs.setState(false)
-            skip_Liked_Songs.setState(true)
+            playLikedSongs.setState(false)
+            skipLikedSongs.setState(true)
             disable.setState(false)
             likedSongsMode("disable")
             likedSongsMode("skip")
@@ -157,13 +157,13 @@ let skipOrPlayLikedSongsCount = 0
 
         let disable = new Spicetify.Menu.Item("Disable", isDisable, () => {
             setLocalStorageDataWithKey(skipLikedSongsKey, "disable")
-            skip_Liked_Songs.setState(false)
-            play_Liked_Songs.setState(false)
+            skipLikedSongs.setState(false)
+            playLikedSongs.setState(false)
             disable.setState(true)
             likedSongsMode("disable")
         })
 
-        new Spicetify.Menu.SubMenu("Play/Skip Liked Songs", [play_Liked_Songs, skip_Liked_Songs, disable]).register()
+        new Spicetify.Menu.SubMenu("Play/Skip Liked Songs", [playLikedSongs, skipLikedSongs, disable]).register()
     }
 
     if (isLocalStorageInitialized()) {

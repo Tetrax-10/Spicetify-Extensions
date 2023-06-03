@@ -52,7 +52,7 @@ let sortByPlayCount = 0
             }
             throw "Config error Sort By Play Count"
         } catch {
-            await setLocalStorageDataWithKey("sortByPlayCount:settings", `{}`)
+            await setLocalStorageDataWithKey("sortByPlayCount:settings", "{}")
             // default settings
             return {
                 myScrobbles: true,
@@ -221,7 +221,7 @@ let sortByPlayCount = 0
                         let name = document.querySelector(".popup-row .inputbox").value.replace(/\n/g, "")
 
                         if (name === "" || !name) {
-                            alert("The UserName can't be blank")
+                            alert("The UserName can't be blank") // eslint-disable-line no-alert
                             return
                         }
 
@@ -290,7 +290,7 @@ let sortByPlayCount = 0
                 React.createElement(
                     "select",
                     {
-                        value,
+                        value: value,
                         onChange: async (e) => {
                             setValue(e.target.value)
                             CONFIG[field] = e.target.value
@@ -323,33 +323,6 @@ let sortByPlayCount = 0
             },
             name
         )
-    }
-
-    function restartPopup() {
-        let DOMcontent = React.createElement(
-            "div",
-            null,
-            style,
-            React.createElement(ButtonItem, {
-                name: "Restart Now",
-                color: " red",
-                onclickFun: async () => {
-                    await Spicetify.CosmosAsync.post("sp://desktop/v1/restart")
-                },
-            }),
-            React.createElement(ButtonItem, {
-                name: "Restart Later",
-                color: " green",
-                onclickFun: async () => {
-                    Spicetify.PopupModal.hide()
-                },
-            })
-        )
-
-        Spicetify.PopupModal.display({
-            title: "Restart Spotify",
-            content: DOMcontent,
-        })
     }
 
     let settingsDOMContent = React.createElement(
@@ -450,7 +423,7 @@ let sortByPlayCount = 0
         "Sort By Play Count",
         false,
         settingsPage,
-        `<svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="18px" height="18px" viewBox="0 0 1020 795"><g transform="translate(0.000000,795.000000) scale(0.100000,-0.100000)" fill="currentcolor"><path d="M1563 6575 c-79 -22 -126 -49 -188 -109 -94 -92 -139 -227 -118 -351 22 -125 86 -225 188 -291 109 -69 -117 -64 2723 -64 2864 0 2613 -7 2733 73 111 75 179 203 179 339 0 194 -126 353 -317 403 -84 22 -5119 21 -5200 0z"/><path d="M7385 4907 c-159 -53 -269 -180 -295 -342 -6 -36 -10 -514 -10 -1220 l0 -1159 -287 286 c-310 308 -342 332 -467 358 -175 36 -372 -63 -447 -225 -58 -125 -57 -245 5 -370 32 -65 83 -118 708 -741 779 -776 720 -729 909 -729 101 0 108 1 180 37 70 35 107 70 745 710 622 624 673 678 698 735 36 84 47 158 35 235 -21 133 -103 250 -216 306 -126 64 -249 66 -374 6 -67 -32 -98 -60 -361 -322 l-288 -286 0 1160 c0 696 -4 1183 -10 1218 -22 138 -106 253 -227 313 -68 34 -84 37 -167 40 -56 2 -106 -2 -131 -10z"/><path d="M1600 4499 c-223 -37 -381 -258 -341 -475 33 -183 167 -314 351 -343 87 -14 3780 -15 3865 -1 86 14 195 70 246 128 23 26 56 76 73 112 29 60 31 73 31 170 0 97 -2 110 -31 170 -17 36 -50 86 -73 112 -51 58 -160 114 -246 128 -78 13 -3798 11 -3875 -1z"/><path d="M1546 2403 c-27 -8 -72 -29 -100 -47 -226 -145 -260 -457 -71 -642 63 -61 109 -88 192 -109 86 -23 2610 -23 2696 0 112 29 193 87 253 180 119 187 67 439 -115 562 -117 78 -13 73 -1488 72 -1146 0 -1324 -2 -1367 -16z"/></g></svg>`
+        `<svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="18px" height="18px" viewBox="0 0 1020 795"><g transform="translate(0.000000,795.000000) scale(0.100000,-0.100000)" fill="currentcolor"><path d="M1563 6575 c-79 -22 -126 -49 -188 -109 -94 -92 -139 -227 -118 -351 22 -125 86 -225 188 -291 109 -69 -117 -64 2723 -64 2864 0 2613 -7 2733 73 111 75 179 203 179 339 0 194 -126 353 -317 403 -84 22 -5119 21 -5200 0z"/><path d="M7385 4907 c-159 -53 -269 -180 -295 -342 -6 -36 -10 -514 -10 -1220 l0 -1159 -287 286 c-310 308 -342 332 -467 358 -175 36 -372 -63 -447 -225 -58 -125 -57 -245 5 -370 32 -65 83 -118 708 -741 779 -776 720 -729 909 -729 101 0 108 1 180 37 70 35 107 70 745 710 622 624 673 678 698 735 36 84 47 158 35 235 -21 133 -103 250 -216 306 -126 64 -249 66 -374 6 -67 -32 -98 -60 -361 -322 l-288 -286 0 1160 c0 696 -4 1183 -10 1218 -22 138 -106 253 -227 313 -68 34 -84 37 -167 40 -56 2 -106 -2 -131 -10z"/><path d="M1600 4499 c-223 -37 -381 -258 -341 -475 33 -183 167 -314 351 -343 87 -14 3780 -15 3865 -1 86 14 195 70 246 128 23 26 56 76 73 112 29 60 31 73 31 170 0 97 -2 110 -31 170 -17 36 -50 86 -73 112 -51 58 -160 114 -246 128 -78 13 -3798 11 -3875 -1z"/><path d="M1546 2403 c-27 -8 -72 -29 -100 -47 -226 -145 -260 -457 -71 -642 63 -61 109 -88 192 -109 86 -23 2610 -23 2696 0 112 29 193 87 253 180 119 187 67 439 -115 562 -117 78 -13 73 -1488 72 -1146 0 -1324 -2 -1367 -16z"/></g></svg>` // eslint-disable-line quotes
     ).register()
 
     // Play Count
@@ -662,7 +635,7 @@ let sortByPlayCount = 0
     async function makePlaylistPrivate(uri) {
         setTimeout(async () => {
             await Spicetify.CosmosAsync.post(`sp://core-playlist/v1/playlist/${uri}/set-base-permission`, {
-                permission_level: "BLOCKED",
+                permission_level: "BLOCKED", // eslint-disable-line camelcase
             })
         }, 1000)
     }
@@ -859,7 +832,9 @@ let sortByPlayCount = 0
                 } else {
                     albumsRes = await Spicetify.CosmosAsync.get(`wg://album/v1/album-app/album/${albums.uri}/desktop`)
                 }
-            } catch (error) {}
+            } catch (error) {
+                // catch error
+            }
 
             artistFetchTypeCount[type]++
             notification(`${artistFetchTypeCount[type]} / ${allCount} ${type}s`)
@@ -1064,7 +1039,9 @@ let sortByPlayCount = 0
             let initialRequest = await fetch(url)
             let response = await initialRequest.json()
             return response
-        } catch (error) {}
+        } catch (error) {
+            // catch error
+        }
     }
 
     // Last.FM data to valid object for sortByModeForQueue
@@ -1093,7 +1070,9 @@ let sortByPlayCount = 0
             if (await trackInfo.message) {
                 return null
             }
-        } catch (error) {}
+        } catch (error) {
+            // catch error
+        }
 
         try {
             if (await trackInfo.track) {
@@ -1108,7 +1087,9 @@ let sortByPlayCount = 0
                     }
                 }
             }
-        } catch (error) {}
+        } catch (error) {
+            // catch error
+        }
 
         return null
     }
@@ -1207,7 +1188,7 @@ let sortByPlayCount = 0
             uri: item.link,
             provider: CONFIG.queue ? "queue" : "context",
             metadata: {
-                is_queued: CONFIG.queue ? "true" : "false",
+                is_queued: CONFIG.queue ? "true" : "false", // eslint-disable-line camelcase
             },
         }))
 
@@ -1223,9 +1204,11 @@ let sortByPlayCount = 0
         await Spicetify.Platform.PlayerAPI.clearQueue()
 
         await Spicetify.CosmosAsync.put("sp://player/v2/main/queue", {
+            /* eslint-disable camelcase */
             queue_revision: Spicetify.Queue?.queueRevision,
             next_tracks: sortedArray,
             prev_tracks: Spicetify.Queue?.prevTracks,
+            /* eslint-enable camelcase */
         })
 
         if (!CONFIG.queue) {

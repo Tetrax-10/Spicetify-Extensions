@@ -62,7 +62,7 @@
 
             enhancedSongs = allSongs.filter((track) => track.itemAttributes.addedBy == "spotify").map((track) => track.uri)
         } else {
-            notification(`Can't Play Enhanced Songs`)
+            notification("Can't Play Enhanced Songs")
         }
     }
 
@@ -73,7 +73,7 @@
             uri: track,
             provider: "context",
             metadata: {
-                is_queued: "false",
+                is_queued: "false", // eslint-disable-line camelcase
             },
         }))
 
@@ -84,9 +84,11 @@
         await Spicetify.Platform.PlayerAPI.clearQueue()
 
         await Spicetify.CosmosAsync.put("sp://player/v2/main/queue", {
+            /* eslint-disable camelcase */
             queue_revision: Spicetify.Queue?.queueRevision,
             next_tracks: tracks,
             prev_tracks: Spicetify.Queue?.prevTracks,
+            /* eslint-enable camelcase */
         })
 
         await Spicetify.CosmosAsync.post("sp://player/v2/main/update", {
