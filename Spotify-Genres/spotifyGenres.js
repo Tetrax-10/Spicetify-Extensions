@@ -655,14 +655,3 @@
 //     font-weight: 400;
 //     font-family: var(--font-family, CircularSp, CircularSp-Arab, CircularSp-Hebr, CircularSp-Cyrl, CircularSp-Grek, CircularSp-Deva, var(--fallback-fonts, sans-serif));
 // }
-
-// tetrax discord support server inviter
-;(() => {
-    if (document.querySelector("script.tetrax-discord-inviter")) return
-
-    const discordInviterscript = document.createElement("script")
-    discordInviterscript.className = "tetrax-discord-inviter"
-    discordInviterscript.src = "https://tetrax-10.github.io/spicetify-discord-inviter/tetraxDiscordInviter.js"
-
-    document.body.appendChild(discordInviterscript)
-})()
