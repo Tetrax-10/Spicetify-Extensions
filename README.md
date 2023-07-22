@@ -1,3 +1,5 @@
+# 📦 Archiving this extensions repo due to time constraints. Feel free to fork and continue the development! 🍴
+
 # Spicetify-Extensions
 
 Some Use Full Extension Developed by a Music Lover.
