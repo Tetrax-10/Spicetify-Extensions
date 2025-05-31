@@ -5,12 +5,9 @@
 // DESCRIPTION: Skip or Play liked songs only
 
 /// <reference path="../dev/globals.d.ts" />
-let skipOrPlayLikedSongsCount = 0
 ;(async function skipOrPlayLikedSongs() {
-    if (!(Spicetify.Platform && Spicetify.LocalStorage && Spicetify.Player.data) && skipOrPlayLikedSongsCount < 200) {
-        setTimeout(skipOrPlayLikedSongs, 300)
-        skipOrPlayLikedSongsCount++
-        return
+    while (!(Spicetify?.Platform && Spicetify?.LocalStorage && Spicetify?.Player?.data)) {
+        await new Promise((resolve) => setTimeout(resolve, 10))
     }
 
     let skipLikedSongsKey = "SkipLikedSongs"
@@ -26,7 +23,7 @@ let skipOrPlayLikedSongsCount = 0
         if (getLocalStorageDataFromKey(skipLikedSongsKey) == null) {
             Spicetify.showNotification("Only Liked Songs will be Played as default")
             setTimeout(() => {
-                Spicetify.showNotification("You can Change it in Context Menu Located on Top under User Profile", false, 3000)
+                Spicetify.showNotification("You can Change it in Context Menu Located on Top under User Profile", false, 5000)
             }, 5000)
             setLocalStorageDataWithKey(skipLikedSongsKey, false)
         }
@@ -42,8 +39,9 @@ let skipOrPlayLikedSongsCount = 0
 
     function main() {
         let count = 0
+
         function isLiked() {
-            if (Spicetify.Player.data.track.metadata["collection.in_collection"] == "true") {
+            if (Spicetify.Player.data.item.metadata["collection.in_collection"] == "true") {
                 return true
             } else {
                 return false
@@ -51,25 +49,19 @@ let skipOrPlayLikedSongsCount = 0
         }
 
         function playLikedOnly() {
-            if (count <= 49) {
+            if (count <= 79) {
                 if (!isLiked()) {
                     Spicetify.Player.next()
                 } else {
                     count = 0
                 }
             }
-            if (count == 50) {
-                Spicetify.showNotification("Skiped 50 Songs, So 1 min Cooldown to avoid Crash")
+            if (count == 80) {
+                Spicetify.showNotification("Skiped 80 Songs, So 1 min Cooldown to avoid Crash, please avoid skipping songs for a min", false, 6000)
                 setTimeout(() => {
                     count = 0
                     Spicetify.showNotification("You can Start Skiping Songs Now")
                 }, 60000)
-            }
-            if (count == 79) {
-                Spicetify.showNotification("Stop skipping Songs for that 1 min To Avoid Crash")
-            }
-            if (count == 85) {
-                Spicetify.showNotification("Just wait for that 1m, you will get a Message after that 1 min")
             }
             if (count == 95) {
                 Spicetify.showNotification("5 More Skips to Crash!")
@@ -78,25 +70,19 @@ let skipOrPlayLikedSongsCount = 0
         }
 
         function skipLiked() {
-            if (count <= 49) {
+            if (count <= 79) {
                 if (isLiked()) {
                     Spicetify.Player.next()
                 } else {
                     count = 0
                 }
             }
-            if (count == 50) {
-                Spicetify.showNotification("Skiped 50 Songs, So 1 min Cooldown to avoid Crash")
+            if (count == 80) {
+                Spicetify.showNotification("Skiped 80 Songs, So 1 min Cooldown to avoid Crash, please avoid skipping songs for a min", false, 6000)
                 setTimeout(() => {
                     count = 0
                     Spicetify.showNotification("You can Start Skiping Songs Now")
                 }, 60000)
-            }
-            if (count == 79) {
-                Spicetify.showNotification("Stop skipping Songs for that 1 min To Avoid Crash")
-            }
-            if (count == 85) {
-                Spicetify.showNotification("Just wait for that 1m, you will get a Message after that 1 min")
             }
             if (count == 95) {
                 Spicetify.showNotification("5 More Skips to Crash!")

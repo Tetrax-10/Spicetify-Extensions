@@ -1,5 +1,7 @@
 # 📦 Archiving this extensions repo due to time constraints. Feel free to fork and continue the development! 🍴
 
+## Edit (31st may 2025): Thanks to [Jordan](https://open.spotify.com/user/31anolqptv7j6z4oe3spjnjn64nq) for sponsoring me to update the [Skip or Play Liked Songs](https://github.com/Tetrax-10/Spicetify-Extensions/tree/master/Skip-or-Play-Liked-Songs) extension.
+
 # Spicetify-Extensions
 
 Some Use Full Extension Developed by a Music Lover.
